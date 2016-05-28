@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width initial-scale=1">
+
+<title>Quick PostgreSQL server optimization for development (or integration server)</title>
+<meta name="description" content="Quick PostgreSQL server optimization for development (or integration server)">
+<meta name="keywords" content="postgres, postgresql, rails, performance, ruby, optimization">
+
+<link rel="stylesheet" href="/css/main.css">
+<link rel="canonical" href="https://www.tkalin.com/blog_posts/quick-postgresql-server-optimization-for-development-or-integration-server">
+<link rel="alternate" type="application/atom+xml" title="Ivan Tkalin" href="https://www.tkalin.com/feed.xml" />
+<link href="/assets/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+
+<!-- <script type="text/javascript">                                                     -->
+<!--     var host = "www.tkalin.com";                                                    -->
+<!--     if ((host == window.location.host) && (window.location.protocol != "https:")) { -->
+<!--       window.location.protocol = "https";                                           -->
+<!--     }                                                                               -->
+<!-- </script>                                                                           -->
+
+</head>
+
+
+  <body>
+    <nav class="navbar navbar-default navbar-static-top">
+
+  <div class="container">
+
+    <div class="col-sm-12">
+
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">Ivan Tkalin</a>
+      </div>
+
+      <div class="collapse navbar-collapse">
+        <p class="navbar-text">My blogging about ruby, javascript and everything related</p>
+
+        <ul class="nav navbar-nav navbar-left">
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <form class="navbar-form" action="https://www.google.com/search" method="get">
+              <div class="form-group">
+                <input type="hidden" name="as_sitesearch" value="www.tkalin.com">
+                <input class="form-control" type="text" name="as_q" placeholder="Search">
+              </div>
+            </form>
+          </li>
+          <li><a href="/feed.xml"><i class="svg-icon rss"></i></a></li>
+        </ul>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</nav>
+
+
+    <div class="container">
+      <div class="col-sm-8">
+        <header>
+  <h1>Quick PostgreSQL server optimization for development (or integration server)</h1>
+  <small class="text-muted">
+    <span class="glyphicon glyphicon-calendar"></span>
+    <span>Nov 10, 2013</span>
+    •
+    <span><a href="https://www.tkalin.com/blog_posts/quick-postgresql-server-optimization-for-development-or-integration-server/#disqus_thread">No Comments</a></span>
+  </small>
+</header>
+
+<hr/>
+
+<article>
+  <h2 id="tldr">TL;DR</h2>
+
+<p>I’ve made RSpec test suite for my Ruby on Rails application 18% faster by following a <a href="http://www.postgresql.org/docs/current/static/non-durability.html" title="Non-durable settings">Non-durable PostgreSQL configuration</a> guide.</p>
+
+<h2 id="intro">Intro</h2>
+
+<p>When I’m developing (usually <a href="http://rubyonrails.org/" title="Ruby on Rails">Ruby on Rails</a>) applications using <a href="http://www.postgresql.org/" title="PostgreSQL">PostgreSQL</a> database server for persistence, I don’t need high durability of my development database (or integration server). What I care the most is it’s speed. I realize, however, that database server, probably, is not the bottle neck of the typical application test suite.</p>
+
+<p>Here I show how switching few options in the PostgreSQL config file increased performance of the test suite on my development machine (by reducing durability).</p>
+
+<p><strong>Disclaimer</strong>: I’m not performance testing ninja and all my performance tests are very subjective.
+I test only what I care the most – execution time of the test suite for my current Ruby on Rails application.</p>
+
+<h2 id="environment">Environment</h2>
+
+<p>Hardware: Intel i7-3720QM CPU @ 2.60GHz, 16 Gb RAM
+OS: Ubuntu 12.04.3 LTS
+Software: Ruby on Rails 3.2.15, Ruby 2.0.0p247, Postgres 9.2.5</p>
+
+<h2 id="about-the-application">About the application</h2>
+
+<p>I have a monolithic Ruby on Rails application, with 18064/19132 (code/test) lines of code, with test suite of 1977 RSpec examples, some of which are javascript-enabled feature specs. I’m using <a href="https://github.com/bmabey/database_cleaner" title="database_cleaner">database_cleaner</a> gem for cleaning database between tests, with <code class="highlighter-rouge">transaction</code> strategy for non-javascript specs and <code class="highlighter-rouge">truncation</code> strategy for javascript specs. I’m running my test suite with wonderful <a href="https://github.com/grosser/parallel_tests" title="parallel_tests">parallel_tests</a> gem.</p>
+
+<h2 id="default-postgresql-925-configuration">Default PostgreSQL 9.2.5 configuration</h2>
+
+<p>Here are results of running full test suite on the clean PostgreSQL installation:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span> bin/stubs/parallel_rspec spec; <span class="o">)</span>  1002.48s user 51.83s system 359% cpu 4:53.35 total
+<span class="o">(</span> bin/stubs/parallel_rspec spec; <span class="o">)</span>  1006.46s user 54.12s system 360% cpu 4:54.02 total
+<span class="o">(</span> bin/stubs/parallel_rspec spec; <span class="o">)</span>  1004.78s user 54.74s system 356% cpu 4:57.18 total</code></pre></figure>
+
+<p>Or about 295 seconds in average.</p>
+
+<h2 id="decreasing-durability">Decreasing durability</h2>
+
+<p>According to the official <a href="http://www.postgresql.org/docs/current/static/non-durability.html" title="Non-durable configuration guide">Non-durable configuration guide</a>, I modified my <code class="highlighter-rouge">/etc/postgresql/9.2/main/postgresql.conf</code> in the following way:</p>
+
+<figure class="highlight"><pre><code class="language-linux-config" data-lang="linux-config"># Turn off fsync; there is no need to flush data to disk.
+fsync = 'off'
+
+# Turn off full_page_writes;
+# there is no need to guard against partial page writes.
+full_page_writes = 'off'
+
+# Increase checkpoint_segments and checkpoint_timeout ;
+# this reduces the frequency of checkpoints,
+# but increases the storage requirements of /pg_xlog.
+checkpoint_segments = '100'
+checkpoint_timeout = '45min'
+
+# Turn off synchronous_commit;
+# there might be no need to write the WAL to disk on every commit.
+# This setting does risk transaction loss (though not data corruption)
+# in case of a crash of the database alone.
+synchronous_commit = 'off'</code></pre></figure>
+
+<h2 id="results">Results</h2>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">(</span> bin/stubs/parallel_rspec spec; <span class="o">)</span>  1134.99s user 69.70s system 505% cpu 3:58.12 total
+<span class="o">(</span> bin/stubs/parallel_rspec spec; <span class="o">)</span>  1144.00s user 68.01s system 492% cpu 4:05.93 total
+<span class="o">(</span> bin/stubs/parallel_rspec spec; <span class="o">)</span>  1145.39s user 68.29s system 493% cpu 4:05.83 total</code></pre></figure>
+
+<p>Or about 243 seconds in average, with more intensive CPU usage.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>As we can see, very simple configuration change made execution of my test suite ~52 seconds (or ~18%) faster, which is pretty nice, I think.</p>
+
+
+  
+    <a href="/tag/postgres">postgres</a>
+  
+    <a href="/tag/rails">rails</a>
+  
+</article>
+
+<hr />
+
+<footer>
+  <div>
+    <!-- share buttons -->
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="ivalkeen">Tweet</a>
+    <div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+  </div>
+  <hr/>
+  <div id="disqus_thread"></div>
+</footer>
+
+<!-- twitter init -->
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+
+<!-- facebook init -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=1645955732290194";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'tkalincom'; // required: replace example with your forum shortname
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+      <div class="col-sm-3 col-sm-offset-1">
+        <div class="text-justify">
+  <img src="/assets/avatar.jpg" alt="Ivan Tkalin" class="img-circle" />
+</div>
+
+<hr />
+
+<p class="text-justify">
+  <small>
+    I'm <strong>Ivan Tkalin</strong>, a professional software developer, located in <strong>Berlin, Germany</strong>.
+  </small>
+</p>
+
+<p class="text-justify">
+  <small>
+    Currently I'm interested in everything related to <strong>Ruby</strong>, <strong>JavaScript</strong>, <strong>PostgreSQL</strong>, <strong>HTML/CSS</strong>, <strong>Linux</strong>, <strong>Git</strong> and <strong>Vim</strong>.
+  </small>
+</p>
+
+<p class="text-justify">
+  <small>
+    If you want to contact me, please <a href="mailto:itkalin@gmail.com">send me an email</a>
+  </small>
+</p>
+
+<p class="text-justify">
+  <small>
+    Feel free to follow me on <a href="http://twitter.com/ivalkeen">twitter</a> and <a href="http://github.com/ivalkeen">github</a>
+  </small>
+</p>
+
+<hr />
+
+<ul class='list-inline text-center'>
+  <li>
+    <a href="https://github.com/ivalkeen"><i class="svg-icon large github"></i></a>
+  </li>
+  <li>
+    <a href="https://stackoverflow.com/users/188975/ivalkeen"><i class="svg-icon large stackoverflow"></i></a>
+  </li>
+  <li>
+    <a href="https://twitter.com/ivalkeen"><i class="svg-icon large twitter"></i></a>
+  </li>
+  <li>
+    <a href="http://de.linkedin.com/pub/ivan-tkalin/10/381/503/"><i class="svg-icon large linkedin"></i></a>
+  </li>
+</ul>
+
+      </div>
+    </div>
+
+    <footer>
+  <hr />
+
+  <div class="container">
+
+    <p class="text-center text-muted">My blogging about ruby, javascript and everything related</p>
+    <p class="text-center text-muted">by</p>
+    <p class="text-center text-muted">Ivan Tkalin</p>
+
+  </div>
+
+  <br />
+
+</footer>
+
+
+    <script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'tkalincom'; // required: replace example with your forum shortname
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());
+</script>
+
+    <!-- *Google Analytics code*/ -->
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33991324-1']);
+  _gaq.push(['_setDomainName', 'tkalin.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  </body>
+</html>
