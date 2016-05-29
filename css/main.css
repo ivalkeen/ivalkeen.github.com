@@ -16,28 +16,31 @@ h2 {
   margin-top: 24px;
   margin-bottom: 24px; }
 
+p {
+  margin: 0 0 30px; }
+
 /**
  * Code formatting
  */
 pre,
 code {
   font-size: 14px;
-  line-height: 25.7142868041992px;
+  line-height: 22px;
   border: 1px solid #e8e8e8;
   border-radius: 3px;
-  background-color: #f4f4f4;
+  background-color: #fafafa;
   overflow-x: auto;
   white-space: pre-wrap; }
 
-code {
-  padding: 1px 5px; }
+pre > code {
+  border: 0;
+  padding-right: 0;
+  padding-left: 0; }
+pre.highlight {
+  background-color: #fafafa; }
 
-pre {
-  padding: 8px 12px; }
-  pre > code {
-    border: 0;
-    padding-right: 0;
-    padding-left: 0; }
+.highlighter-rouge {
+  padding-bottom: 7.5px; }
 
 .navbar-brand {
   font-size: 26px;
