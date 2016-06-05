@@ -5,8 +5,8 @@
     <description>Personal blog</description>
     <link>https://www.tkalin.com/</link>
     <atom:link href="https://www.tkalin.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 05 Jun 2016 12:39:52 +0200</pubDate>
-    <lastBuildDate>Sun, 05 Jun 2016 12:39:52 +0200</lastBuildDate>
+    <pubDate>Sun, 05 Jun 2016 12:54:08 +0200</pubDate>
+    <lastBuildDate>Sun, 05 Jun 2016 12:54:08 +0200</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -192,8 +192,8 @@ PictureTest#test_polymorphic_association_negation [/Users/ivan/code/rails_polymo
 &lt;p&gt;Which will just replace ‘AND’ condition in the SQL query to ‘OR’.&lt;/p&gt;
 </description>
         <pubDate>Sun, 24 Apr 2016 13:00:00 +0200</pubDate>
-        <link>https://www.tkalin.com/blog_posts/rails-bug-with-polymorphic-associations</link>
-        <guid isPermaLink="true">https://www.tkalin.com/blog_posts/rails-bug-with-polymorphic-associations</guid>
+        <link>https://www.tkalin.com/blog_posts/rails-bug-with-polymorphic-associations/</link>
+        <guid isPermaLink="true">https://www.tkalin.com/blog_posts/rails-bug-with-polymorphic-associations/</guid>
         
         <category>ruby</category>
         
@@ -290,8 +290,8 @@ window:&lt;/p&gt;
 &lt;p&gt;If you have any questions about plugin or suggestions on how to improve this guide, please feel free to comment&lt;/p&gt;
 </description>
         <pubDate>Sun, 10 May 2015 19:00:00 +0200</pubDate>
-        <link>https://www.tkalin.com/blog_posts/ide-like-go-to-declaration-in-vim</link>
-        <guid isPermaLink="true">https://www.tkalin.com/blog_posts/ide-like-go-to-declaration-in-vim</guid>
+        <link>https://www.tkalin.com/blog_posts/ide-like-go-to-declaration-in-vim/</link>
+        <guid isPermaLink="true">https://www.tkalin.com/blog_posts/ide-like-go-to-declaration-in-vim/</guid>
         
         <category>vim</category>
         
@@ -341,8 +341,8 @@ It means that if methods being mocked/stubbed are not actually implemented by th
 &lt;/ol&gt;
 </description>
         <pubDate>Sun, 26 Apr 2015 17:00:00 +0200</pubDate>
-        <link>https://www.tkalin.com/blog_posts/upgrading-to-rspec3</link>
-        <guid isPermaLink="true">https://www.tkalin.com/blog_posts/upgrading-to-rspec3</guid>
+        <link>https://www.tkalin.com/blog_posts/upgrading-to-rspec3/</link>
+        <guid isPermaLink="true">https://www.tkalin.com/blog_posts/upgrading-to-rspec3/</guid>
         
         <category>ruby</category>
         
@@ -377,8 +377,8 @@ It means that if methods being mocked/stubbed are not actually implemented by th
 
 </description>
         <pubDate>Thu, 27 Feb 2014 10:00:00 +0100</pubDate>
-        <link>https://www.tkalin.com/blog_posts/rails-4-disable-assets-caching-for-development-test-environments</link>
-        <guid isPermaLink="true">https://www.tkalin.com/blog_posts/rails-4-disable-assets-caching-for-development-test-environments</guid>
+        <link>https://www.tkalin.com/blog_posts/rails-4-disable-assets-caching-for-development-test-environments/</link>
+        <guid isPermaLink="true">https://www.tkalin.com/blog_posts/rails-4-disable-assets-caching-for-development-test-environments/</guid>
         
         <category>rails</category>
         
@@ -458,8 +458,8 @@ synchronous_commit = &#39;off&#39;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
 </description>
         <pubDate>Sun, 10 Nov 2013 21:00:00 +0100</pubDate>
-        <link>https://www.tkalin.com/blog_posts/quick-postgresql-server-optimization-for-development-or-integration-server</link>
-        <guid isPermaLink="true">https://www.tkalin.com/blog_posts/quick-postgresql-server-optimization-for-development-or-integration-server</guid>
+        <link>https://www.tkalin.com/blog_posts/quick-postgresql-server-optimization-for-development-or-integration-server/</link>
+        <guid isPermaLink="true">https://www.tkalin.com/blog_posts/quick-postgresql-server-optimization-for-development-or-integration-server/</guid>
         
         <category>postgres</category>
         
@@ -561,8 +561,8 @@ sudo rm /usr/lib/libgnome-keyring.so.0.2.0
 
 </description>
         <pubDate>Mon, 04 Nov 2013 10:00:00 +0100</pubDate>
-        <link>https://www.tkalin.com/blog_posts/installing-adobe-air-and-elance-tracker-on-ubuntu-13-10-saucy-salamander-64-bit</link>
-        <guid isPermaLink="true">https://www.tkalin.com/blog_posts/installing-adobe-air-and-elance-tracker-on-ubuntu-13-10-saucy-salamander-64-bit</guid>
+        <link>https://www.tkalin.com/blog_posts/installing-adobe-air-and-elance-tracker-on-ubuntu-13-10-saucy-salamander-64-bit/</link>
+        <guid isPermaLink="true">https://www.tkalin.com/blog_posts/installing-adobe-air-and-elance-tracker-on-ubuntu-13-10-saucy-salamander-64-bit/</guid>
         
         <category>ubuntu</category>
         
@@ -603,8 +603,8 @@ user3:pass3
 &lt;p&gt;Then restart nginx, open your site and you’ll see login/password prompt.&lt;/p&gt;
 </description>
         <pubDate>Mon, 30 Jul 2012 23:30:00 +0200</pubDate>
-        <link>https://www.tkalin.com/blog_posts/protecting-staging-testing-site-area</link>
-        <guid isPermaLink="true">https://www.tkalin.com/blog_posts/protecting-staging-testing-site-area</guid>
+        <link>https://www.tkalin.com/blog_posts/protecting-staging-testing-site-area/</link>
+        <guid isPermaLink="true">https://www.tkalin.com/blog_posts/protecting-staging-testing-site-area/</guid>
         
         <category>nginx</category>
         
@@ -626,8 +626,8 @@ user3:pass3
 &lt;p&gt;So basically I have &lt;code class=&quot;highlighter-rouge&quot;&gt;Item&lt;/code&gt; model, which has many &lt;code class=&quot;highlighter-rouge&quot;&gt;AttachedAsset&lt;/code&gt; models. &lt;code class=&quot;highlighter-rouge&quot;&gt;AttachedAsset&lt;/code&gt; model is used to store image with paperclip. All code in models and controller is very simple and found in paperclip’s HOWTOs. The only non-obvious part is &lt;code class=&quot;highlighter-rouge&quot;&gt;file_field_tag&lt;/code&gt; in the &lt;code class=&quot;highlighter-rouge&quot;&gt;new.html.haml&lt;/code&gt; template – it has tricky &lt;code class=&quot;highlighter-rouge&quot;&gt;name&lt;/code&gt; (to be handled as array of &lt;code class=&quot;highlighter-rouge&quot;&gt;asset&lt;/code&gt; inside &lt;code class=&quot;highlighter-rouge&quot;&gt;attached_assets_attributes&lt;/code&gt;) and &lt;code class=&quot;highlighter-rouge&quot;&gt;multiple&lt;/code&gt; attributes is set to &lt;code class=&quot;highlighter-rouge&quot;&gt;true&lt;/code&gt;.&lt;/p&gt;
 </description>
         <pubDate>Fri, 25 May 2012 21:00:00 +0200</pubDate>
-        <link>https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3-2-paperclip-html5-and-no-javascript</link>
-        <guid isPermaLink="true">https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3-2-paperclip-html5-and-no-javascript</guid>
+        <link>https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3-2-paperclip-html5-and-no-javascript/</link>
+        <guid isPermaLink="true">https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3-2-paperclip-html5-and-no-javascript/</guid>
         
         <category>rails</category>
         
@@ -693,8 +693,8 @@ end
 &lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: I’m passing url helpers’ names as symbols and evaluate them in shared example group (with &lt;code class=&quot;highlighter-rouge&quot;&gt;let&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;send&lt;/code&gt;), because they can’t be evaluated in ExampleGroup context.&lt;/p&gt;
 </description>
         <pubDate>Wed, 23 May 2012 17:00:00 +0200</pubDate>
-        <link>https://www.tkalin.com/blog_posts/testing-authorization-using-rspec-parametrized-shared-examples</link>
-        <guid isPermaLink="true">https://www.tkalin.com/blog_posts/testing-authorization-using-rspec-parametrized-shared-examples</guid>
+        <link>https://www.tkalin.com/blog_posts/testing-authorization-using-rspec-parametrized-shared-examples/</link>
+        <guid isPermaLink="true">https://www.tkalin.com/blog_posts/testing-authorization-using-rspec-parametrized-shared-examples/</guid>
         
         <category>rails</category>
         
@@ -805,8 +805,8 @@ StartupWMClass=CVIM
 &lt;/div&gt;
 </description>
         <pubDate>Mon, 23 Apr 2012 13:00:00 +0200</pubDate>
-        <link>https://www.tkalin.com/blog_posts/using-console-vim-as-vim-protocol-handler-in-ubuntu</link>
-        <guid isPermaLink="true">https://www.tkalin.com/blog_posts/using-console-vim-as-vim-protocol-handler-in-ubuntu</guid>
+        <link>https://www.tkalin.com/blog_posts/using-console-vim-as-vim-protocol-handler-in-ubuntu/</link>
+        <guid isPermaLink="true">https://www.tkalin.com/blog_posts/using-console-vim-as-vim-protocol-handler-in-ubuntu/</guid>
         
         <category>ubuntu</category>
         

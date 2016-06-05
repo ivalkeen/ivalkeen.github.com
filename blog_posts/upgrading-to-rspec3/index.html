@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width initial-scale=1">
+
+<title>Upgrading to RSpec 3.x</title>
+<meta name="description" content="Upgrading to RSpec 3.x">
+<meta name="keywords" content="ruby, rspec, rspec3, transpec">
+
+<link rel="stylesheet" href="/css/main.css">
+<link rel="canonical" href="https://www.tkalin.com/blog_posts/upgrading-to-rspec3/">
+<link rel="alternate" type="application/atom+xml" title="Ivan Tkalin" href="https://www.tkalin.com/feed.xml" />
+<link href="/assets/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+
+<!-- <script type="text/javascript">                                                     -->
+<!--     var host = "www.tkalin.com";                                                    -->
+<!--     if ((host == window.location.host) && (window.location.protocol != "https:")) { -->
+<!--       window.location.protocol = "https";                                           -->
+<!--     }                                                                               -->
+<!-- </script>                                                                           -->
+
+</head>
+
+
+  <body>
+    <nav class="navbar navbar-default navbar-static-top">
+
+  <div class="container">
+
+    <div class="col-sm-12">
+
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">Ivan Tkalin</a>
+      </div>
+
+      <div class="collapse navbar-collapse">
+
+        <ul class="nav navbar-nav navbar-left">
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <form class="navbar-form" action="https://www.google.com/search" method="get">
+              <div class="form-group">
+                <input type="hidden" name="as_sitesearch" value="www.tkalin.com">
+                <input class="form-control" type="text" name="as_q" placeholder="Search">
+              </div>
+            </form>
+          </li>
+          <li><a href="/feed.xml"><i class="svg-icon rss"></i></a></li>
+        </ul>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</nav>
+
+
+    <div class="container">
+      <div class="col-sm-8">
+        <header>
+  <h1>Upgrading to RSpec 3.x</h1>
+  <small class="text-muted">
+    <span class="glyphicon glyphicon-calendar"></span>
+    <span>Apr 26, 2015</span>
+    •
+    <span><a href="https://www.tkalin.com/blog_posts/upgrading-to-rspec3//#disqus_thread">No Comments</a></span>
+  </small>
+</header>
+
+<hr/>
+
+<article>
+  <p>This short article is TL;DR of the talk: <a href="https://www.youtube.com/watch?v=5D4UbNui3rE">RSpec 3 and why I expect(you).to care by Jon Rowe</a>.
+I picked 3 important recommendations out of this talk which I’m going to follow.</p>
+
+<h2 id="use-zero-monkey-patching-mode">1. Use zero monkey patching mode</h2>
+
+<p>This will completely disable all the monkey patching and will make RSpec less magical. Of course, it has a few consequences:</p>
+
+<ul>
+  <li>DSL will not be exposed globally, so <code class="highlighter-rouge">RSpec.describe</code> must be used instead of <code class="highlighter-rouge">describe</code> etc.</li>
+  <li><code class="highlighter-rouge">should</code> and <code class="highlighter-rouge">should_not</code> syntax will be disabled, so <code class="highlighter-rouge">expect()</code> syntax must be used.</li>
+</ul>
+
+<p>To enable zero monkey patching mode, just add this line to RSpec configuration:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">  <span class="n">config</span><span class="p">.</span><span class="nf">disable_monkey_pathing!</span></code></pre></figure>
+
+<h2 id="use-verified-doubles">2. Use verified doubles</h2>
+
+<p>This will enable checking that the contract of the mock corresponds to the contract of the real object.
+It means that if methods being mocked/stubbed are not actually implemented by the object behind test double, the test will fail with error.</p>
+
+<p>Once it’s enabled, <code class="highlighter-rouge">instance_double</code> should be used instead of <code class="highlighter-rouge">double</code> to create verified doubles. <code class="highlighter-rouge">allow()</code> and <code class="highlighter-rouge">expect()</code> methods for real objects just work.</p>
+
+<p>To enable verified doubles, just add this line to RSpec configuration:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby">  <span class="n">config</span><span class="p">.</span><span class="nf">verify_partial_doubles</span> <span class="o">=</span> <span class="kp">true</span></code></pre></figure>
+
+<p><strong>Note:</strong> this doesn’t play very well with <code class="highlighter-rouge">ActiveRecord::Base</code> models in Rails, because Rails loads columns dynamically, so don’t try to verify columns of rails models.</p>
+
+<h2 id="upgrading-from-rspec-2-to-3">3. Upgrading from RSpec 2 to 3:</h2>
+
+<p>Upgrade from RSpec 2 to RSpec 3 should be easy if you follow this simple guide:</p>
+
+<ol>
+  <li>Upgrade to latest version of RSpec 2.99 first and fix all deprecations</li>
+  <li>Use <a href="https://github.com/yujinakayama/transpec">transpec</a> to convert all existing specs to 3 syntax</li>
+</ol>
+
+  
+    <a href="/tag/ruby">ruby</a>
+  
+    <a href="/tag/rspec">rspec</a>
+  
+</article>
+
+<hr />
+
+<footer>
+  <div>
+    <!-- share buttons -->
+    <a href="https://twitter.com/share" class="twitter-share-button" data-via="ivalkeen">Tweet</a>
+    <div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+  </div>
+  <hr/>
+  <div id="disqus_thread"></div>
+</footer>
+
+<!-- twitter init -->
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+
+<!-- facebook init -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=1645955732290194";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'tkalincom'; // required: replace example with your forum shortname
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+      </div>
+      <div class="col-sm-3 col-sm-offset-1">
+        <div class="text-justify">
+  <img src="/assets/avatar.jpg" alt="Ivan Tkalin" class="img-circle" />
+</div>
+
+<hr />
+
+<p class="text-justify">
+  <small>
+    I'm <strong>Ivan Tkalin</strong>, a professional software developer, located in <strong>Berlin, Germany</strong>.
+  </small>
+</p>
+
+<p class="text-justify">
+  <small>
+    Currently I'm interested in everything related to <strong>Ruby</strong>, <strong>JavaScript</strong>, <strong>PostgreSQL</strong>, <strong>HTML/CSS</strong>, <strong>Linux</strong>, <strong>Git</strong> and <strong>Vim</strong>.
+  </small>
+</p>
+
+<p class="text-justify">
+  <small>
+    If you want to contact me, please <a href="mailto:itkalin@gmail.com">send me an email</a>
+  </small>
+</p>
+
+<p class="text-justify">
+  <small>
+    Feel free to follow me on <a href="http://twitter.com/ivalkeen">twitter</a> and <a href="http://github.com/ivalkeen">github</a>
+  </small>
+</p>
+
+<hr />
+
+<ul class='list-inline text-center'>
+  <li>
+    <a href="https://github.com/ivalkeen"><i class="svg-icon large github"></i></a>
+  </li>
+  <li>
+    <a href="https://stackoverflow.com/users/188975/ivalkeen"><i class="svg-icon large stackoverflow"></i></a>
+  </li>
+  <li>
+    <a href="https://twitter.com/ivalkeen"><i class="svg-icon large twitter"></i></a>
+  </li>
+  <li>
+    <a href="http://de.linkedin.com/pub/ivan-tkalin/10/381/503/"><i class="svg-icon large linkedin"></i></a>
+  </li>
+</ul>
+
+      </div>
+    </div>
+
+    <footer>
+  <hr />
+
+  <div class="container">
+    <p class="text-center text-muted"><small>(c) Ivan Tkalin</small></p>
+  </div>
+</footer>
+
+
+    <script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'tkalincom'; // required: replace example with your forum shortname
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());
+</script>
+
+    <!-- *Google Analytics code*/ -->
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33991324-1']);
+  _gaq.push(['_setDomainName', 'tkalin.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+  </body>
+</html>
