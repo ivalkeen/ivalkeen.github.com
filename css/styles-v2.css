@@ -142,8 +142,8 @@ time {
 }
 
 #container main section.post-nav ul {
-  margin: 0.5em 0;
-  padding: 0.5em 0 0;
+  margin: 1em 0;
+  padding: 1em 0 0;
   list-style: none;
   display: flex;
   justify-content: space-between;
@@ -407,4 +407,17 @@ footer {
 footer a {
   color: #333;
   text-decoration: none;
+}
+
+.comments-block {
+  border-top: 1px solid #f7f7f7;
+}
+
+#show-comments {
+  padding: 0.5em 1em;
+  margin: 1em 0;
+  background: none;
+  color: #666;
+  border-radius: 5px;
+  font-family: "Roboto Condensed", sans-serif;
 }
