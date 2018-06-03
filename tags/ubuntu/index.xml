@@ -14,10 +14,10 @@
     
     <item>
       <title>Installing Adobe Air and Elance Tracker on Ubuntu 13.10 (Saucy Salamander) 64 bit</title>
-      <link>https://www.tkalin.com/blog_posts/installing-adobe-air-and-elance-tracker-on-ubuntu-13.10-saucy-salamander-64-bit/</link>
+      <link>https://www.tkalin.com/blog_posts/installing-adobe-air-and-elance-tracker-on-ubuntu-13-10-saucy-salamander-64-bit/</link>
       <pubDate>Mon, 04 Nov 2013 09:00:00 +0000</pubDate>
       
-      <guid>https://www.tkalin.com/blog_posts/installing-adobe-air-and-elance-tracker-on-ubuntu-13.10-saucy-salamander-64-bit/</guid>
+      <guid>https://www.tkalin.com/blog_posts/installing-adobe-air-and-elance-tracker-on-ubuntu-13-10-saucy-salamander-64-bit/</guid>
       <description>Update: Following instructions also work for Ubuntu 14.04 LTS Trusty Tahr 64 bit.
 After upgrading to Ubuntu 13.10 (Saucy) 64 bits, I had troubles installing Adobe Air and Elance Tracker air application. None of the guides available online worked for me. The guide that I used to install it on Ubuntu 13.04 didn&amp;rsquo;t work either. I would be happy not to use this piece of crap by Adobe, but, unfortunately, Elance doesn&amp;rsquo;t want to build native tracker application for Linux, and I need it for my freelance work.</description>
     </item>

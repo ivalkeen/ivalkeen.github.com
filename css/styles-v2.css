@@ -151,6 +151,10 @@ time {
   font-size: 0.9em;
 }
 
+#container main section.post-nav ul li {
+    width: 50%;
+}
+
 #container main article pre {
   background-color: #ffffcc;
   overflow-x: auto;
