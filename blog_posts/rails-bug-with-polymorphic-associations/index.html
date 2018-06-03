@@ -1,0 +1,336 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Ivan Tkalin</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The HTML5 Herald" />
+  <meta name="author" content="Ivan Tkalin" />
+  <meta name="generator" content="Hugo 0.41" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Roboto+Condensed|Oswald" />
+  <link rel="stylesheet" type="text/css" href="/css/styles-v3.css" />
+  <link rel="alternate" type="application/atom+xml" title="Ivan Tkalin" href="/index.xml" />
+  <link href="/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+        <a href="/">Ivan Tkalin</a>
+      </h1>
+
+      <ul id="social-media">
+        
+        <li><a href="https://twitter.com/ivalkeen"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+         
+        <li><a href="https://www.linkedin.com/in/ivan-tkalin-50338110"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+         
+        <li><a href="https://github.com/ivalkeen"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a></li>
+           
+        <li><a href="https://instagram.com/itkalin.photography"><i class="fa fa-instagram fa-lg" aria-hidden="true"></i></a></li>
+        
+      </ul>
+
+      
+      <p class="tagline">I&rsquo;m a software engineer. I solve problems.</p>
+      
+    </header>
+
+    
+<nav>
+    <ul class="main">
+        
+        <li>
+            <a class="" href="/about/">
+            <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/posts/">
+            <i class="fa-li fa  fa-lg"></i><span>Posts</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/tags/">
+            <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Rails bug with polymorphic associations</h1>
+
+    
+        <aside>
+    <time class="post-date" datetime="2016-04-24T11:00:00Z">Apr 24, 2016</time>
+    &nbsp;|&nbsp;
+    5 min read
+    
+    
+        &nbsp;|&nbsp;
+        
+        
+        <a href="/tags/ruby/">#ruby</a>
+        
+        , 
+        <a href="/tags/rails/">#rails</a>
+        
+    
+</aside>
+
+    
+
+    
+
+<p>In general, I don&rsquo;t like using <a href="http://guides.rubyonrails.org/association_basics.html#polymorphic-associations">polymorphic associations</a>,
+because of inability to have a database-level integrity control and trickier eager loading.
+However, sometimes they look like a natural choice for certain cases in Ruby on Rails applications.</p>
+
+<p>Recently, I faced a problem, which turned out to be a bug in how Rails handles negations with polymorphic associations.
+It took me some time to figure out what exactly was wrong, so I decided to share my experience here for future reference (mostly for myself).</p>
+
+<h2 id="demo-project">Demo project</h2>
+
+<p>I&rsquo;ve created a simple new Rails 5 application to demonstrate it (<a href="https://github.com/ivalkeen/rails_polymorphic_bug">here</a>).
+I&rsquo;ve borrowed models schema from <a href="http://guides.rubyonrails.org/association_basics.html#polymorphic-associations">rails guides</a>
+and wrote some tests which should help me to explain what the problem is about.
+In our simple app, we have 3 models (<a href="https://github.com/ivalkeen/rails_polymorphic_bug/blob/master/app/models/picture.rb">Picture</a>,
+<a href="https://github.com/ivalkeen/rails_polymorphic_bug/blob/master/app/models/employee.rb">Employee</a>
+and <a href="https://github.com/ivalkeen/rails_polymorphic_bug/blob/master/app/models/product.rb">Product</a>):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># app/models/picture.rb</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Picture</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ActiveRecord</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Base</span>
+  belongs_to <span style="color:#e6db74">:imageable</span>, <span style="color:#e6db74">polymorphic</span>: <span style="color:#66d9ef">true</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#75715e"># app/models/employee.rb</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Employee</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ActiveRecord</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Base</span>
+  has_many <span style="color:#e6db74">:pictures</span>, <span style="color:#e6db74">as</span>: <span style="color:#e6db74">:imageable</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#75715e"># app/models/product.rb</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Product</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ActiveRecord</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Base</span>
+  has_many <span style="color:#e6db74">:pictures</span>, <span style="color:#e6db74">as</span>: <span style="color:#e6db74">:imageable</span>
+<span style="color:#66d9ef">end</span></code></pre></div>
+<p><strong>Picture</strong> has a polymorphic association, which means that it has a property <em>&ldquo;imageable&rdquo;</em> which may hold a reference to either <strong>Employee</strong> or <strong>Product</strong>.</p>
+
+<p>Here is how the <a href="https://github.com/ivalkeen/rails_polymorphic_bug/tree/master/db/migrate">migrations</a> look like:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CreateEmployees</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ActiveRecord</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Migration</span><span style="color:#f92672">[</span><span style="color:#ae81ff">5</span><span style="color:#f92672">.</span><span style="color:#ae81ff">0</span><span style="color:#f92672">]</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">change</span>
+    create_table <span style="color:#e6db74">:employees</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>t<span style="color:#f92672">|</span>
+      t<span style="color:#f92672">.</span>string <span style="color:#e6db74">:name</span>
+      t<span style="color:#f92672">.</span>timestamps
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CreateProducts</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ActiveRecord</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Migration</span><span style="color:#f92672">[</span><span style="color:#ae81ff">5</span><span style="color:#f92672">.</span><span style="color:#ae81ff">0</span><span style="color:#f92672">]</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">change</span>
+    create_table <span style="color:#e6db74">:products</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>t<span style="color:#f92672">|</span>
+      t<span style="color:#f92672">.</span>string <span style="color:#e6db74">:name</span>
+      t<span style="color:#f92672">.</span>timestamps
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CreatePictures</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ActiveRecord</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Migration</span><span style="color:#f92672">[</span><span style="color:#ae81ff">5</span><span style="color:#f92672">.</span><span style="color:#ae81ff">0</span><span style="color:#f92672">]</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">change</span>
+    create_table <span style="color:#e6db74">:pictures</span> <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>t<span style="color:#f92672">|</span>
+      t<span style="color:#f92672">.</span>string <span style="color:#e6db74">:name</span>
+      t<span style="color:#f92672">.</span>references <span style="color:#e6db74">:imageable</span>, <span style="color:#e6db74">polymorphic</span>: <span style="color:#66d9ef">true</span>, <span style="color:#e6db74">index</span>: <span style="color:#66d9ef">true</span>
+      t<span style="color:#f92672">.</span>timestamps <span style="color:#e6db74">null</span>: <span style="color:#66d9ef">false</span>
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span></code></pre></div>
+<h2 id="reproducing-a-problem-in-a-test">Reproducing a problem in a test</h2>
+
+<p>Everything looks pretty straightforward so far. Now to see the problem, let&rsquo;s write a test (the source code is <a href="https://github.com/ivalkeen/rails_polymorphic_bug/blob/master/test/models/picture_test.rb">here</a>):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">require <span style="color:#e6db74">&#39;test_helper&#39;</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PictureTest</span> <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">ActiveSupport</span><span style="color:#f92672">::</span><span style="color:#66d9ef">TestCase</span>
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup</span>
+    <span style="color:#75715e"># Create 2 users: Ivan and Michael</span>
+    @ivan <span style="color:#f92672">=</span> <span style="color:#66d9ef">Employee</span><span style="color:#f92672">.</span>create(name: <span style="color:#e6db74">&#39;Ivan&#39;</span>)
+    @michael <span style="color:#f92672">=</span> <span style="color:#66d9ef">Employee</span><span style="color:#f92672">.</span>create(name: <span style="color:#e6db74">&#39;Michael&#39;</span>)
+    <span style="color:#75715e"># Create 2 products: OS X and Windows</span>
+    @osx <span style="color:#f92672">=</span> <span style="color:#66d9ef">Product</span><span style="color:#f92672">.</span>create(name: <span style="color:#e6db74">&#39;OS X&#39;</span>)
+    @windows <span style="color:#f92672">=</span> <span style="color:#66d9ef">Product</span><span style="color:#f92672">.</span>create(name: <span style="color:#e6db74">&#39;Windows&#39;</span>)
+    <span style="color:#75715e"># Create a picture, which has a reference to employee Ivan</span>
+    @ivan_avatar <span style="color:#f92672">=</span> <span style="color:#66d9ef">Picture</span>
+      <span style="color:#f92672">.</span>create(name: <span style="color:#e6db74">&#34;Ivan&#39;s avatar&#34;</span>, <span style="color:#e6db74">imageable</span>: @ivan)
+    <span style="color:#75715e"># Create a picture, which has a reference to employee Michael</span>
+    @michael_avatar <span style="color:#f92672">=</span> <span style="color:#66d9ef">Picture</span>
+      <span style="color:#f92672">.</span>create(name: <span style="color:#e6db74">&#34;Michael&#39;s avatar&#34;</span>, <span style="color:#e6db74">imageable</span>: @michael)
+    <span style="color:#75715e"># Create a picture, which has a reference to product OS X</span>
+    @osx_logo <span style="color:#f92672">=</span> <span style="color:#66d9ef">Picture</span>
+      <span style="color:#f92672">.</span>create(name: <span style="color:#e6db74">&#39;OS X Logo&#39;</span>, <span style="color:#e6db74">imageable</span>: @osx)
+    <span style="color:#75715e"># Create a picture, which has a reference to product Windows</span>
+    @windows_logo <span style="color:#f92672">=</span> <span style="color:#66d9ef">Picture</span>
+      <span style="color:#f92672">.</span>create(name: <span style="color:#e6db74">&#39;Windows Logo&#39;</span>, <span style="color:#e6db74">imageable</span>: @windows)
+  <span style="color:#66d9ef">end</span>
+
+  test <span style="color:#e6db74">&#39;polymorphic association negation&#39;</span> <span style="color:#66d9ef">do</span>
+    images <span style="color:#f92672">=</span> <span style="color:#66d9ef">Picture</span><span style="color:#f92672">.</span>where<span style="color:#f92672">.</span>not(<span style="color:#e6db74">imageable</span>: @ivan)<span style="color:#f92672">.</span>order(<span style="color:#e6db74">:name</span>)
+    <span style="color:#75715e"># all images except Ivan&#39;s avatar should be found here</span>
+    assert_equal images, <span style="color:#f92672">[</span>@michael_avatar, @osx_logo, @windows_logo<span style="color:#f92672">]</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span></code></pre></div>
+<p>So, what exactly is going on here? I&rsquo;ve added comments to almost every line, so it should be clear enough what this test is supposed to test. We have 2 users (Ivan and Michael) and 2 products (OS X and Windows). Every user has an avatar (which is represented by the Picture objects and holds reference to user). Every product has a logo (which is also represented by Picture object and holds a reference to product).</p>
+
+<p>In the test itself, we are making query:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">images <span style="color:#f92672">=</span> <span style="color:#66d9ef">Picture</span><span style="color:#f92672">.</span>where<span style="color:#f92672">.</span>not(<span style="color:#e6db74">imageable</span>: @ivan)<span style="color:#f92672">.</span>order(<span style="color:#e6db74">:name</span>)</code></pre></div>
+<p>We can read it as <em>&ldquo;Find all pictures which don&rsquo;t reference to Ivan&rdquo;</em>. So our expectation is:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">assert_equal images, <span style="color:#f92672">[</span>@michael_avatar, @osx_logo, @windows_logo<span style="color:#f92672">]</span></code></pre></div>
+<p>which means that we expect all the images to be found except one representing Ivan&rsquo;s avatar.</p>
+
+<p>But when we run this test, we get this error:</p>
+
+<pre><code>Failure:
+PictureTest#test_polymorphic_association_negation [/Users/ivan/code/rails_polymorphic_bug/test/models/picture_test.rb:22]:
+--— expected
++++ actual
+@@ -1 +1 @@
+-#&lt;ActiveRecord::Relation [#&lt;Picture id: 4, name: &quot;Windows Logo&quot;, imageable_type: &quot;Product&quot;, imageable_id: 2, created_at: &quot;2016–04–24 18:45:51&quot;, updated_at: &quot;2016–04–24 18:45:51&quot;&gt;]&gt;
++[#&lt;Picture id: 2, name: &quot;Michael's avatar&quot;, imageable_type: &quot;Employee&quot;, imageable_id: 2, created_at: &quot;2016–04–24 18:45:51&quot;, updated_at: &quot;2016–04–24 18:45:51&quot;&gt;, #&lt;Picture id: 3, name: &quot;OS X Logo&quot;, imageable_type: &quot;Product&quot;, imageable_id: 1, created_at: &quot;2016–04–24 18:45:51&quot;, updated_at: &quot;2016–04–24 18:45:51&quot;&gt;, #&lt;Picture id: 4, name: &quot;Windows Logo&quot;, imageable_type: &quot;Product&quot;, imageable_id: 2, created_at: &quot;2016–04–24 18:45:51&quot;, updated_at: &quot;2016–04–24 18:45:51&quot;&gt;]
+</code></pre>
+
+<p>It looks like only &ldquo;Windows Logo&rdquo; was returned! But where are &ldquo;OS X Logo&rdquo; and &ldquo;Michael&rsquo;s avatar&rdquo;?</p>
+
+<h2 id="diagnosing-problem">Diagnosing problem</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">images <span style="color:#f92672">=</span> <span style="color:#66d9ef">Picture</span><span style="color:#f92672">.</span>where<span style="color:#f92672">.</span>not(<span style="color:#e6db74">imageable</span>: @ivan)<span style="color:#f92672">.</span>order(<span style="color:#e6db74">:name</span>)
+puts images<span style="color:#f92672">.</span>to_sql</code></pre></div>
+<p>To understand, why only one picture was returned (while we were expecting 3), we can check the SQL query generated to perform the search:</p>
+
+<p>Here is what we get (with some formatting applied):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#34;pictures&#34;</span>.<span style="color:#f92672">*</span>
+<span style="color:#66d9ef">FROM</span> <span style="color:#e6db74">&#34;pictures&#34;</span>
+<span style="color:#66d9ef">WHERE</span> (<span style="color:#e6db74">&#34;pictures&#34;</span>.<span style="color:#e6db74">&#34;imageable_type&#34;</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;Employee&#39;</span>)
+  <span style="color:#66d9ef">AND</span> (<span style="color:#e6db74">&#34;pictures&#34;</span>.<span style="color:#e6db74">&#34;imageable_id&#34;</span> <span style="color:#f92672">!=</span> <span style="color:#ae81ff">1</span>)
+<span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span> <span style="color:#e6db74">&#34;pictures&#34;</span>.<span style="color:#e6db74">&#34;name&#34;</span> <span style="color:#66d9ef">ASC</span></code></pre></div>
+<p>As we can see, this query only fetches pictures where both conditions are met:</p>
+
+<ol>
+<li><em>imageable_type</em> is not &ldquo;Employee&rdquo;</li>
+<li><em>imageable_id</em> is not &ldquo;1&rdquo;</li>
+</ol>
+
+<p>So pictures referencing any object with type &lsquo;Employee&rsquo;, as well as any picture referencing any object with id&rsquo;1&rsquo;, will not match!</p>
+
+<p>Thus, Michael&rsquo;s avatar was not found, because it holds a reference to Michael, which has type &lsquo;Employee&rsquo;. And &lsquo;OS X Logo&rsquo; was not found, because it holds a reference to &lsquo;OS X&rsquo;, which has id &lsquo;1&rsquo;. So only &lsquo;Windows Logo&rsquo; was found, because it references &lsquo;Product&rsquo; with id &lsquo;2&rsquo;.</p>
+
+<p>It clearly looks like a bug. There is an issue on Rails&rsquo; <a href="https://github.com/rails/rails/issues/16983">issue</a> tracker and even a <a href="https://github.com/rails/rails/pull/17010">pull request</a> which fixes it.</p>
+
+<h2 id="solution">Solution</h2>
+
+<p>Today (as of April 24th 2016), this bug is still not fixed, despite the fact that the pull request to fix it was created in September 2014. So until it&rsquo;s merged (if ever), we need to solve that somehow.</p>
+
+<p>The most obvious solution that I came up with was to just build the query manually, like <a href="https://github.com/ivalkeen/rails_polymorphic_bug/blob/master/test/models/picture_test.rb#L25">this</a>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">images <span style="color:#f92672">=</span> <span style="color:#66d9ef">Picture</span>
+ <span style="color:#f92672">.</span>where(<span style="color:#e6db74">&#34;imageable_type &lt;&gt; ? or imageable_id &lt;&gt; ?&#34;</span>,
+   @ivan<span style="color:#f92672">.</span>class<span style="color:#f92672">.</span>name, @ivan<span style="color:#f92672">.</span>id)
+ <span style="color:#f92672">.</span>order(<span style="color:#e6db74">:name</span>)</code></pre></div>
+<p>Which will just replace &lsquo;AND&rsquo; condition in the SQL query to &lsquo;OR&rsquo;.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://www.tkalin.com/blog_posts/ide-like-go-to-declaration-in-vim/"><i class="fa fa-chevron-circle-left"></i> IDE-like &#34;Go to Declaration&#34; in Vim</a>
+        </li>
+        
+        
+    </ul>
+</section>
+    
+        <section class="comments-block">
+  <button id="show-comments" style="display: none;">Show Comments</button>
+</section>
+
+<section id="disqus_thread"></section>
+
+<script>
+      (function () {
+            
+            
+            if (window.location.hostname == "localhost")
+                  return;
+
+            var disqus_loaded = false;
+            var disqus_shortname = 'tkalincom';
+            var disqus_button = document.getElementById("show-comments");
+
+            disqus_button.style.display = "";
+            disqus_button.addEventListener("click", disqus, false);
+
+            function disqus() {
+
+                  if (!disqus_loaded) {
+                        disqus_loaded = true;
+
+                        var e = document.createElement("script");
+                        e.type = "text/javascript";
+                        e.async = true;
+                        e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+                        (document.getElementsByTagName("head")[0] ||
+                              document.getElementsByTagName("body")[0])
+                        .appendChild(e);
+
+                        
+                        document.getElementById("show-comments").style.display = "none";
+                  }
+            }
+
+            
+            var hash = window.location.hash.substr(1);
+            if (hash.length > 8) {
+                  if (hash.substring(0, 8) == "comment-") {
+                        disqus();
+                  }
+            }
+
+            
+            if (/bot|google|baidu|bing|msn|duckduckgo|slurp|yandex/i.test(navigator.userAgent)) {
+                  disqus();
+            }
+      })();
+</script>
+
+    
+
+
+
+
+
+</main>
+    <footer>
+      <p>
+        © Ivan Tkalin
+            
+            |
+            <a href="index.xml">Subscribe</a>
+      </p>
+    </footer>
+</div>
+<script src="/js/scripts.js"></script>
+</body>
+
+</html>

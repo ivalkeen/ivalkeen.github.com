@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ctags on Ivan Tkalin</title>
+    <link>https://www.tkalin.com/tags/ctags/</link>
+    <description>Recent content in Ctags on Ivan Tkalin</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© Ivan Tkalin</copyright>
+    <lastBuildDate>Sun, 10 May 2015 17:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.tkalin.com/tags/ctags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>IDE-like &#34;Go to Declaration&#34; in Vim</title>
+      <link>https://www.tkalin.com/blog_posts/ide-like-go-to-declaration-in-vim/</link>
+      <pubDate>Sun, 10 May 2015 17:00:00 +0000</pubDate>
+      
+      <guid>https://www.tkalin.com/blog_posts/ide-like-go-to-declaration-in-vim/</guid>
+      <description>I always wanted &amp;lsquo;Go to declaration&amp;rsquo; feature in Vim with fuzzy-search, like in many modern IDEs. Of course, Vim has a built-in support of tags jumping, but for some programming languages, like Ruby (when you may have dozens of classes named Base), locating and picking the right declaration may be painful. I didn&amp;rsquo;t find any existing solutions, so I wrote a small plugin for that.
+Here is a demo showing how this plugin works for Ruby file, but it&amp;rsquo;s not limited to Ruby.</description>
+    </item>
+    
+  </channel>
+</rss>

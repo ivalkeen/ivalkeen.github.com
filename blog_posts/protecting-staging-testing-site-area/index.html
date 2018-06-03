@@ -1,0 +1,217 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Ivan Tkalin</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The HTML5 Herald" />
+  <meta name="author" content="Ivan Tkalin" />
+  <meta name="generator" content="Hugo 0.41" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Roboto+Condensed|Oswald" />
+  <link rel="stylesheet" type="text/css" href="/css/styles-v3.css" />
+  <link rel="alternate" type="application/atom+xml" title="Ivan Tkalin" href="/index.xml" />
+  <link href="/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+        <a href="/">Ivan Tkalin</a>
+      </h1>
+
+      <ul id="social-media">
+        
+        <li><a href="https://twitter.com/ivalkeen"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+         
+        <li><a href="https://www.linkedin.com/in/ivan-tkalin-50338110"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+         
+        <li><a href="https://github.com/ivalkeen"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a></li>
+           
+        <li><a href="https://instagram.com/itkalin.photography"><i class="fa fa-instagram fa-lg" aria-hidden="true"></i></a></li>
+        
+      </ul>
+
+      
+      <p class="tagline">I&rsquo;m a software engineer. I solve problems.</p>
+      
+    </header>
+
+    
+<nav>
+    <ul class="main">
+        
+        <li>
+            <a class="" href="/about/">
+            <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/posts/">
+            <i class="fa-li fa  fa-lg"></i><span>Posts</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/tags/">
+            <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Protecting staging/testing site area</h1>
+
+    
+        <aside>
+    <time class="post-date" datetime="2012-07-30T21:30:00Z">Jul 30, 2012</time>
+    &nbsp;|&nbsp;
+    1 min read
+    
+    
+        &nbsp;|&nbsp;
+        
+        
+        <a href="/tags/nginx/">#nginx</a>
+        
+        , 
+        <a href="/tags/rails/">#rails</a>
+        
+    
+</aside>
+
+    
+
+    <p>It seems, that the easiest way to protect staging/testing version of the (rails) application from search engines and undesired users is using HTTP Basic Authentication. Configuring it for nginx is very easy and well documented.</p>
+
+<p>First, enable HTTP Basic Authentication and specify passwords file location. To do this, add these lines to the site&rsquo;s server config:</p>
+
+<pre><code>auth_basic &quot;Testing Zone&quot;;
+auth_basic_user_file /var/www/my_app/current/shared/config/.htpasswd;
+</code></pre>
+
+<p>Passwords file, specified in <code>auth_basic_user_file</code> directive, should store users and <strong>encrypted</strong> passwords in the following format:</p>
+
+<pre><code>user:pass
+user2:pass2:comment
+user3:pass3
+</code></pre>
+
+<p>To encrypt passwords using MD5, <code>htpasswd</code> (goes with apache) or <code>openssl</code> tools can be used:</p>
+
+<pre><code>openssl passwd -1 user_name
+</code></pre>
+
+<p>Then create <code>/var/www/my_app/current/shared/config/.htpasswd</code> file with the user name and encrypted password:</p>
+
+<pre><code>user_name:$1$YSZFGvi9$BjAEmoG/a//a0UkNyzjMC/
+</code></pre>
+
+<p>Then restart nginx, open your site and you&rsquo;ll see login/password prompt.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3-2-paperclip-html5-and-no-javascript/"><i class="fa fa-chevron-circle-left"></i> Multiple file upload with Rails 3.2, paperclip, html5 and no javascript</a>
+        </li>
+        
+        
+        <li>
+            <a href="https://www.tkalin.com/blog_posts/installing-adobe-air-and-elance-tracker-on-ubuntu-13-10-saucy-salamander-64-bit/">Installing Adobe Air and Elance Tracker on Ubuntu 13.10 (Saucy Salamander) 64 bit <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+    
+        <section class="comments-block">
+  <button id="show-comments" style="display: none;">Show Comments</button>
+</section>
+
+<section id="disqus_thread"></section>
+
+<script>
+      (function () {
+            
+            
+            if (window.location.hostname == "localhost")
+                  return;
+
+            var disqus_loaded = false;
+            var disqus_shortname = 'tkalincom';
+            var disqus_button = document.getElementById("show-comments");
+
+            disqus_button.style.display = "";
+            disqus_button.addEventListener("click", disqus, false);
+
+            function disqus() {
+
+                  if (!disqus_loaded) {
+                        disqus_loaded = true;
+
+                        var e = document.createElement("script");
+                        e.type = "text/javascript";
+                        e.async = true;
+                        e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+                        (document.getElementsByTagName("head")[0] ||
+                              document.getElementsByTagName("body")[0])
+                        .appendChild(e);
+
+                        
+                        document.getElementById("show-comments").style.display = "none";
+                  }
+            }
+
+            
+            var hash = window.location.hash.substr(1);
+            if (hash.length > 8) {
+                  if (hash.substring(0, 8) == "comment-") {
+                        disqus();
+                  }
+            }
+
+            
+            if (/bot|google|baidu|bing|msn|duckduckgo|slurp|yandex/i.test(navigator.userAgent)) {
+                  disqus();
+            }
+      })();
+</script>
+
+    
+
+
+
+
+
+</main>
+    <footer>
+      <p>
+        © Ivan Tkalin
+            
+            |
+            <a href="index.xml">Subscribe</a>
+      </p>
+    </footer>
+</div>
+<script src="/js/scripts.js"></script>
+</body>
+
+</html>

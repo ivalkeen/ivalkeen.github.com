@@ -1,0 +1,257 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Ivan Tkalin</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The HTML5 Herald" />
+  <meta name="author" content="Ivan Tkalin" />
+  <meta name="generator" content="Hugo 0.41" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Roboto+Condensed|Oswald" />
+  <link rel="stylesheet" type="text/css" href="/css/styles-v3.css" />
+  <link rel="alternate" type="application/atom+xml" title="Ivan Tkalin" href="/index.xml" />
+  <link href="/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+        <a href="/">Ivan Tkalin</a>
+      </h1>
+
+      <ul id="social-media">
+        
+        <li><a href="https://twitter.com/ivalkeen"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+         
+        <li><a href="https://www.linkedin.com/in/ivan-tkalin-50338110"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+         
+        <li><a href="https://github.com/ivalkeen"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a></li>
+           
+        <li><a href="https://instagram.com/itkalin.photography"><i class="fa fa-instagram fa-lg" aria-hidden="true"></i></a></li>
+        
+      </ul>
+
+      
+      <p class="tagline">I&rsquo;m a software engineer. I solve problems.</p>
+      
+    </header>
+
+    
+<nav>
+    <ul class="main">
+        
+        <li>
+            <a class="" href="/about/">
+            <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/posts/">
+            <i class="fa-li fa  fa-lg"></i><span>Posts</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/tags/">
+            <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>Quick PostgreSQL server optimization for development (or integration server)</h1>
+
+    
+        <aside>
+    <time class="post-date" datetime="2013-11-10T20:00:00Z">Nov 10, 2013</time>
+    &nbsp;|&nbsp;
+    3 min read
+    
+    
+        &nbsp;|&nbsp;
+        
+        
+        <a href="/tags/postgres/">#postgres</a>
+        
+        , 
+        <a href="/tags/rails/">#rails</a>
+        
+    
+</aside>
+
+    
+
+    
+
+<h2 id="tl-dr">TL;DR</h2>
+
+<p>I&rsquo;ve made RSpec test suite for my Ruby on Rails application 18% faster by following a <a href="http://www.postgresql.org/docs/current/static/non-durability.html" title="Non-durable settings">Non-durable PostgreSQL configuration</a> guide.</p>
+
+<h2 id="intro">Intro</h2>
+
+<p>When I&rsquo;m developing (usually <a href="http://rubyonrails.org/" title="Ruby on Rails">Ruby on Rails</a>) applications using <a href="http://www.postgresql.org/" title="PostgreSQL">PostgreSQL</a> database server for persistence, I don&rsquo;t need high durability of my development database (or integration server). What I care the most is it&rsquo;s speed. I realize, however, that database server, probably, is not the bottle neck of the typical application test suite.</p>
+
+<p>Here I show how switching few options in the PostgreSQL config file increased performance of the test suite on my development machine (by reducing durability).</p>
+
+<p><strong>Disclaimer</strong>: I&rsquo;m not performance testing ninja and all my performance tests are very subjective.
+I test only what I care the most &ndash; execution time of the test suite for my current Ruby on Rails application.</p>
+
+<h2 id="environment">Environment</h2>
+
+<p>Hardware: Intel i7-3720QM CPU @ 2.60GHz, 16 Gb RAM
+OS: Ubuntu 12.04.3 LTS
+Software: Ruby on Rails 3.2.15, Ruby 2.0.0p247, Postgres 9.2.5</p>
+
+<h2 id="about-the-application">About the application</h2>
+
+<p>I have a monolithic Ruby on Rails application, with <sup>18064</sup>&frasl;<sub>19132</sub> (code/test) lines of code, with test suite of 1977 RSpec examples, some of which are javascript-enabled feature specs. I&rsquo;m using <a href="https://github.com/bmabey/database_cleaner" title="database_cleaner">database_cleaner</a> gem for cleaning database between tests, with <code>transaction</code> strategy for non-javascript specs and <code>truncation</code> strategy for javascript specs. I&rsquo;m running my test suite with wonderful <a href="https://github.com/grosser/parallel_tests" title="parallel_tests">parallel_tests</a> gem.</p>
+
+<h2 id="default-postgresql-9-2-5-configuration">Default PostgreSQL 9.2.5 configuration</h2>
+
+<p>Here are results of running full test suite on the clean PostgreSQL installation:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">(</span> bin/stubs/parallel_rspec spec; <span style="color:#f92672">)</span>  <span style="color:#ae81ff">1002</span>.48s user <span style="color:#ae81ff">51</span>.83s system <span style="color:#ae81ff">359</span>% cpu <span style="color:#ae81ff">4</span>:53.35 total
+<span style="color:#f92672">(</span> bin/stubs/parallel_rspec spec; <span style="color:#f92672">)</span>  <span style="color:#ae81ff">1006</span>.46s user <span style="color:#ae81ff">54</span>.12s system <span style="color:#ae81ff">360</span>% cpu <span style="color:#ae81ff">4</span>:54.02 total
+<span style="color:#f92672">(</span> bin/stubs/parallel_rspec spec; <span style="color:#f92672">)</span>  <span style="color:#ae81ff">1004</span>.78s user <span style="color:#ae81ff">54</span>.74s system <span style="color:#ae81ff">356</span>% cpu <span style="color:#ae81ff">4</span>:57.18 total</code></pre></div>
+<p>Or about 295 seconds in average.</p>
+
+<h2 id="decreasing-durability">Decreasing durability</h2>
+
+<p>According to the official <a href="http://www.postgresql.org/docs/current/static/non-durability.html" title="Non-durable configuration guide">Non-durable configuration guide</a>, I modified my <code>/etc/postgresql/9.2/main/postgresql.conf</code> in the following way:</p>
+
+<pre><code># Turn off fsync; there is no need to flush data to disk.
+fsync = 'off'
+
+# Turn off full_page_writes;
+# there is no need to guard against partial page writes.
+full_page_writes = 'off'
+
+# Increase checkpoint_segments and checkpoint_timeout ;
+# this reduces the frequency of checkpoints,
+# but increases the storage requirements of /pg_xlog.
+checkpoint_segments = '100'
+checkpoint_timeout = '45min'
+
+# Turn off synchronous_commit;
+# there might be no need to write the WAL to disk on every commit.
+# This setting does risk transaction loss (though not data corruption)
+# in case of a crash of the database alone.
+synchronous_commit = 'off'
+</code></pre>
+
+<h2 id="results">Results</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">(</span> bin/stubs/parallel_rspec spec; <span style="color:#f92672">)</span>  <span style="color:#ae81ff">1134</span>.99s user <span style="color:#ae81ff">69</span>.70s system <span style="color:#ae81ff">505</span>% cpu <span style="color:#ae81ff">3</span>:58.12 total
+<span style="color:#f92672">(</span> bin/stubs/parallel_rspec spec; <span style="color:#f92672">)</span>  <span style="color:#ae81ff">1144</span>.00s user <span style="color:#ae81ff">68</span>.01s system <span style="color:#ae81ff">492</span>% cpu <span style="color:#ae81ff">4</span>:05.93 total
+<span style="color:#f92672">(</span> bin/stubs/parallel_rspec spec; <span style="color:#f92672">)</span>  <span style="color:#ae81ff">1145</span>.39s user <span style="color:#ae81ff">68</span>.29s system <span style="color:#ae81ff">493</span>% cpu <span style="color:#ae81ff">4</span>:05.83 total</code></pre></div>
+<p>Or about 243 seconds in average, with more intensive CPU usage.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>As we can see, very simple configuration change made execution of my test suite ~52 seconds (or ~18%) faster, which is pretty nice, I think.</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://www.tkalin.com/blog_posts/installing-adobe-air-and-elance-tracker-on-ubuntu-13-10-saucy-salamander-64-bit/"><i class="fa fa-chevron-circle-left"></i> Installing Adobe Air and Elance Tracker on Ubuntu 13.10 (Saucy Salamander) 64 bit</a>
+        </li>
+        
+        
+        <li>
+            <a href="https://www.tkalin.com/blog_posts/rails-4-disable-assets-caching-for-development-test-environments/">Rails 4: Disable assets caching for development/test environments <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+    
+        <section class="comments-block">
+  <button id="show-comments" style="display: none;">Show Comments</button>
+</section>
+
+<section id="disqus_thread"></section>
+
+<script>
+      (function () {
+            
+            
+            if (window.location.hostname == "localhost")
+                  return;
+
+            var disqus_loaded = false;
+            var disqus_shortname = 'tkalincom';
+            var disqus_button = document.getElementById("show-comments");
+
+            disqus_button.style.display = "";
+            disqus_button.addEventListener("click", disqus, false);
+
+            function disqus() {
+
+                  if (!disqus_loaded) {
+                        disqus_loaded = true;
+
+                        var e = document.createElement("script");
+                        e.type = "text/javascript";
+                        e.async = true;
+                        e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+                        (document.getElementsByTagName("head")[0] ||
+                              document.getElementsByTagName("body")[0])
+                        .appendChild(e);
+
+                        
+                        document.getElementById("show-comments").style.display = "none";
+                  }
+            }
+
+            
+            var hash = window.location.hash.substr(1);
+            if (hash.length > 8) {
+                  if (hash.substring(0, 8) == "comment-") {
+                        disqus();
+                  }
+            }
+
+            
+            if (/bot|google|baidu|bing|msn|duckduckgo|slurp|yandex/i.test(navigator.userAgent)) {
+                  disqus();
+            }
+      })();
+</script>
+
+    
+
+
+
+
+
+</main>
+    <footer>
+      <p>
+        © Ivan Tkalin
+            
+            |
+            <a href="index.xml">Subscribe</a>
+      </p>
+    </footer>
+</div>
+<script src="/js/scripts.js"></script>
+</body>
+
+</html>

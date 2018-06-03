@@ -1,0 +1,265 @@
+<!doctype html>
+
+<html lang="en-us">
+
+<head>
+  <title>Ivan Tkalin</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The HTML5 Herald" />
+  <meta name="author" content="Ivan Tkalin" />
+  <meta name="generator" content="Hugo 0.41" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Roboto+Condensed|Oswald" />
+  <link rel="stylesheet" type="text/css" href="/css/styles-v3.css" />
+  <link rel="alternate" type="application/atom+xml" title="Ivan Tkalin" href="/index.xml" />
+  <link href="/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+</head>
+
+<body>
+  <div id="container">
+    <header>
+      <h1>
+        <a href="/">Ivan Tkalin</a>
+      </h1>
+
+      <ul id="social-media">
+        
+        <li><a href="https://twitter.com/ivalkeen"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+         
+        <li><a href="https://www.linkedin.com/in/ivan-tkalin-50338110"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+         
+        <li><a href="https://github.com/ivalkeen"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a></li>
+           
+        <li><a href="https://instagram.com/itkalin.photography"><i class="fa fa-instagram fa-lg" aria-hidden="true"></i></a></li>
+        
+      </ul>
+
+      
+      <p class="tagline">I&rsquo;m a software engineer. I solve problems.</p>
+      
+    </header>
+
+    
+<nav>
+    <ul class="main">
+        
+        <li>
+            <a class="" href="/about/">
+            <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/posts/">
+            <i class="fa-li fa  fa-lg"></i><span>Posts</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/tags/">
+            <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+    </ul>
+</nav>
+
+
+    <main>
+
+
+
+
+<article>
+
+    <h1>IDE-like &#34;Go to Declaration&#34; in Vim</h1>
+
+    
+        <aside>
+    <time class="post-date" datetime="2015-05-10T17:00:00Z">May 10, 2015</time>
+    &nbsp;|&nbsp;
+    2 min read
+    
+    
+        &nbsp;|&nbsp;
+        
+        
+        <a href="/tags/vim/">#vim</a>
+        
+        , 
+        <a href="/tags/ctags/">#ctags</a>
+        
+    
+</aside>
+
+    
+
+    
+
+<p>I always wanted &lsquo;Go to declaration&rsquo; feature in Vim with fuzzy-search, like in many modern IDEs.
+Of course, Vim has a built-in support of tags jumping, but for some programming languages, like Ruby (when you may have dozens of classes named <code>Base</code>),
+locating and picking the right declaration may be painful.
+I didn&rsquo;t find any existing solutions, so I wrote a small <a href="https://github.com/ivalkeen/vim-ctrlp-tjump">plugin</a> for that.</p>
+
+<p>Here is a demo showing how this plugin works for Ruby file, but it&rsquo;s not limited to Ruby.</p>
+
+<div style="position: relative; padding-bottom: 65%; padding-top: 25px; height: 0;">
+<iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" width="420" height="315" src="https://www.youtube.com/embed/42jB5MK5WwI" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ol>
+<li><p>You need to have tags working for your project. Configuring tags generation is out of scope of this article, because it&rsquo;s language specific.
+For ruby you can check <a href="https://www.tkalin.com/blog_posts/navigating-your-rails-project-codebase-with-vim/">this guide</a>, but, please, keep in mind that it is outdated, and now I use <a href="https://github.com/tmm1/ripper-tags">ripper-tags</a> instead of <code>ctags</code> to generate tags.</p>
+
+<p>Vim wiki has an <a href="http://vim.wikia.com/wiki/Browsing_programs_with_tags">article</a> describing how to configure tags in Vim.</p></li>
+
+<li><p>You need <a href="https://github.com/kien/ctrlp.vim">CtrlP</a> plugin to be installed and working</p></li>
+</ol>
+
+<h2 id="installation">Installation</h2>
+
+<ol>
+<li><p>Install <a href="https://github.com/ivalkeen/vim-ctrlp-tjump">vim-ctrlp-tjump</a> plugin using your favorite method. I recommend using <a href="https://github.com/Shougo/neobundle.vim">NeoBundle</a>, <a href="https://github.com/gmarik/Vundle.vim">Vundle</a> or <a href="https://github.com/tpope/vim-pathogen">Pathogen</a>.</p></li>
+
+<li><p>Create mappings (optional):</p>
+
+<pre><code>nnoremap &lt;c-]&gt; :CtrlPtjump&lt;cr&gt;
+vnoremap &lt;c-]&gt; :CtrlPtjumpVisual&lt;cr&gt;
+</code></pre>
+
+<p>This is not necessary step. You can use commands <code>:CtrlPtjump</code> and <code>:CtrlPtjumpVisual</code> without mappings or create your custom mappings.
+Personally I find remapping of <code>&lt;c-]&gt;</code> convenient, because it is default Vim&rsquo;s mapping for <code>:tag</code> command.</p></li>
+</ol>
+
+<h2 id="usage">Usage</h2>
+
+<ol>
+<li><p>Move cursor to the Class/Method usage in your code</p></li>
+
+<li><p>Press <code>c-]</code> (if you have created mapping) or just execute <code>:CtrlPtjump</code> command (or <code>:CtrlPtjumpVisual</code> in visual mode) in the command line.
+You should see <code>CtrlP</code> window with all definitions of the tag under cursor:</p>
+
+<p><img class="img img-responsive" src="https://i.imgur.com/1UrMOpd.png"></p>
+
+<p>You can type path/file fragments to narrow down the search using CtrlP&rsquo;s fuzzy-search.</p>
+
+<p>Press <code>Enter</code> to open declaration in the same window, <code>Ctrl-T</code> to open declaration in the new Tab.
+<code>Ctrl-S</code> and <code>Ctrl-V</code> will open declaration in a horizontal or vertical split respectively.</p></li>
+</ol>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Sometimes paths to declarations can be really long, for example for tags for ruby gems.
+There is an option to display paths in a shortened format:</p>
+
+<pre><code>let g:ctrlp_tjump_shortener = ['/home/.*/gems/', '.../']
+</code></pre>
+
+<p>If there is only one tag found, it is possible to open it without opening CtrlP
+window:</p>
+
+<pre><code>let g:ctrlp_tjump_only_silent = 1
+</code></pre>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Using tags and <a href="https://github.com/ivalkeen/vim-ctrlp-tjump">vim-ctrlp-tjump</a> plugin significantly improved my workflow of working with large Ruby codebases in Vim.</p>
+
+<p>If you have any questions about plugin or suggestions on how to improve this guide, please feel free to comment</p>
+
+
+</article>
+
+
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://www.tkalin.com/blog_posts/upgrading-to-rspec3/"><i class="fa fa-chevron-circle-left"></i> Upgrading to RSpec 3.x</a>
+        </li>
+        
+        
+        <li>
+            <a href="https://www.tkalin.com/blog_posts/rails-bug-with-polymorphic-associations/">Rails bug with polymorphic associations <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+    
+        <section class="comments-block">
+  <button id="show-comments" style="display: none;">Show Comments</button>
+</section>
+
+<section id="disqus_thread"></section>
+
+<script>
+      (function () {
+            
+            
+            if (window.location.hostname == "localhost")
+                  return;
+
+            var disqus_loaded = false;
+            var disqus_shortname = 'tkalincom';
+            var disqus_button = document.getElementById("show-comments");
+
+            disqus_button.style.display = "";
+            disqus_button.addEventListener("click", disqus, false);
+
+            function disqus() {
+
+                  if (!disqus_loaded) {
+                        disqus_loaded = true;
+
+                        var e = document.createElement("script");
+                        e.type = "text/javascript";
+                        e.async = true;
+                        e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+                        (document.getElementsByTagName("head")[0] ||
+                              document.getElementsByTagName("body")[0])
+                        .appendChild(e);
+
+                        
+                        document.getElementById("show-comments").style.display = "none";
+                  }
+            }
+
+            
+            var hash = window.location.hash.substr(1);
+            if (hash.length > 8) {
+                  if (hash.substring(0, 8) == "comment-") {
+                        disqus();
+                  }
+            }
+
+            
+            if (/bot|google|baidu|bing|msn|duckduckgo|slurp|yandex/i.test(navigator.userAgent)) {
+                  disqus();
+            }
+      })();
+</script>
+
+    
+
+
+
+
+
+</main>
+    <footer>
+      <p>
+        © Ivan Tkalin
+            
+            |
+            <a href="index.xml">Subscribe</a>
+      </p>
+    </footer>
+</div>
+<script src="/js/scripts.js"></script>
+</body>
+
+</html>
