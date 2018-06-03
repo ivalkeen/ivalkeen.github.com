@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Ivan Tkalin</title>
+    <link>https://www.tkalin.com/posts/</link>
+    <description>Recent content in Posts on Ivan Tkalin</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© Ivan Tkalin</copyright>
+    <lastBuildDate>Sun, 24 Apr 2016 11:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.tkalin.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Rails bug with polymorphic associations</title>
+      <link>https://www.tkalin.com/blog_posts/rails-bug-with-polymorphic-associations/</link>
+      <pubDate>Sun, 24 Apr 2016 11:00:00 +0000</pubDate>
+      
+      <guid>https://www.tkalin.com/blog_posts/rails-bug-with-polymorphic-associations/</guid>
+      <description>In general, I don&amp;rsquo;t like using polymorphic associations, because of inability to have a database-level integrity control and trickier eager loading. However, sometimes they look like a natural choice for certain cases in Ruby on Rails applications.
+Recently, I faced a problem, which turned out to be a bug in how Rails handles negations with polymorphic associations. It took me some time to figure out what exactly was wrong, so I decided to share my experience here for future reference (mostly for myself).</description>
+    </item>
+    
+    <item>
+      <title>IDE-like &#34;Go to Declaration&#34; in Vim</title>
+      <link>https://www.tkalin.com/blog_posts/ide-like-go-to-declaration-in-vim/</link>
+      <pubDate>Sun, 10 May 2015 17:00:00 +0000</pubDate>
+      
+      <guid>https://www.tkalin.com/blog_posts/ide-like-go-to-declaration-in-vim/</guid>
+      <description>I always wanted &amp;lsquo;Go to declaration&amp;rsquo; feature in Vim with fuzzy-search, like in many modern IDEs. Of course, Vim has a built-in support of tags jumping, but for some programming languages, like Ruby (when you may have dozens of classes named Base), locating and picking the right declaration may be painful. I didn&amp;rsquo;t find any existing solutions, so I wrote a small plugin for that.
+Here is a demo showing how this plugin works for Ruby file, but it&amp;rsquo;s not limited to Ruby.</description>
+    </item>
+    
+    <item>
+      <title>Upgrading to RSpec 3.x</title>
+      <link>https://www.tkalin.com/blog_posts/upgrading-to-rspec-3.x/</link>
+      <pubDate>Sun, 26 Apr 2015 15:00:00 +0000</pubDate>
+      
+      <guid>https://www.tkalin.com/blog_posts/upgrading-to-rspec-3.x/</guid>
+      <description>This short article is TL;DR of the talk: RSpec 3 and why I expect(you).to care by Jon Rowe. I picked 3 important recommendations out of this talk which I&amp;rsquo;m going to follow.
+1. Use zero monkey patching mode This will completely disable all the monkey patching and will make RSpec less magical. Of course, it has a few consequences:
+ DSL will not be exposed globally, so RSpec.describe must be used instead of describe etc.</description>
+    </item>
+    
+    <item>
+      <title>Rails 4: Disable assets caching for development/test environments</title>
+      <link>https://www.tkalin.com/blog_posts/rails-4-disable-assets-caching-for-development/test-environments/</link>
+      <pubDate>Thu, 27 Feb 2014 09:00:00 +0000</pubDate>
+      
+      <guid>https://www.tkalin.com/blog_posts/rails-4-disable-assets-caching-for-development/test-environments/</guid>
+      <description>Ruby on Rails by default caches pre-compiled assets (sass, coffeescripts) to tmp/cache/assets directory in development and test environments. It makes page loading in development and running test faster (when assets are already precompiled), but may cause some weird bugs.
+For example, when I was upgrading my Rails 3.2 application to Rails 4, I noticed that there are deprecation messages on CI server, but not on my local machine. I started investigating it and found, that these deprecation messages come from SASS file in one of my gems (it was twitter bootstrap 2.</description>
+    </item>
+    
+    <item>
+      <title>Quick PostgreSQL server optimization for development (or integration server)</title>
+      <link>https://www.tkalin.com/blog_posts/quick-postgresql-server-optimization-for-development-or-integration-server/</link>
+      <pubDate>Sun, 10 Nov 2013 20:00:00 +0000</pubDate>
+      
+      <guid>https://www.tkalin.com/blog_posts/quick-postgresql-server-optimization-for-development-or-integration-server/</guid>
+      <description>TL;DR I&amp;rsquo;ve made RSpec test suite for my Ruby on Rails application 18% faster by following a Non-durable PostgreSQL configuration guide.
+Intro When I&amp;rsquo;m developing (usually Ruby on Rails) applications using PostgreSQL database server for persistence, I don&amp;rsquo;t need high durability of my development database (or integration server). What I care the most is it&amp;rsquo;s speed. I realize, however, that database server, probably, is not the bottle neck of the typical application test suite.</description>
+    </item>
+    
+    <item>
+      <title>Installing Adobe Air and Elance Tracker on Ubuntu 13.10 (Saucy Salamander) 64 bit</title>
+      <link>https://www.tkalin.com/blog_posts/installing-adobe-air-and-elance-tracker-on-ubuntu-13.10-saucy-salamander-64-bit/</link>
+      <pubDate>Mon, 04 Nov 2013 09:00:00 +0000</pubDate>
+      
+      <guid>https://www.tkalin.com/blog_posts/installing-adobe-air-and-elance-tracker-on-ubuntu-13.10-saucy-salamander-64-bit/</guid>
+      <description>Update: Following instructions also work for Ubuntu 14.04 LTS Trusty Tahr 64 bit.
+After upgrading to Ubuntu 13.10 (Saucy) 64 bits, I had troubles installing Adobe Air and Elance Tracker air application. None of the guides available online worked for me. The guide that I used to install it on Ubuntu 13.04 didn&amp;rsquo;t work either. I would be happy not to use this piece of crap by Adobe, but, unfortunately, Elance doesn&amp;rsquo;t want to build native tracker application for Linux, and I need it for my freelance work.</description>
+    </item>
+    
+    <item>
+      <title>Protecting staging/testing site area</title>
+      <link>https://www.tkalin.com/blog_posts/protecting-staging/testing-site-area/</link>
+      <pubDate>Mon, 30 Jul 2012 21:30:00 +0000</pubDate>
+      
+      <guid>https://www.tkalin.com/blog_posts/protecting-staging/testing-site-area/</guid>
+      <description>It seems, that the easiest way to protect staging/testing version of the (rails) application from search engines and undesired users is using HTTP Basic Authentication. Configuring it for nginx is very easy and well documented.
+First, enable HTTP Basic Authentication and specify passwords file location. To do this, add these lines to the site&amp;rsquo;s server config:
+auth_basic &amp;quot;Testing Zone&amp;quot;; auth_basic_user_file /var/www/my_app/current/shared/config/.htpasswd;  Passwords file, specified in auth_basic_user_file directive, should store users and encrypted passwords in the following format:</description>
+    </item>
+    
+    <item>
+      <title>Multiple file upload with Rails 3.2, paperclip, html5 and no javascript</title>
+      <link>https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3.2-paperclip-html5-and-no-javascript/</link>
+      <pubDate>Fri, 25 May 2012 19:00:00 +0000</pubDate>
+      
+      <guid>https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3.2-paperclip-html5-and-no-javascript/</guid>
+      <description>Today, I was looking for a simple multiple file upload solution for Ruby on Rails 3.2 with paperclip 3.0.4 and found several jQuery and Flash solutions, like Uploadify or jQuery-File-Upload, buy they seemed to be too heavy and complicated for my case. I didn&amp;rsquo;t need asynchronous upload and other features they provide, I only needed really simple (ideally pure html) solution to save several images for my Item model with regular form submit, but with possibility to select all images at once (in one input field).</description>
+    </item>
+    
+    <item>
+      <title>Testing authorization using RSpec parametrized shared examples </title>
+      <link>https://www.tkalin.com/blog_posts/testing-authorization-using-rspec-parametrized-shared-examples/</link>
+      <pubDate>Wed, 23 May 2012 15:00:00 +0000</pubDate>
+      
+      <guid>https://www.tkalin.com/blog_posts/testing-authorization-using-rspec-parametrized-shared-examples/</guid>
+      <description>I have a rails app, that uses Devise for authentication and CanCan for authorization. There is a group of controllers in my application, that should be accessible by administrators only. I was thinking about a DRY way to test these resources and their accessibility by administrators only (using request specs with RSpec and Capybara).
+The idea is to have shared examples, which try to visit resource url as unauthenicated user, authenicated non-privileged user and administrator, and check if desired resource was loaded or not.</description>
+    </item>
+    
+    <item>
+      <title>Using console vim as vim:// protocol handler in Ubuntu</title>
+      <link>https://www.tkalin.com/blog_posts/using-console-vim-as-vim/-protocol-handler-in-ubuntu/</link>
+      <pubDate>Mon, 23 Apr 2012 11:00:00 +0000</pubDate>
+      
+      <guid>https://www.tkalin.com/blog_posts/using-console-vim-as-vim/-protocol-handler-in-ubuntu/</guid>
+      <description>Do you want your browser to launch console vim and open specified file on specified line when you click link like this: vim:///etc/hosts&amp;amp;line=10? This article will show how to register console vim as vim:// protocol handler in Ubuntu 11.10. Just follow these steps:
+1. Create vim launcher script We&amp;rsquo;ll need small vim launcher script, which will handle vim://... uri. As a ruby programmer I wrote this script in Ruby (so it requires Ruby to be installed), but it can be rewritten to Perl/Python or even Bash.</description>
+    </item>
+    
+    <item>
+      <title>Broadcasting your rhythmbox in ubuntu 11.10 </title>
+      <link>https://www.tkalin.com/blog_posts/broadcasting-your-rhythmbox-in-ubuntu-11.10/</link>
+      <pubDate>Fri, 30 Mar 2012 11:00:00 +0000</pubDate>
+      
+      <guid>https://www.tkalin.com/blog_posts/broadcasting-your-rhythmbox-in-ubuntu-11.10/</guid>
+      <description>Once I decided to setup my rhythmbox broadcasting into local network (so my wife or home media player could connect and listen), and didn&amp;rsquo;t find any comprehensive guide, so I decided to write my own when I managed to configure it.
+I found a couple rhythmbox plugins for that, but they didn&amp;rsquo;t work for me, so I stopped on icecast plus darkice.
+Installing and configuring icecast Icecast is free server software for streaming multimedia.</description>
+    </item>
+    
+    <item>
+      <title>Calling GNOME/KDE default application from NERDTree</title>
+      <link>https://www.tkalin.com/blog_posts/calling-gnome/kde-default-application-from-nerdtree/</link>
+      <pubDate>Fri, 03 Feb 2012 11:00:00 +0000</pubDate>
+      
+      <guid>https://www.tkalin.com/blog_posts/calling-gnome/kde-default-application-from-nerdtree/</guid>
+      <description>Sometimes it is really nice to be able to call system default application for file or directory from vim. For example open Document Reader for a pdf file or browse directory with images with Nautilus. I didn&amp;rsquo;t find working solution for NERDTree, which I use for file system navigation in vim, so I wrote simple plugin for it.
+What it does, it simply creates new menu item e(x)ecute in NERDTree menu, which executes system default application for selected file or directory.</description>
+    </item>
+    
+    <item>
+      <title>Navigating your Rails project codebase  with vim</title>
+      <link>https://www.tkalin.com/blog_posts/navigating-your-rails-project-codebase--with-vim/</link>
+      <pubDate>Sat, 10 Dec 2011 11:00:00 +0000</pubDate>
+      
+      <guid>https://www.tkalin.com/blog_posts/navigating-your-rails-project-codebase--with-vim/</guid>
+      <description>When you work with source code, it is always nice to have the abilty to quickly jump to class/method definitions for either your own code or code from one of your ruby gems. This articles describes how to do this in vim with exuberant ctags, guard, and guard-ctags-bundler.
+Tags  A tag is an identifier that appears in a &amp;ldquo;tags&amp;rdquo; file. It is a sort of label that can be jumped to.</description>
+    </item>
+    
+  </channel>
+</rss>

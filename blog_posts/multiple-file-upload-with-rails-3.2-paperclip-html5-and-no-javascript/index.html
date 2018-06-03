@@ -74,11 +74,11 @@
 
 <article>
 
-    <h1>Testing authorization using RSpec parametrized shared examples </h1>
+    <h1>Multiple file upload with Rails 3.2, paperclip, html5 and no javascript</h1>
 
     
         <aside>
-    <time class="post-date" datetime="2012-05-23T15:00:00Z">May 23, 2012</time>
+    <time class="post-date" datetime="2012-05-25T19:00:00Z">May 25, 2012</time>
     &nbsp;|&nbsp;
     2 min read
     
@@ -89,64 +89,22 @@
         <a href="/tags/rails/">#rails</a>
         
         , 
-        <a href="/tags/rspec/">#rspec</a>
+        <a href="/tags/paperclip/">#paperclip</a>
         
     
 </aside>
 
     
 
-    <p>I have a rails app, that uses Devise for authentication and CanCan for authorization. There is a group of controllers in my application, that should be accessible by administrators only. I was thinking about a DRY way to test these resources and their accessibility by administrators only (using request specs with RSpec and Capybara).</p>
+    <p>Today, I was looking for a simple multiple file upload solution for <a href="https://github.com/rails/rails">Ruby on Rails 3.2</a> with <a href="https://github.com/thoughtbot/paperclip">paperclip 3.0.4</a> and found several jQuery and Flash solutions, like <a href="http://www.uploadify.com/">Uploadify</a> or <a href="https://github.com/blueimp/jQuery-File-Upload">jQuery-File-Upload</a>, buy they seemed to be too heavy and complicated for my case. I didn&rsquo;t need asynchronous upload and other features they provide, I only needed really simple (ideally pure html) solution to save several images for my <code>Item</code> model with regular form submit, but with possibility to select all images at once (in one input field).</p>
 
-<p>The idea is to have shared examples, which try to visit resource url as unauthenicated user, authenicated non-privileged user and administrator, and check if desired resource was loaded or not. I will show, how I used RSpec&rsquo;s shared examples (with resource url as parameter) for this.</p>
+<p>Luckily, there is html5 attribute <code>multiple</code> for input <code>type='file'</code>, which is already supported by  modern browsers (Opera, Firefox, Chrome, Safari), and that&rsquo;s pretty ok for me. In the following code snippet, I&rsquo;ll show, how I used this attribute and how I marked up my rails form make it work with <a href="https://github.com/thoughtbot/paperclip">paperclip</a>.</p>
 
-<p>Create shared example group in <code>request_shared_examples.rb</code> file in <code>spec/support</code> directory:</p>
+<p><strong>Note:</strong> As soon as IE doesn&rsquo;t support <code>multiple</code> attribute, the example below will allow to upload only one file for IE users.</p>
 
-<pre><code>shared_examples &quot;accessible by admin&quot; do |url|
-  let(:url_path) { send(url) }
+<script src="https://gist.github.com/2790062.js"></script>
 
-  context &quot;unauthenticated&quot; do
-    it &quot;redirects to root page with error&quot; do
-      visit url_path
-      current_path.should == root_path
-      page.should have_selector(&quot;.alert-error&quot;)
-    end
-  end
-
-  context &quot;for unauthorized user&quot; do
-    it &quot;redirects to root page with error&quot; do
-      login_user(admin: false)
-      visit url_path
-      current_path.should == root_path
-      page.should have_selector(&quot;.alert-error&quot;)
-    end
-  end
-
-  context &quot;for authorized user&quot; do
-    it &quot;displays page without errors&quot; do
-      login_user(admin: true)
-      visit url_path
-      current_path.should == url_path
-      page.should_not have_selector(&quot;.alert-error&quot;)
-    end
-  end
-end
-</code></pre>
-
-<p>Include these examples in your specs with <code>it_should_behave_like</code> method:</p>
-
-<pre><code>describe &quot;Items&quot;, :type =&gt; :request do
-  it_should_behave_like(&quot;accessible by admin&quot;, :admin_items_path)
-  # other examples
-end
-
-describe &quot;Categories&quot;, :type =&gt; :request do
-  it_should_behave_like(&quot;accessible by admin&quot;, :admin_categories_path)
-  # other examples
-end
-</code></pre>
-
-<p><strong>NOTE</strong>: I&rsquo;m passing url helpers&rsquo; names as symbols and evaluate them in shared example group (with <code>let</code> and <code>send</code>), because they can&rsquo;t be evaluated in ExampleGroup context.</p>
+<p>So basically I have <code>Item</code> model, which has many <code>AttachedAsset</code> models. <code>AttachedAsset</code> model is used to store image with paperclip. All code in models and controller is very simple and found in paperclip&rsquo;s HOWTOs. The only non-obvious part is <code>file_field_tag</code> in the <code>new.html.haml</code> template &ndash; it has tricky <code>name</code> (to be handled as array of <code>asset</code> inside <code>attached_assets_attributes</code>) and <code>multiple</code> attributes is set to <code>true</code>.</p>
 
 
 </article>
@@ -156,12 +114,12 @@ end
     <ul>
         
         <li>
-            <a href="https://www.tkalin.com/blog_posts/using-console-vim-as-vim/-protocol-handler-in-ubuntu/"><i class="fa fa-chevron-circle-left"></i> Using console vim as vim:// protocol handler in Ubuntu</a>
+            <a href="https://www.tkalin.com/blog_posts/testing-authorization-using-rspec-parametrized-shared-examples/"><i class="fa fa-chevron-circle-left"></i> Testing authorization using RSpec parametrized shared examples </a>
         </li>
         
         
         <li>
-            <a href="https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3.2-paperclip-html5-and-no-javascript/">Multiple file upload with Rails 3.2, paperclip, html5 and no javascript <i class="fa fa-chevron-circle-right"></i> </a>
+            <a href="https://www.tkalin.com/blog_posts/protecting-staging/testing-site-area/">Protecting staging/testing site area <i class="fa fa-chevron-circle-right"></i> </a>
         </li>
         
     </ul>

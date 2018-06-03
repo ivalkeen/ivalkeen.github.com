@@ -74,11 +74,11 @@
 
 <article>
 
-    <h1>Testing authorization using RSpec parametrized shared examples </h1>
+    <h1>Rails 4: Disable assets caching for development/test environments</h1>
 
     
         <aside>
-    <time class="post-date" datetime="2012-05-23T15:00:00Z">May 23, 2012</time>
+    <time class="post-date" datetime="2014-02-27T09:00:00Z">Feb 27, 2014</time>
     &nbsp;|&nbsp;
     2 min read
     
@@ -89,64 +89,32 @@
         <a href="/tags/rails/">#rails</a>
         
         , 
-        <a href="/tags/rspec/">#rspec</a>
+        <a href="/tags/rails4/">#rails4</a>
         
     
 </aside>
 
     
 
-    <p>I have a rails app, that uses Devise for authentication and CanCan for authorization. There is a group of controllers in my application, that should be accessible by administrators only. I was thinking about a DRY way to test these resources and their accessibility by administrators only (using request specs with RSpec and Capybara).</p>
+    <p>Ruby on Rails by default caches pre-compiled assets (sass, coffeescripts) to tmp/cache/assets directory in development and test environments. It makes page loading in development and running test faster (when assets are already precompiled), but may cause some weird bugs.</p>
 
-<p>The idea is to have shared examples, which try to visit resource url as unauthenicated user, authenicated non-privileged user and administrator, and check if desired resource was loaded or not. I will show, how I used RSpec&rsquo;s shared examples (with resource url as parameter) for this.</p>
+<p>For example, when I was upgrading my Rails 3.2 application to Rails 4, I noticed that there are deprecation messages on CI server, but not on my local machine. I started investigating it and found, that these deprecation messages come from SASS file in one of my gems (it was twitter bootstrap 2.0.1). And these deprecation messages appear on my dev machine only if I clean assets cache before running tests.</p>
 
-<p>Create shared example group in <code>request_shared_examples.rb</code> file in <code>spec/support</code> directory:</p>
+<p>Another issue with file system assets cache in test environment, is that when running test in parallel (I use parallel_test gem), and assets cache is not built yet, tests may fail because of errors with concurrent access to cache files from different processes.</p>
 
-<pre><code>shared_examples &quot;accessible by admin&quot; do |url|
-  let(:url_path) { send(url) }
+<p>Main problem with file system assets cache in development environment was that cache was not always rebuilt when it needed to. For example, when I was upgrading to newer bootstrap version, new bootstrap stylesheets were not build and my development version looked pretty fine, but on production it was totally broken. I was able to reproduce it on my dev machine only after cleaning assets cache.</p>
 
-  context &quot;unauthenticated&quot; do
-    it &quot;redirects to root page with error&quot; do
-      visit url_path
-      current_path.should == root_path
-      page.should have_selector(&quot;.alert-error&quot;)
-    end
-  end
-
-  context &quot;for unauthorized user&quot; do
-    it &quot;redirects to root page with error&quot; do
-      login_user(admin: false)
-      visit url_path
-      current_path.should == root_path
-      page.should have_selector(&quot;.alert-error&quot;)
-    end
-  end
-
-  context &quot;for authorized user&quot; do
-    it &quot;displays page without errors&quot; do
-      login_user(admin: true)
-      visit url_path
-      current_path.should == url_path
-      page.should_not have_selector(&quot;.alert-error&quot;)
-    end
-  end
-end
-</code></pre>
-
-<p>Include these examples in your specs with <code>it_should_behave_like</code> method:</p>
-
-<pre><code>describe &quot;Items&quot;, :type =&gt; :request do
-  it_should_behave_like(&quot;accessible by admin&quot;, :admin_items_path)
-  # other examples
-end
-
-describe &quot;Categories&quot;, :type =&gt; :request do
-  it_should_behave_like(&quot;accessible by admin&quot;, :admin_categories_path)
-  # other examples
-end
-</code></pre>
-
-<p><strong>NOTE</strong>: I&rsquo;m passing url helpers&rsquo; names as symbols and evaluate them in shared example group (with <code>let</code> and <code>send</code>), because they can&rsquo;t be evaluated in ExampleGroup context.</p>
+<p>After facing all these issues, I decided to disable assets file system cache, and change it to memory cache. Which means, that cache is built and stored in memory while process (rspec or rails server) is active. It can be done by adding following code to application.rb:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#75715e"># Use memory store for assets cache in development/test to avoid caching</span>
+<span style="color:#75715e"># to tmp/assets, because it causes hiding of deprecation messages in</span>
+<span style="color:#75715e"># stylesheets, sometimes break parallel_tests and doesn&#39;t always refresh</span>
+<span style="color:#75715e"># gem stylesheets in development</span>
+config<span style="color:#f92672">.</span>assets<span style="color:#f92672">.</span>configure <span style="color:#66d9ef">do</span> <span style="color:#f92672">|</span>env<span style="color:#f92672">|</span>
+  <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>env<span style="color:#f92672">.</span>development? <span style="color:#f92672">||</span> <span style="color:#66d9ef">Rails</span><span style="color:#f92672">.</span>env<span style="color:#f92672">.</span>test?
+    env<span style="color:#f92672">.</span>cache <span style="color:#f92672">=</span> <span style="color:#66d9ef">ActiveSupport</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Cache</span><span style="color:#f92672">.</span>lookup_store(<span style="color:#e6db74">:memory_store</span>)
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span></code></pre></div>
+<p>I found that for my application, assets cache is built pretty fast, and I didn&rsquo;t notice any significant performance penalties after doing it. And I didn&rsquo;t notice (yet) any other downsides of this approach. Now I have a little bit more control over my front-end code and it makes me feel better.</p>
 
 
 </article>
@@ -156,12 +124,12 @@ end
     <ul>
         
         <li>
-            <a href="https://www.tkalin.com/blog_posts/using-console-vim-as-vim/-protocol-handler-in-ubuntu/"><i class="fa fa-chevron-circle-left"></i> Using console vim as vim:// protocol handler in Ubuntu</a>
+            <a href="https://www.tkalin.com/blog_posts/quick-postgresql-server-optimization-for-development-or-integration-server/"><i class="fa fa-chevron-circle-left"></i> Quick PostgreSQL server optimization for development (or integration server)</a>
         </li>
         
         
         <li>
-            <a href="https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3.2-paperclip-html5-and-no-javascript/">Multiple file upload with Rails 3.2, paperclip, html5 and no javascript <i class="fa fa-chevron-circle-right"></i> </a>
+            <a href="https://www.tkalin.com/blog_posts/upgrading-to-rspec-3.x/">Upgrading to RSpec 3.x <i class="fa fa-chevron-circle-right"></i> </a>
         </li>
         
     </ul>

@@ -74,22 +74,19 @@
 
 <article>
 
-    <h1>IDE-like &#34;Go to Declaration&#34; in Vim</h1>
+    <h1>Calling GNOME/KDE default application from NERDTree</h1>
 
     
         <aside>
-    <time class="post-date" datetime="2015-05-10T17:00:00Z">May 10, 2015</time>
+    <time class="post-date" datetime="2012-02-03T11:00:00Z">Feb 3, 2012</time>
     &nbsp;|&nbsp;
-    2 min read
+    1 min read
     
     
         &nbsp;|&nbsp;
         
         
         <a href="/tags/vim/">#vim</a>
-        
-        , 
-        <a href="/tags/ctags/">#ctags</a>
         
     
 </aside>
@@ -98,78 +95,33 @@
 
     
 
-<p>I always wanted &lsquo;Go to declaration&rsquo; feature in Vim with fuzzy-search, like in many modern IDEs.
-Of course, Vim has a built-in support of tags jumping, but for some programming languages, like Ruby (when you may have dozens of classes named <code>Base</code>),
-locating and picking the right declaration may be painful.
-I didn&rsquo;t find any existing solutions, so I wrote a small <a href="https://github.com/ivalkeen/vim-ctrlp-tjump">plugin</a> for that.</p>
+<p>Sometimes it is really nice to be able to call system default application for file or directory from vim. For example open <code>Document Reader</code> for a <code>pdf</code> file or browse directory with images with <code>Nautilus</code>. I didn&rsquo;t find working solution for NERDTree, which I use for file system navigation in vim, so I wrote simple <a href="https://github.com/ivalkeen/nerdtree-execute" title="nerdtree-execute">plugin</a> for it.</p>
 
-<p>Here is a demo showing how this plugin works for Ruby file, but it&rsquo;s not limited to Ruby.</p>
-
-<div style="position: relative; padding-bottom: 65%; padding-top: 25px; height: 0;">
-<iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" width="420" height="315" src="https://www.youtube.com/embed/42jB5MK5WwI" frameborder="0" allowfullscreen></iframe>
-</div>
-
-<h2 id="prerequisites">Prerequisites</h2>
-
-<ol>
-<li><p>You need to have tags working for your project. Configuring tags generation is out of scope of this article, because it&rsquo;s language specific.
-For ruby you can check <a href="https://www.tkalin.com/blog_posts/navigating-your-rails-project-codebase-with-vim/">this guide</a>, but, please, keep in mind that it is outdated, and now I use <a href="https://github.com/tmm1/ripper-tags">ripper-tags</a> instead of <code>ctags</code> to generate tags.</p>
-
-<p>Vim wiki has an <a href="http://vim.wikia.com/wiki/Browsing_programs_with_tags">article</a> describing how to configure tags in Vim.</p></li>
-
-<li><p>You need <a href="https://github.com/kien/ctrlp.vim">CtrlP</a> plugin to be installed and working</p></li>
-</ol>
+<p>What it does, it simply creates new menu item <code>e(x)ecute</code> in NERDTree menu, which executes system default application for selected file or directory. It works on <code>Linux</code> only and should work for <code>GNOME</code> and <code>KDE</code>.</p>
 
 <h2 id="installation">Installation</h2>
 
-<ol>
-<li><p>Install <a href="https://github.com/ivalkeen/vim-ctrlp-tjump">vim-ctrlp-tjump</a> plugin using your favorite method. I recommend using <a href="https://github.com/Shougo/neobundle.vim">NeoBundle</a>, <a href="https://github.com/gmarik/Vundle.vim">Vundle</a> or <a href="https://github.com/tpope/vim-pathogen">Pathogen</a>.</p></li>
+<p>The installation is very simple. If you use <a href="https://github.com/tpope/vim-pathogen" title="Pathogen">pathogen</a> to manage your plugins:</p>
 
-<li><p>Create mappings (optional):</p>
-
-<pre><code>nnoremap &lt;c-]&gt; :CtrlPtjump&lt;cr&gt;
-vnoremap &lt;c-]&gt; :CtrlPtjumpVisual&lt;cr&gt;
+<pre><code>$ cd ~/.vim
+$ git clone git://github.com/ivalkeen/nerdtree-execute.git bundle/nerdtree-execute
 </code></pre>
 
-<p>This is not necessary step. You can use commands <code>:CtrlPtjump</code> and <code>:CtrlPtjumpVisual</code> without mappings or create your custom mappings.
-Personally I find remapping of <code>&lt;c-]&gt;</code> convenient, because it is default Vim&rsquo;s mapping for <code>:tag</code> command.</p></li>
-</ol>
+<p>or if use git submodules with pathogen (like me):</p>
+
+<pre><code>$ cd ~/.vim
+$ git submodule add git://github.com/ivalkeen/nerdtree-execute.git bundle/nerdtree-execute
+</code></pre>
+
+<p>If you don&rsquo;t use <a href="https://github.com/tpope/vim-pathogen" title="Pathogen">pathogen</a>, then just start using it, or</p>
+
+<pre><code>$ cd ~/.vim
+$ git clone git://github.com/ivalkeen/nerdtree-execute.git
+</code></pre>
 
 <h2 id="usage">Usage</h2>
 
-<ol>
-<li><p>Move cursor to the Class/Method usage in your code</p></li>
-
-<li><p>Press <code>c-]</code> (if you have created mapping) or just execute <code>:CtrlPtjump</code> command (or <code>:CtrlPtjumpVisual</code> in visual mode) in the command line.
-You should see <code>CtrlP</code> window with all definitions of the tag under cursor:</p>
-
-<p><img class="img img-responsive" src="https://i.imgur.com/1UrMOpd.png"></p>
-
-<p>You can type path/file fragments to narrow down the search using CtrlP&rsquo;s fuzzy-search.</p>
-
-<p>Press <code>Enter</code> to open declaration in the same window, <code>Ctrl-T</code> to open declaration in the new Tab.
-<code>Ctrl-S</code> and <code>Ctrl-V</code> will open declaration in a horizontal or vertical split respectively.</p></li>
-</ol>
-
-<h2 id="configuration">Configuration</h2>
-
-<p>Sometimes paths to declarations can be really long, for example for tags for ruby gems.
-There is an option to display paths in a shortened format:</p>
-
-<pre><code>let g:ctrlp_tjump_shortener = ['/home/.*/gems/', '.../']
-</code></pre>
-
-<p>If there is only one tag found, it is possible to open it without opening CtrlP
-window:</p>
-
-<pre><code>let g:ctrlp_tjump_only_silent = 1
-</code></pre>
-
-<h2 id="conclusion">Conclusion</h2>
-
-<p>Using tags and <a href="https://github.com/ivalkeen/vim-ctrlp-tjump">vim-ctrlp-tjump</a> plugin significantly improved my workflow of working with large Ruby codebases in Vim.</p>
-
-<p>If you have any questions about plugin or suggestions on how to improve this guide, please feel free to comment</p>
+<p>When navigating in NERDTree, select file or directory, press &rsquo;m&rsquo; key, and NERDTree menu will appear. Press &lsquo;x&rsquo; then to execute system default application for selected file/directory, using this plugin. You can open your favourite image editor for images, pdf reader for pdfs etc.</p>
 
 
 </article>
@@ -179,12 +131,12 @@ window:</p>
     <ul>
         
         <li>
-            <a href="https://www.tkalin.com/blog_posts/upgrading-to-rspec-3.x/"><i class="fa fa-chevron-circle-left"></i> Upgrading to RSpec 3.x</a>
+            <a href="https://www.tkalin.com/blog_posts/navigating-your-rails-project-codebase--with-vim/"><i class="fa fa-chevron-circle-left"></i> Navigating your Rails project codebase  with vim</a>
         </li>
         
         
         <li>
-            <a href="https://www.tkalin.com/blog_posts/rails-bug-with-polymorphic-associations/">Rails bug with polymorphic associations <i class="fa fa-chevron-circle-right"></i> </a>
+            <a href="https://www.tkalin.com/blog_posts/broadcasting-your-rhythmbox-in-ubuntu-11.10/">Broadcasting your rhythmbox in ubuntu 11.10  <i class="fa fa-chevron-circle-right"></i> </a>
         </li>
         
     </ul>

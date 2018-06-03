@@ -74,79 +74,54 @@
 
 <article>
 
-    <h1>Testing authorization using RSpec parametrized shared examples </h1>
+    <h1>Protecting staging/testing site area</h1>
 
     
         <aside>
-    <time class="post-date" datetime="2012-05-23T15:00:00Z">May 23, 2012</time>
+    <time class="post-date" datetime="2012-07-30T21:30:00Z">Jul 30, 2012</time>
     &nbsp;|&nbsp;
-    2 min read
+    1 min read
     
     
         &nbsp;|&nbsp;
         
         
-        <a href="/tags/rails/">#rails</a>
+        <a href="/tags/nginx/">#nginx</a>
         
         , 
-        <a href="/tags/rspec/">#rspec</a>
+        <a href="/tags/rails/">#rails</a>
         
     
 </aside>
 
     
 
-    <p>I have a rails app, that uses Devise for authentication and CanCan for authorization. There is a group of controllers in my application, that should be accessible by administrators only. I was thinking about a DRY way to test these resources and their accessibility by administrators only (using request specs with RSpec and Capybara).</p>
+    <p>It seems, that the easiest way to protect staging/testing version of the (rails) application from search engines and undesired users is using HTTP Basic Authentication. Configuring it for nginx is very easy and well documented.</p>
 
-<p>The idea is to have shared examples, which try to visit resource url as unauthenicated user, authenicated non-privileged user and administrator, and check if desired resource was loaded or not. I will show, how I used RSpec&rsquo;s shared examples (with resource url as parameter) for this.</p>
+<p>First, enable HTTP Basic Authentication and specify passwords file location. To do this, add these lines to the site&rsquo;s server config:</p>
 
-<p>Create shared example group in <code>request_shared_examples.rb</code> file in <code>spec/support</code> directory:</p>
-
-<pre><code>shared_examples &quot;accessible by admin&quot; do |url|
-  let(:url_path) { send(url) }
-
-  context &quot;unauthenticated&quot; do
-    it &quot;redirects to root page with error&quot; do
-      visit url_path
-      current_path.should == root_path
-      page.should have_selector(&quot;.alert-error&quot;)
-    end
-  end
-
-  context &quot;for unauthorized user&quot; do
-    it &quot;redirects to root page with error&quot; do
-      login_user(admin: false)
-      visit url_path
-      current_path.should == root_path
-      page.should have_selector(&quot;.alert-error&quot;)
-    end
-  end
-
-  context &quot;for authorized user&quot; do
-    it &quot;displays page without errors&quot; do
-      login_user(admin: true)
-      visit url_path
-      current_path.should == url_path
-      page.should_not have_selector(&quot;.alert-error&quot;)
-    end
-  end
-end
+<pre><code>auth_basic &quot;Testing Zone&quot;;
+auth_basic_user_file /var/www/my_app/current/shared/config/.htpasswd;
 </code></pre>
 
-<p>Include these examples in your specs with <code>it_should_behave_like</code> method:</p>
+<p>Passwords file, specified in <code>auth_basic_user_file</code> directive, should store users and <strong>encrypted</strong> passwords in the following format:</p>
 
-<pre><code>describe &quot;Items&quot;, :type =&gt; :request do
-  it_should_behave_like(&quot;accessible by admin&quot;, :admin_items_path)
-  # other examples
-end
-
-describe &quot;Categories&quot;, :type =&gt; :request do
-  it_should_behave_like(&quot;accessible by admin&quot;, :admin_categories_path)
-  # other examples
-end
+<pre><code>user:pass
+user2:pass2:comment
+user3:pass3
 </code></pre>
 
-<p><strong>NOTE</strong>: I&rsquo;m passing url helpers&rsquo; names as symbols and evaluate them in shared example group (with <code>let</code> and <code>send</code>), because they can&rsquo;t be evaluated in ExampleGroup context.</p>
+<p>To encrypt passwords using MD5, <code>htpasswd</code> (goes with apache) or <code>openssl</code> tools can be used:</p>
+
+<pre><code>openssl passwd -1 user_name
+</code></pre>
+
+<p>Then create <code>/var/www/my_app/current/shared/config/.htpasswd</code> file with the user name and encrypted password:</p>
+
+<pre><code>user_name:$1$YSZFGvi9$BjAEmoG/a//a0UkNyzjMC/
+</code></pre>
+
+<p>Then restart nginx, open your site and you&rsquo;ll see login/password prompt.</p>
 
 
 </article>
@@ -156,12 +131,12 @@ end
     <ul>
         
         <li>
-            <a href="https://www.tkalin.com/blog_posts/using-console-vim-as-vim/-protocol-handler-in-ubuntu/"><i class="fa fa-chevron-circle-left"></i> Using console vim as vim:// protocol handler in Ubuntu</a>
+            <a href="https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3.2-paperclip-html5-and-no-javascript/"><i class="fa fa-chevron-circle-left"></i> Multiple file upload with Rails 3.2, paperclip, html5 and no javascript</a>
         </li>
         
         
         <li>
-            <a href="https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3.2-paperclip-html5-and-no-javascript/">Multiple file upload with Rails 3.2, paperclip, html5 and no javascript <i class="fa fa-chevron-circle-right"></i> </a>
+            <a href="https://www.tkalin.com/blog_posts/installing-adobe-air-and-elance-tracker-on-ubuntu-13.10-saucy-salamander-64-bit/">Installing Adobe Air and Elance Tracker on Ubuntu 13.10 (Saucy Salamander) 64 bit <i class="fa fa-chevron-circle-right"></i> </a>
         </li>
         
     </ul>

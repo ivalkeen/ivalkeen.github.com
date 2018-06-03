@@ -74,11 +74,11 @@
 
 <article>
 
-    <h1>Testing authorization using RSpec parametrized shared examples </h1>
+    <h1>Upgrading to RSpec 3.x</h1>
 
     
         <aside>
-    <time class="post-date" datetime="2012-05-23T15:00:00Z">May 23, 2012</time>
+    <time class="post-date" datetime="2015-04-26T15:00:00Z">Apr 26, 2015</time>
     &nbsp;|&nbsp;
     2 min read
     
@@ -86,7 +86,7 @@
         &nbsp;|&nbsp;
         
         
-        <a href="/tags/rails/">#rails</a>
+        <a href="/tags/ruby/">#ruby</a>
         
         , 
         <a href="/tags/rspec/">#rspec</a>
@@ -96,57 +96,41 @@
 
     
 
-    <p>I have a rails app, that uses Devise for authentication and CanCan for authorization. There is a group of controllers in my application, that should be accessible by administrators only. I was thinking about a DRY way to test these resources and their accessibility by administrators only (using request specs with RSpec and Capybara).</p>
+    
 
-<p>The idea is to have shared examples, which try to visit resource url as unauthenicated user, authenicated non-privileged user and administrator, and check if desired resource was loaded or not. I will show, how I used RSpec&rsquo;s shared examples (with resource url as parameter) for this.</p>
+<p>This short article is TL;DR of the talk: <a href="https://www.youtube.com/watch?v=5D4UbNui3rE">RSpec 3 and why I expect(you).to care by Jon Rowe</a>.
+I picked 3 important recommendations out of this talk which I&rsquo;m going to follow.</p>
 
-<p>Create shared example group in <code>request_shared_examples.rb</code> file in <code>spec/support</code> directory:</p>
+<h2 id="1-use-zero-monkey-patching-mode">1. Use zero monkey patching mode</h2>
 
-<pre><code>shared_examples &quot;accessible by admin&quot; do |url|
-  let(:url_path) { send(url) }
+<p>This will completely disable all the monkey patching and will make RSpec less magical. Of course, it has a few consequences:</p>
 
-  context &quot;unauthenticated&quot; do
-    it &quot;redirects to root page with error&quot; do
-      visit url_path
-      current_path.should == root_path
-      page.should have_selector(&quot;.alert-error&quot;)
-    end
-  end
+<ul>
+<li>DSL will not be exposed globally, so <code>RSpec.describe</code> must be used instead of <code>describe</code> etc.</li>
+<li><code>should</code> and <code>should_not</code> syntax will be disabled, so <code>expect()</code> syntax must be used.</li>
+</ul>
 
-  context &quot;for unauthorized user&quot; do
-    it &quot;redirects to root page with error&quot; do
-      login_user(admin: false)
-      visit url_path
-      current_path.should == root_path
-      page.should have_selector(&quot;.alert-error&quot;)
-    end
-  end
+<p>To enable zero monkey patching mode, just add this line to RSpec configuration:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">  config<span style="color:#f92672">.</span>disable_monkey_pathing!</code></pre></div>
+<h2 id="2-use-verified-doubles">2. Use verified doubles</h2>
 
-  context &quot;for authorized user&quot; do
-    it &quot;displays page without errors&quot; do
-      login_user(admin: true)
-      visit url_path
-      current_path.should == url_path
-      page.should_not have_selector(&quot;.alert-error&quot;)
-    end
-  end
-end
-</code></pre>
+<p>This will enable checking that the contract of the mock corresponds to the contract of the real object.
+It means that if methods being mocked/stubbed are not actually implemented by the object behind test double, the test will fail with error.</p>
 
-<p>Include these examples in your specs with <code>it_should_behave_like</code> method:</p>
+<p>Once it&rsquo;s enabled, <code>instance_double</code> should be used instead of <code>double</code> to create verified doubles. <code>allow()</code> and <code>expect()</code> methods for real objects just work.</p>
 
-<pre><code>describe &quot;Items&quot;, :type =&gt; :request do
-  it_should_behave_like(&quot;accessible by admin&quot;, :admin_items_path)
-  # other examples
-end
+<p>To enable verified doubles, just add this line to RSpec configuration:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">  config<span style="color:#f92672">.</span>verify_partial_doubles <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span></code></pre></div>
+<p><strong>Note:</strong> this doesn&rsquo;t play very well with <code>ActiveRecord::Base</code> models in Rails, because Rails loads columns dynamically, so don&rsquo;t try to verify columns of rails models.</p>
 
-describe &quot;Categories&quot;, :type =&gt; :request do
-  it_should_behave_like(&quot;accessible by admin&quot;, :admin_categories_path)
-  # other examples
-end
-</code></pre>
+<h2 id="3-upgrading-from-rspec-2-to-3">3. Upgrading from RSpec 2 to 3:</h2>
 
-<p><strong>NOTE</strong>: I&rsquo;m passing url helpers&rsquo; names as symbols and evaluate them in shared example group (with <code>let</code> and <code>send</code>), because they can&rsquo;t be evaluated in ExampleGroup context.</p>
+<p>Upgrade from RSpec 2 to RSpec 3 should be easy if you follow this simple guide:</p>
+
+<ol>
+<li>Upgrade to latest version of RSpec 2.99 first and fix all deprecations</li>
+<li>Use <a href="https://github.com/yujinakayama/transpec">transpec</a> to convert all existing specs to 3 syntax</li>
+</ol>
 
 
 </article>
@@ -156,12 +140,12 @@ end
     <ul>
         
         <li>
-            <a href="https://www.tkalin.com/blog_posts/using-console-vim-as-vim/-protocol-handler-in-ubuntu/"><i class="fa fa-chevron-circle-left"></i> Using console vim as vim:// protocol handler in Ubuntu</a>
+            <a href="https://www.tkalin.com/blog_posts/rails-4-disable-assets-caching-for-development/test-environments/"><i class="fa fa-chevron-circle-left"></i> Rails 4: Disable assets caching for development/test environments</a>
         </li>
         
         
         <li>
-            <a href="https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3.2-paperclip-html5-and-no-javascript/">Multiple file upload with Rails 3.2, paperclip, html5 and no javascript <i class="fa fa-chevron-circle-right"></i> </a>
+            <a href="https://www.tkalin.com/blog_posts/ide-like-go-to-declaration-in-vim/">IDE-like &#34;Go to Declaration&#34; in Vim <i class="fa fa-chevron-circle-right"></i> </a>
         </li>
         
     </ul>

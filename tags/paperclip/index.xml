@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Paperclip on Ivan Tkalin</title>
+    <link>https://www.tkalin.com/tags/paperclip/</link>
+    <description>Recent content in Paperclip on Ivan Tkalin</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>© Ivan Tkalin</copyright>
+    <lastBuildDate>Fri, 25 May 2012 19:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.tkalin.com/tags/paperclip/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Multiple file upload with Rails 3.2, paperclip, html5 and no javascript</title>
+      <link>https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3.2-paperclip-html5-and-no-javascript/</link>
+      <pubDate>Fri, 25 May 2012 19:00:00 +0000</pubDate>
+      
+      <guid>https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3.2-paperclip-html5-and-no-javascript/</guid>
+      <description>Today, I was looking for a simple multiple file upload solution for Ruby on Rails 3.2 with paperclip 3.0.4 and found several jQuery and Flash solutions, like Uploadify or jQuery-File-Upload, buy they seemed to be too heavy and complicated for my case. I didn&amp;rsquo;t need asynchronous upload and other features they provide, I only needed really simple (ideally pure html) solution to save several images for my Item model with regular form submit, but with possibility to select all images at once (in one input field).</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -74,11 +74,11 @@
 
 <article>
 
-    <h1>Testing authorization using RSpec parametrized shared examples </h1>
+    <h1>Installing Adobe Air and Elance Tracker on Ubuntu 13.10 (Saucy Salamander) 64 bit</h1>
 
     
         <aside>
-    <time class="post-date" datetime="2012-05-23T15:00:00Z">May 23, 2012</time>
+    <time class="post-date" datetime="2013-11-04T09:00:00Z">Nov 4, 2013</time>
     &nbsp;|&nbsp;
     2 min read
     
@@ -86,67 +86,88 @@
         &nbsp;|&nbsp;
         
         
-        <a href="/tags/rails/">#rails</a>
-        
-        , 
-        <a href="/tags/rspec/">#rspec</a>
+        <a href="/tags/ubuntu/">#ubuntu</a>
         
     
 </aside>
 
     
 
-    <p>I have a rails app, that uses Devise for authentication and CanCan for authorization. There is a group of controllers in my application, that should be accessible by administrators only. I was thinking about a DRY way to test these resources and their accessibility by administrators only (using request specs with RSpec and Capybara).</p>
+    
 
-<p>The idea is to have shared examples, which try to visit resource url as unauthenicated user, authenicated non-privileged user and administrator, and check if desired resource was loaded or not. I will show, how I used RSpec&rsquo;s shared examples (with resource url as parameter) for this.</p>
+<p><strong>Update:</strong> Following instructions also work for Ubuntu 14.04 LTS Trusty Tahr 64 bit.</p>
 
-<p>Create shared example group in <code>request_shared_examples.rb</code> file in <code>spec/support</code> directory:</p>
+<p>After upgrading to Ubuntu 13.10 (Saucy) 64 bits, I had troubles installing Adobe Air and Elance Tracker air application. None of the guides available online worked for me. The guide that I used to install it on Ubuntu 13.04 didn&rsquo;t work either. I would be happy not to use this piece of crap by Adobe, but, unfortunately,  Elance doesn&rsquo;t want to build native tracker application for Linux, and I need it for my freelance work.</p>
 
-<pre><code>shared_examples &quot;accessible by admin&quot; do |url|
-  let(:url_path) { send(url) }
+<p>After spending several hours digging around, finally I managed to install both Adobe Air and Elance Tracker application on my Ubuntu 13.10 64 box. Here is small guide for future reference.</p>
 
-  context &quot;unauthenticated&quot; do
-    it &quot;redirects to root page with error&quot; do
-      visit url_path
-      current_path.should == root_path
-      page.should have_selector(&quot;.alert-error&quot;)
-    end
-  end
+<h2 id="installing-adobe-air">Installing Adobe Air</h2>
 
-  context &quot;for unauthorized user&quot; do
-    it &quot;redirects to root page with error&quot; do
-      login_user(admin: false)
-      visit url_path
-      current_path.should == root_path
-      page.should have_selector(&quot;.alert-error&quot;)
-    end
-  end
+<ol>
+<li><p>Install i386 libraries, that are required for successful installation and running of Adobe Air and air applications:</p>
 
-  context &quot;for authorized user&quot; do
-    it &quot;displays page without errors&quot; do
-      login_user(admin: true)
-      visit url_path
-      current_path.should == url_path
-      page.should_not have_selector(&quot;.alert-error&quot;)
-    end
-  end
-end
+<pre><code>sudo apt-get install libxt6:i386 libnspr4-0d:i386 libgtk2.0-0:i386 libstdc++6:i386 libnss3-1d:i386 lib32nss-mdns libxml2:i386 libxslt1.1:i386 libcanberra-gtk-module:i386 gtk2-engines-murrine:i386
+</code></pre></li>
+
+<li><p>Install libgnome-keyring0:i386:</p>
+
+<pre><code>sudo apt-get install libgnome-keyring0:i386
 </code></pre>
 
-<p>Include these examples in your specs with <code>it_should_behave_like</code> method:</p>
+<p><strong>If installation was successful, proceed to step 3.</strong></p>
 
-<pre><code>describe &quot;Items&quot;, :type =&gt; :request do
-  it_should_behave_like(&quot;accessible by admin&quot;, :admin_items_path)
-  # other examples
-end
+<p>Sometimes, it can&rsquo;t be installed using <code>apt-get</code>, causing error with dependencies. So we&rsquo;ll need to download it and install manually. In fact, this is easy.</p>
 
-describe &quot;Categories&quot;, :type =&gt; :request do
-  it_should_behave_like(&quot;accessible by admin&quot;, :admin_categories_path)
-  # other examples
-end
+<p>download deb-package using apt-get to <code>/tmp</code>:</p>
+
+<pre><code>cd /tmp
+sudo apt-get download libgnome-keyring0:i386
 </code></pre>
 
-<p><strong>NOTE</strong>: I&rsquo;m passing url helpers&rsquo; names as symbols and evaluate them in shared example group (with <code>let</code> and <code>send</code>), because they can&rsquo;t be evaluated in ExampleGroup context.</p>
+<p>extract deb-package into <code>gnome-keyring</code> subfolder (<strong>note version in the file name, it may be different</strong>):</p>
+
+<pre><code>sudo dpkg-deb -R libgnome-keyring0_3.8.0-2_i386.deb gnome-keyring
+</code></pre>
+
+<p>install library in the system by copying:</p>
+
+<pre><code>sudo cp gnome-keyring/usr/lib/i386-linux-gnu/libgnome-keyring.so.0.2.0 /usr/lib/i386-linux-gnu/
+
+sudo ln -s /usr/lib/i386-linux-gnu/libgnome-keyring.so.0.2.0 /usr/lib/i386-linux-gnu/libgnome-keyring.so.0
+</code></pre></li>
+
+<li><p>Create symlinks to gnome-keyring so Adobe Air could see it:</p>
+
+<pre><code>sudo ln -s /usr/lib/i386-linux-gnu/libgnome-keyring.so.0 /usr/lib/libgnome-keyring.so.0
+
+sudo ln -s /usr/lib/i386-linux-gnu/libgnome-keyring.so.0.2.0 /usr/lib/libgnome-keyring.so.0.2.0
+</code></pre></li>
+
+<li><p>Download Adobe Air installer from Adobe official site: <a href="http://helpx.adobe.com/air/kb/archived-air-sdk-version.html">http://helpx.adobe.com/air/kb/archived-air-sdk-version.html</a></p></li>
+
+<li><p>Install Adobe Air using downloaded installer (don&rsquo;t forget to allow execution of the installer file):</p>
+
+<pre><code>chmod a+x AdobeAIRInstaller.bin
+
+sudo ./AdobeAIRInstaller.bin
+</code></pre>
+
+<p>Adobe Air should be installed successfully now! Now you may remove excess symlinks:</p>
+
+<pre><code>sudo rm /usr/lib/libgnome-keyring.so.0
+
+sudo rm /usr/lib/libgnome-keyring.so.0.2.0
+</code></pre></li>
+</ol>
+
+<h2 id="installing-elance-tracker">Installing Elance Tracker</h2>
+
+<p>This is easy. Just download <code>TrackerSetup.deb</code> package from Elance official site, and install it using command:</p>
+
+<pre><code>    sudo dpkg -i TrackerSetup.deb
+</code></pre>
+
+<p>That&rsquo;s it.</p>
 
 
 </article>
@@ -156,12 +177,12 @@ end
     <ul>
         
         <li>
-            <a href="https://www.tkalin.com/blog_posts/using-console-vim-as-vim/-protocol-handler-in-ubuntu/"><i class="fa fa-chevron-circle-left"></i> Using console vim as vim:// protocol handler in Ubuntu</a>
+            <a href="https://www.tkalin.com/blog_posts/protecting-staging/testing-site-area/"><i class="fa fa-chevron-circle-left"></i> Protecting staging/testing site area</a>
         </li>
         
         
         <li>
-            <a href="https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3.2-paperclip-html5-and-no-javascript/">Multiple file upload with Rails 3.2, paperclip, html5 and no javascript <i class="fa fa-chevron-circle-right"></i> </a>
+            <a href="https://www.tkalin.com/blog_posts/quick-postgresql-server-optimization-for-development-or-integration-server/">Quick PostgreSQL server optimization for development (or integration server) <i class="fa fa-chevron-circle-right"></i> </a>
         </li>
         
     </ul>
