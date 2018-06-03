@@ -45,10 +45,10 @@ Here is a demo showing how this plugin works for Ruby file, but it&amp;rsquo;s n
     
     <item>
       <title>Rails 4: Disable assets caching for development/test environments</title>
-      <link>https://www.tkalin.com/blog_posts/rails-4-disable-assets-caching-for-development/test-environments/</link>
+      <link>https://www.tkalin.com/blog_posts/rails-4-disable-assets-caching-for-development-test-environments/</link>
       <pubDate>Thu, 27 Feb 2014 09:00:00 +0000</pubDate>
       
-      <guid>https://www.tkalin.com/blog_posts/rails-4-disable-assets-caching-for-development/test-environments/</guid>
+      <guid>https://www.tkalin.com/blog_posts/rails-4-disable-assets-caching-for-development-test-environments/</guid>
       <description>Ruby on Rails by default caches pre-compiled assets (sass, coffeescripts) to tmp/cache/assets directory in development and test environments. It makes page loading in development and running test faster (when assets are already precompiled), but may cause some weird bugs.
 For example, when I was upgrading my Rails 3.2 application to Rails 4, I noticed that there are deprecation messages on CI server, but not on my local machine. I started investigating it and found, that these deprecation messages come from SASS file in one of my gems (it was twitter bootstrap 2.</description>
     </item>
@@ -75,10 +75,10 @@ After upgrading to Ubuntu 13.10 (Saucy) 64 bits, I had troubles installing Adobe
     
     <item>
       <title>Protecting staging/testing site area</title>
-      <link>https://www.tkalin.com/blog_posts/protecting-staging/testing-site-area/</link>
+      <link>https://www.tkalin.com/blog_posts/protecting-staging-testing-site-area/</link>
       <pubDate>Mon, 30 Jul 2012 21:30:00 +0000</pubDate>
       
-      <guid>https://www.tkalin.com/blog_posts/protecting-staging/testing-site-area/</guid>
+      <guid>https://www.tkalin.com/blog_posts/protecting-staging-testing-site-area/</guid>
       <description>It seems, that the easiest way to protect staging/testing version of the (rails) application from search engines and undesired users is using HTTP Basic Authentication. Configuring it for nginx is very easy and well documented.
 First, enable HTTP Basic Authentication and specify passwords file location. To do this, add these lines to the site&amp;rsquo;s server config:
 auth_basic &amp;quot;Testing Zone&amp;quot;; auth_basic_user_file /var/www/my_app/current/shared/config/.htpasswd;  Passwords file, specified in auth_basic_user_file directive, should store users and encrypted passwords in the following format:</description>
@@ -86,10 +86,10 @@ auth_basic &amp;quot;Testing Zone&amp;quot;; auth_basic_user_file /var/www/my_ap
     
     <item>
       <title>Multiple file upload with Rails 3.2, paperclip, html5 and no javascript</title>
-      <link>https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3.2-paperclip-html5-and-no-javascript/</link>
+      <link>https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3-2-paperclip-html5-and-no-javascript/</link>
       <pubDate>Fri, 25 May 2012 19:00:00 +0000</pubDate>
       
-      <guid>https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3.2-paperclip-html5-and-no-javascript/</guid>
+      <guid>https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3-2-paperclip-html5-and-no-javascript/</guid>
       <description>Today, I was looking for a simple multiple file upload solution for Ruby on Rails 3.2 with paperclip 3.0.4 and found several jQuery and Flash solutions, like Uploadify or jQuery-File-Upload, buy they seemed to be too heavy and complicated for my case. I didn&amp;rsquo;t need asynchronous upload and other features they provide, I only needed really simple (ideally pure html) solution to save several images for my Item model with regular form submit, but with possibility to select all images at once (in one input field).</description>
     </item>
     
@@ -105,20 +105,20 @@ The idea is to have shared examples, which try to visit resource url as unauthen
     
     <item>
       <title>Using console vim as vim:// protocol handler in Ubuntu</title>
-      <link>https://www.tkalin.com/blog_posts/using-console-vim-as-vim/-protocol-handler-in-ubuntu/</link>
+      <link>https://www.tkalin.com/blog_posts/using-console-vim-as-vim-protocol-handler-in-ubuntu/</link>
       <pubDate>Mon, 23 Apr 2012 11:00:00 +0000</pubDate>
       
-      <guid>https://www.tkalin.com/blog_posts/using-console-vim-as-vim/-protocol-handler-in-ubuntu/</guid>
+      <guid>https://www.tkalin.com/blog_posts/using-console-vim-as-vim-protocol-handler-in-ubuntu/</guid>
       <description>Do you want your browser to launch console vim and open specified file on specified line when you click link like this: vim:///etc/hosts&amp;amp;line=10? This article will show how to register console vim as vim:// protocol handler in Ubuntu 11.10. Just follow these steps:
 1. Create vim launcher script We&amp;rsquo;ll need small vim launcher script, which will handle vim://... uri. As a ruby programmer I wrote this script in Ruby (so it requires Ruby to be installed), but it can be rewritten to Perl/Python or even Bash.</description>
     </item>
     
     <item>
       <title>Broadcasting your rhythmbox in ubuntu 11.10 </title>
-      <link>https://www.tkalin.com/blog_posts/broadcasting-your-rhythmbox-in-ubuntu-11.10/</link>
+      <link>https://www.tkalin.com/blog_posts/broadcasting-your-rhythmbox-in-ubuntu-11-10/</link>
       <pubDate>Fri, 30 Mar 2012 11:00:00 +0000</pubDate>
       
-      <guid>https://www.tkalin.com/blog_posts/broadcasting-your-rhythmbox-in-ubuntu-11.10/</guid>
+      <guid>https://www.tkalin.com/blog_posts/broadcasting-your-rhythmbox-in-ubuntu-11-10/</guid>
       <description>Once I decided to setup my rhythmbox broadcasting into local network (so my wife or home media player could connect and listen), and didn&amp;rsquo;t find any comprehensive guide, so I decided to write my own when I managed to configure it.
 I found a couple rhythmbox plugins for that, but they didn&amp;rsquo;t work for me, so I stopped on icecast plus darkice.
 Installing and configuring icecast Icecast is free server software for streaming multimedia.</description>
@@ -126,20 +126,20 @@ Installing and configuring icecast Icecast is free server software for streaming
     
     <item>
       <title>Calling GNOME/KDE default application from NERDTree</title>
-      <link>https://www.tkalin.com/blog_posts/calling-gnome/kde-default-application-from-nerdtree/</link>
+      <link>https://www.tkalin.com/blog_posts/calling-gnome-kde-default-application-from-nerdtree/</link>
       <pubDate>Fri, 03 Feb 2012 11:00:00 +0000</pubDate>
       
-      <guid>https://www.tkalin.com/blog_posts/calling-gnome/kde-default-application-from-nerdtree/</guid>
+      <guid>https://www.tkalin.com/blog_posts/calling-gnome-kde-default-application-from-nerdtree/</guid>
       <description>Sometimes it is really nice to be able to call system default application for file or directory from vim. For example open Document Reader for a pdf file or browse directory with images with Nautilus. I didn&amp;rsquo;t find working solution for NERDTree, which I use for file system navigation in vim, so I wrote simple plugin for it.
 What it does, it simply creates new menu item e(x)ecute in NERDTree menu, which executes system default application for selected file or directory.</description>
     </item>
     
     <item>
       <title>Navigating your Rails project codebase  with vim</title>
-      <link>https://www.tkalin.com/blog_posts/navigating-your-rails-project-codebase--with-vim/</link>
+      <link>https://www.tkalin.com/blog_posts/navigating-your-rails-project-codebase-with-vim/</link>
       <pubDate>Sat, 10 Dec 2011 11:00:00 +0000</pubDate>
       
-      <guid>https://www.tkalin.com/blog_posts/navigating-your-rails-project-codebase--with-vim/</guid>
+      <guid>https://www.tkalin.com/blog_posts/navigating-your-rails-project-codebase-with-vim/</guid>
       <description>When you work with source code, it is always nice to have the abilty to quickly jump to class/method definitions for either your own code or code from one of your ruby gems. This articles describes how to do this in vim with exuberant ctags, guard, and guard-ctags-bundler.
 Tags  A tag is an identifier that appears in a &amp;ldquo;tags&amp;rdquo; file. It is a sort of label that can be jumped to.</description>
     </item>

@@ -1,256 +1,202 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
 
-  <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width initial-scale=1">
+<html lang="en-us">
 
-<title>Multiple file upload with Rails 3.2, paperclip, html5 and no javascript</title>
-<meta name="description" content="Multiple file upload with Rails 3.2, paperclip, html5 and no javascript">
-<meta name="keywords" content="rails, ruby, paperclip, multiple file upload, html5">
-
-<link rel="stylesheet" href="/css/main.css">
-<link rel="canonical" href="https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3-2-paperclip-html5-and-no-javascript/">
-<link rel="alternate" type="application/atom+xml" title="Ivan Tkalin" href="https://www.tkalin.com/feed.xml" />
-<link href="/assets/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
-
-<!-- <script type="text/javascript">                                                     -->
-<!--     var host = "www.tkalin.com";                                                    -->
-<!--     if ((host == window.location.host) && (window.location.protocol != "https:")) { -->
-<!--       window.location.protocol = "https";                                           -->
-<!--     }                                                                               -->
-<!-- </script>                                                                           -->
-
+<head>
+  <title>Ivan Tkalin</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The HTML5 Herald" />
+  <meta name="author" content="Ivan Tkalin" />
+  <meta name="generator" content="Hugo 0.41" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Roboto+Condensed|Oswald" />
+  <link rel="stylesheet" type="text/css" href="/css/styles-v2.css" />
+  <link rel="alternate" type="application/atom+xml" title="Ivan Tkalin" href="/index.xml" />
+  <link href="/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 </head>
 
+<body>
+  <div id="container">
+    <header>
+      <h1>
+        <a href="/">Ivan Tkalin</a>
+      </h1>
 
-  <body>
-    <nav class="navbar navbar-default navbar-static-top">
+      <ul id="social-media">
+        
+        <li><a href="https://twitter.com/ivalkeen"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+         
+        <li><a href="https://www.linkedin.com/in/ivan-tkalin-50338110"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+         
+        <li><a href="https://github.com/ivalkeen"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a></li>
+           
+        <li><a href="https://instagram.com/itkalin.photography"><i class="fa fa-instagram fa-lg" aria-hidden="true"></i></a></li>
+        
+      </ul>
 
-  <div class="container">
+      
+      <p class="tagline">I&rsquo;m a software engineer. I solve problems.</p>
+      
+    </header>
 
-    <div class="col-sm-12">
-
-      <div class="navbar-header">
-        <a class="navbar-brand" href="/">Ivan Tkalin</a>
-      </div>
-
-      <div class="collapse navbar-collapse">
-
-        <ul class="nav navbar-nav navbar-left">
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-        </ul>
-
-        <ul class="nav navbar-nav navbar-right">
-          <li>
-            <form class="navbar-form" action="https://www.google.com/search" method="get">
-              <div class="form-group">
-                <input type="hidden" name="as_sitesearch" value="www.tkalin.com">
-                <input class="form-control" type="text" name="as_q" placeholder="Search">
-              </div>
-            </form>
-          </li>
-          <li><a href="/feed.xml"><i class="svg-icon rss"></i></a></li>
-        </ul>
-
-      </div>
-
-    </div>
-
-  </div>
-
+    
+<nav>
+    <ul class="main">
+        
+        <li>
+            <a class="" href="/about/">
+            <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/posts/">
+            <i class="fa-li fa  fa-lg"></i><span>Posts</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/tags/">
+            <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+    </ul>
 </nav>
 
 
-    <div class="container">
-      <div class="col-sm-8">
-        <header>
-  <h1>Multiple file upload with Rails 3.2, paperclip, html5 and no javascript</h1>
-  <small class="text-muted">
-    <span class="glyphicon glyphicon-calendar"></span>
-    <span>May 25, 2012</span>
-    •
-    <span><a href="https://www.tkalin.com/blog_posts/multiple-file-upload-with-rails-3-2-paperclip-html5-and-no-javascript/#disqus_thread">No Comments</a></span>
-  </small>
-</header>
+    <main>
 
-<hr/>
+
+
 
 <article>
-  <p>Today, I was looking for a simple multiple file upload solution for <a href="https://github.com/rails/rails">Ruby on Rails 3.2</a> with <a href="https://github.com/thoughtbot/paperclip">paperclip 3.0.4</a> and found several jQuery and Flash solutions, like <a href="http://www.uploadify.com/">Uploadify</a> or <a href="https://github.com/blueimp/jQuery-File-Upload">jQuery-File-Upload</a>, buy they seemed to be too heavy and complicated for my case. I didn’t need asynchronous upload and other features they provide, I only needed really simple (ideally pure html) solution to save several images for my <code class="highlighter-rouge">Item</code> model with regular form submit, but with possibility to select all images at once (in one input field).</p>
 
-<p>Luckily, there is html5 attribute <code class="highlighter-rouge">multiple</code> for input <code class="highlighter-rouge">type='file'</code>, which is already supported by  modern browsers (Opera, Firefox, Chrome, Safari), and that’s pretty ok for me. In the following code snippet, I’ll show, how I used this attribute and how I marked up my rails form make it work with <a href="https://github.com/thoughtbot/paperclip">paperclip</a>.</p>
+    <h1>Multiple file upload with Rails 3.2, paperclip, html5 and no javascript</h1>
 
-<p><strong>Note:</strong> As soon as IE doesn’t support <code class="highlighter-rouge">multiple</code> attribute, the example below will allow to upload only one file for IE users.</p>
+    
+        <aside>
+    <time class="post-date" datetime="2012-05-25T19:00:00Z">May 25, 2012</time>
+    &nbsp;|&nbsp;
+    2 min read
+    
+    
+        &nbsp;|&nbsp;
+        
+        
+        <a href="/tags/rails/">#rails</a>
+        
+        , 
+        <a href="/tags/paperclip/">#paperclip</a>
+        
+    
+</aside>
+
+    
+
+    <p>Today, I was looking for a simple multiple file upload solution for <a href="https://github.com/rails/rails">Ruby on Rails 3.2</a> with <a href="https://github.com/thoughtbot/paperclip">paperclip 3.0.4</a> and found several jQuery and Flash solutions, like <a href="http://www.uploadify.com/">Uploadify</a> or <a href="https://github.com/blueimp/jQuery-File-Upload">jQuery-File-Upload</a>, buy they seemed to be too heavy and complicated for my case. I didn&rsquo;t need asynchronous upload and other features they provide, I only needed really simple (ideally pure html) solution to save several images for my <code>Item</code> model with regular form submit, but with possibility to select all images at once (in one input field).</p>
+
+<p>Luckily, there is html5 attribute <code>multiple</code> for input <code>type='file'</code>, which is already supported by  modern browsers (Opera, Firefox, Chrome, Safari), and that&rsquo;s pretty ok for me. In the following code snippet, I&rsquo;ll show, how I used this attribute and how I marked up my rails form make it work with <a href="https://github.com/thoughtbot/paperclip">paperclip</a>.</p>
+
+<p><strong>Note:</strong> As soon as IE doesn&rsquo;t support <code>multiple</code> attribute, the example below will allow to upload only one file for IE users.</p>
 
 <script src="https://gist.github.com/2790062.js"></script>
 
-<p>So basically I have <code class="highlighter-rouge">Item</code> model, which has many <code class="highlighter-rouge">AttachedAsset</code> models. <code class="highlighter-rouge">AttachedAsset</code> model is used to store image with paperclip. All code in models and controller is very simple and found in paperclip’s HOWTOs. The only non-obvious part is <code class="highlighter-rouge">file_field_tag</code> in the <code class="highlighter-rouge">new.html.haml</code> template – it has tricky <code class="highlighter-rouge">name</code> (to be handled as array of <code class="highlighter-rouge">asset</code> inside <code class="highlighter-rouge">attached_assets_attributes</code>) and <code class="highlighter-rouge">multiple</code> attributes is set to <code class="highlighter-rouge">true</code>.</p>
+<p>So basically I have <code>Item</code> model, which has many <code>AttachedAsset</code> models. <code>AttachedAsset</code> model is used to store image with paperclip. All code in models and controller is very simple and found in paperclip&rsquo;s HOWTOs. The only non-obvious part is <code>file_field_tag</code> in the <code>new.html.haml</code> template &ndash; it has tricky <code>name</code> (to be handled as array of <code>asset</code> inside <code>attached_assets_attributes</code>) and <code>multiple</code> attributes is set to <code>true</code>.</p>
 
-  
-    <a href="/tag/rails">rails</a>
-  
-    <a href="/tag/paperclip">paperclip</a>
-  
+
 </article>
 
-<hr />
 
-<footer>
-  <div>
-    <!-- share buttons -->
-    <a href="https://twitter.com/share" class="twitter-share-button" data-via="ivalkeen">Tweet</a>
-    <div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
-  </div>
-  <hr/>
-  <div id="disqus_thread"></div>
-</footer>
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://www.tkalin.com/blog_posts/testing-authorization-using-rspec-parametrized-shared-examples/"><i class="fa fa-chevron-circle-left"></i> Testing authorization using RSpec parametrized shared examples </a>
+        </li>
+        
+        
+        <li>
+            <a href="https://www.tkalin.com/blog_posts/protecting-staging-testing-site-area/">Protecting staging/testing site area <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+    
+        <section class="comments-block">
+  <br/>
+      <button id="show-comments" style="display: block;"><i class="fa fa-comments-o"></i> Add/View Comments</button>
+  <br/>
+</section>
 
-<!-- twitter init -->
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+<section id="disqus_thread"></section>
 
-
-<!-- facebook init -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=1645955732290194";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
-<script type="text/javascript">
-  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-  var disqus_shortname = 'tkalincom'; // required: replace example with your forum shortname
-
-  /* * * DON'T EDIT BELOW THIS LINE * * */
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-      </div>
-      <div class="col-sm-3 col-sm-offset-1">
-        <div class="text-justify">
-  <img src="/assets/avatar.jpg" alt="Ivan Tkalin" class="img-circle" />
-</div>
-
-<hr />
-
-<p class="text-justify">
-  <small>
-    I'm <strong>Ivan Tkalin</strong>, a professional software developer, located in <strong>Berlin, Germany</strong>.
-  </small>
-</p>
-
-<p class="text-justify">
-  <small>
-    Currently I'm interested in everything related to <strong>Ruby</strong>, <strong>JavaScript</strong>, <strong>PostgreSQL</strong>, <strong>HTML/CSS</strong>, <strong>Linux</strong>, <strong>Git</strong> and <strong>Vim</strong>.
-  </small>
-</p>
-
-<p class="text-justify">
-  <small>
-    If you want to contact me, please <a href="mailto:itkalin@gmail.com">send me an email</a>
-  </small>
-</p>
-
-<p class="text-justify">
-  <small>
-    Feel free to follow me on <a href="http://twitter.com/ivalkeen">twitter</a> and <a href="http://github.com/ivalkeen">github</a>
-  </small>
-</p>
-
-<hr />
-
-<ul class='list-inline text-center'>
-  <li>
-    <a href="https://github.com/ivalkeen"><i class="svg-icon large github"></i></a>
-  </li>
-  <li>
-    <a href="https://stackoverflow.com/users/188975/ivalkeen"><i class="svg-icon large stackoverflow"></i></a>
-  </li>
-  <li>
-    <a href="https://twitter.com/ivalkeen"><i class="svg-icon large twitter"></i></a>
-  </li>
-  <li>
-    <a href="http://de.linkedin.com/pub/ivan-tkalin/10/381/503/"><i class="svg-icon large linkedin"></i></a>
-  </li>
-</ul>
-
-      </div>
-    </div>
-
-    <footer>
-  <hr />
-
-  <div class="container">
-    <p class="text-center text-muted"><small>(c) Ivan Tkalin</small></p>
-  </div>
-</footer>
-
-
-    <script type="text/javascript">
-  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-  var disqus_shortname = 'tkalincom'; // required: replace example with your forum shortname
-
-  /* * * DON'T EDIT BELOW THIS LINE * * */
-  (function () {
-    var s = document.createElement('script'); s.async = true;
-    s.type = 'text/javascript';
-    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-  }());
-</script>
-
-    <!-- *Google Analytics code*/ -->
 <script>
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-33991324-1']);
-  _gaq.push(['_setDomainName', 'tkalin.com']);
-  _gaq.push(['_trackPageview']);
+      (function () {
+            
+            
+            if (window.location.hostname == "localhost")
+                  return;
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+            var disqus_loaded = false;
+            var disqus_shortname = 'tkalincom';
+            var disqus_button = document.getElementById("show-comments");
+
+            disqus_button.style.display = "";
+            disqus_button.addEventListener("click", disqus, false);
+
+            function disqus() {
+
+                  if (!disqus_loaded) {
+                        disqus_loaded = true;
+
+                        var e = document.createElement("script");
+                        e.type = "text/javascript";
+                        e.async = true;
+                        e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+                        (document.getElementsByTagName("head")[0] ||
+                              document.getElementsByTagName("body")[0])
+                        .appendChild(e);
+
+                        
+                        document.getElementById("show-comments").style.display = "none";
+                  }
+            }
+
+            
+            var hash = window.location.hash.substr(1);
+            if (hash.length > 8) {
+                  if (hash.substring(0, 8) == "comment-") {
+                        disqus();
+                  }
+            }
+
+            
+            if (/bot|google|baidu|bing|msn|duckduckgo|slurp|yandex/i.test(navigator.userAgent)) {
+                  disqus();
+            }
+      })();
 </script>
 
-  </body>
+    
+
+
+
+
+
+</main>
+    <footer>
+      <p>
+        © Ivan Tkalin
+            
+            |
+            <a href="index.xml">Subscribe</a>
+      </p>
+    </footer>
+</div>
+<script src="/js/scripts.js"></script>
+</body>
+
 </html>

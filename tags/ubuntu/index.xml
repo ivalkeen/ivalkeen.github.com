@@ -24,20 +24,20 @@ After upgrading to Ubuntu 13.10 (Saucy) 64 bits, I had troubles installing Adobe
     
     <item>
       <title>Using console vim as vim:// protocol handler in Ubuntu</title>
-      <link>https://www.tkalin.com/blog_posts/using-console-vim-as-vim/-protocol-handler-in-ubuntu/</link>
+      <link>https://www.tkalin.com/blog_posts/using-console-vim-as-vim-protocol-handler-in-ubuntu/</link>
       <pubDate>Mon, 23 Apr 2012 11:00:00 +0000</pubDate>
       
-      <guid>https://www.tkalin.com/blog_posts/using-console-vim-as-vim/-protocol-handler-in-ubuntu/</guid>
+      <guid>https://www.tkalin.com/blog_posts/using-console-vim-as-vim-protocol-handler-in-ubuntu/</guid>
       <description>Do you want your browser to launch console vim and open specified file on specified line when you click link like this: vim:///etc/hosts&amp;amp;line=10? This article will show how to register console vim as vim:// protocol handler in Ubuntu 11.10. Just follow these steps:
 1. Create vim launcher script We&amp;rsquo;ll need small vim launcher script, which will handle vim://... uri. As a ruby programmer I wrote this script in Ruby (so it requires Ruby to be installed), but it can be rewritten to Perl/Python or even Bash.</description>
     </item>
     
     <item>
       <title>Broadcasting your rhythmbox in ubuntu 11.10 </title>
-      <link>https://www.tkalin.com/blog_posts/broadcasting-your-rhythmbox-in-ubuntu-11.10/</link>
+      <link>https://www.tkalin.com/blog_posts/broadcasting-your-rhythmbox-in-ubuntu-11-10/</link>
       <pubDate>Fri, 30 Mar 2012 11:00:00 +0000</pubDate>
       
-      <guid>https://www.tkalin.com/blog_posts/broadcasting-your-rhythmbox-in-ubuntu-11.10/</guid>
+      <guid>https://www.tkalin.com/blog_posts/broadcasting-your-rhythmbox-in-ubuntu-11-10/</guid>
       <description>Once I decided to setup my rhythmbox broadcasting into local network (so my wife or home media player could connect and listen), and didn&amp;rsquo;t find any comprehensive guide, so I decided to write my own when I managed to configure it.
 I found a couple rhythmbox plugins for that, but they didn&amp;rsquo;t work for me, so I stopped on icecast plus darkice.
 Installing and configuring icecast Icecast is free server software for streaming multimedia.</description>

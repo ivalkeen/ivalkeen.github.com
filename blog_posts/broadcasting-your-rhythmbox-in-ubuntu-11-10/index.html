@@ -1,114 +1,103 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
 
-  <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width initial-scale=1">
+<html lang="en-us">
 
-<title>Broadcasting your rhythmbox in ubuntu 11.10 </title>
-<meta name="description" content="Broadcasting your rhythmbox in ubuntu 11.10 ">
-<meta name="keywords" content="ubuntu, rhythmbox, icecast2, darkice">
-
-<link rel="stylesheet" href="/css/main.css">
-<link rel="canonical" href="https://www.tkalin.com/blog_posts/broadcasting-your-rhythmbox-in-ubuntu-11-10/">
-<link rel="alternate" type="application/atom+xml" title="Ivan Tkalin" href="https://www.tkalin.com/feed.xml" />
-<link href="/assets/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
-
-<!-- <script type="text/javascript">                                                     -->
-<!--     var host = "www.tkalin.com";                                                    -->
-<!--     if ((host == window.location.host) && (window.location.protocol != "https:")) { -->
-<!--       window.location.protocol = "https";                                           -->
-<!--     }                                                                               -->
-<!-- </script>                                                                           -->
-
+<head>
+  <title>Ivan Tkalin</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="The HTML5 Herald" />
+  <meta name="author" content="Ivan Tkalin" />
+  <meta name="generator" content="Hugo 0.41" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Roboto+Condensed|Oswald" />
+  <link rel="stylesheet" type="text/css" href="/css/styles-v2.css" />
+  <link rel="alternate" type="application/atom+xml" title="Ivan Tkalin" href="/index.xml" />
+  <link href="/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 </head>
 
+<body>
+  <div id="container">
+    <header>
+      <h1>
+        <a href="/">Ivan Tkalin</a>
+      </h1>
 
-  <body>
-    <nav class="navbar navbar-default navbar-static-top">
+      <ul id="social-media">
+        
+        <li><a href="https://twitter.com/ivalkeen"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+         
+        <li><a href="https://www.linkedin.com/in/ivan-tkalin-50338110"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+         
+        <li><a href="https://github.com/ivalkeen"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a></li>
+           
+        <li><a href="https://instagram.com/itkalin.photography"><i class="fa fa-instagram fa-lg" aria-hidden="true"></i></a></li>
+        
+      </ul>
 
-  <div class="container">
+      
+      <p class="tagline">I&rsquo;m a software engineer. I solve problems.</p>
+      
+    </header>
 
-    <div class="col-sm-12">
-
-      <div class="navbar-header">
-        <a class="navbar-brand" href="/">Ivan Tkalin</a>
-      </div>
-
-      <div class="collapse navbar-collapse">
-
-        <ul class="nav navbar-nav navbar-left">
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-        </ul>
-
-        <ul class="nav navbar-nav navbar-right">
-          <li>
-            <form class="navbar-form" action="https://www.google.com/search" method="get">
-              <div class="form-group">
-                <input type="hidden" name="as_sitesearch" value="www.tkalin.com">
-                <input class="form-control" type="text" name="as_q" placeholder="Search">
-              </div>
-            </form>
-          </li>
-          <li><a href="/feed.xml"><i class="svg-icon rss"></i></a></li>
-        </ul>
-
-      </div>
-
-    </div>
-
-  </div>
-
+    
+<nav>
+    <ul class="main">
+        
+        <li>
+            <a class="" href="/about/">
+            <i class="fa-li fa  fa-lg"></i><span>About</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/posts/">
+            <i class="fa-li fa  fa-lg"></i><span>Posts</span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="" href="/tags/">
+            <i class="fa-li fa  fa-lg"></i><span>Tags</span>
+            </a>
+        </li>
+        
+    </ul>
 </nav>
 
 
-    <div class="container">
-      <div class="col-sm-8">
-        <header>
-  <h1>Broadcasting your rhythmbox in ubuntu 11.10 </h1>
-  <small class="text-muted">
-    <span class="glyphicon glyphicon-calendar"></span>
-    <span>Mar 30, 2012</span>
-    •
-    <span><a href="https://www.tkalin.com/blog_posts/broadcasting-your-rhythmbox-in-ubuntu-11-10/#disqus_thread">No Comments</a></span>
-  </small>
-</header>
+    <main>
 
-<hr/>
+
+
 
 <article>
-  <p>Once I decided to setup my rhythmbox broadcasting into local network (so my wife or home media player could connect and listen), and didn’t find any comprehensive guide, so I decided to write my own when I managed to configure it.</p>
 
-<p>I found a couple rhythmbox plugins for that, but they didn’t work for me, so I stopped on <code class="highlighter-rouge">icecast</code> plus <code class="highlighter-rouge">darkice</code>.</p>
+    <h1>Broadcasting your rhythmbox in ubuntu 11.10 </h1>
+
+    
+        <aside>
+    <time class="post-date" datetime="2012-03-30T11:00:00Z">Mar 30, 2012</time>
+    &nbsp;|&nbsp;
+    3 min read
+    
+    
+        &nbsp;|&nbsp;
+        
+        
+        <a href="/tags/ubuntu/">#ubuntu</a>
+        
+    
+</aside>
+
+    
+
+    
+
+<p>Once I decided to setup my rhythmbox broadcasting into local network (so my wife or home media player could connect and listen), and didn&rsquo;t find any comprehensive guide, so I decided to write my own when I managed to configure it.</p>
+
+<p>I found a couple rhythmbox plugins for that, but they didn&rsquo;t work for me, so I stopped on <code>icecast</code> plus <code>darkice</code>.</p>
 
 <h2 id="installing-and-configuring-icecast">Installing and configuring icecast</h2>
 
@@ -116,32 +105,29 @@
 
 <h3 id="installation">Installation</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>sudo aptitude install icecast2
+<pre><code>sudo aptitude install icecast2
 </code></pre>
-</div>
 
 <h3 id="configuration">Configuration</h3>
 
 <ol>
-  <li>Open the file <code class="highlighter-rouge">/etc/icecast2/icecast.xml</code> as root and change all passwords in <code class="highlighter-rouge">authentication</code> section. You will use <code class="highlighter-rouge">source-password</code> to connect darkice and <code class="highlighter-rouge">admin-password</code> for admin web-interface.</li>
-  <li>Change <code class="highlighter-rouge">hostname</code> parameter if you want to stream over the internet, or just leave <code class="highlighter-rouge">localhost</code> for local network.</li>
-  <li>To enable icecast daemon, change flag to <code class="highlighter-rouge">ENABLED=true</code> in <code class="highlighter-rouge">/etc/default/icecast2</code> file.</li>
+<li>Open the file <code>/etc/icecast2/icecast.xml</code> as root and change all passwords in <code>authentication</code> section. You will use <code>source-password</code> to connect darkice and <code>admin-password</code> for admin web-interface.</li>
+<li>Change <code>hostname</code> parameter if you want to stream over the internet, or just leave <code>localhost</code> for local network.</li>
+<li>To enable icecast daemon, change flag to <code>ENABLED=true</code> in <code>/etc/default/icecast2</code> file.</li>
 </ol>
 
-<p>Icecast will run on port 8000 (configurable), so you can access admin interface by this url: <code class="highlighter-rouge">http://localhost:8000</code></p>
+<p>Icecast will run on port 8000 (configurable), so you can access admin interface by this url: <code>http://localhost:8000</code></p>
 
 <p>You can start and stop icecast server using following commands</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>sudo /etc/init.d/icecast2 start
+<pre><code>sudo /etc/init.d/icecast2 start
 sudo /etc/init.d/icecast2 stop
 </code></pre>
-</div>
 
-<p>Note: if you (like me) don’t want icecast2 to be started automatically, you can disable it:</p>
+<p>Note: if you (like me) don&rsquo;t want icecast2 to be started automatically, you can disable it:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>sudo update-rc.d icecast2 disable
+<pre><code>sudo update-rc.d icecast2 disable
 </code></pre>
-</div>
 
 <h2 id="installing-and-configuring-darkice">Installing and configuring darkice</h2>
 
@@ -149,227 +135,177 @@ sudo /etc/init.d/icecast2 stop
 
 <h3 id="installation-1">Installation</h3>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>sudo aptitude install darkice
+<pre><code>sudo aptitude install darkice
 </code></pre>
-</div>
 
 <h3 id="configuration-1">Configuration</h3>
 
 <ol>
-  <li>
-    <p>Copy example darkice configuration to your home folder:</p>
+<li><p>Copy example darkice configuration to your home folder:</p>
 
-    <div class="highlighter-rouge"><pre class="highlight"><code> cp /usr/share/doc/darkice/examples/darkice.cfg ~/
+<pre><code>cp /usr/share/doc/darkice/examples/darkice.cfg ~/
+</code></pre></li>
+
+<li><p>Open <code>~/darkice.cfg</code> in your favourite editor and configure like this:</p>
+
+<pre><code>[general]
+duration        = 0
+bufferSecs      = 1
+reconnect       = yes
+
+[input]
+device          = pulse
+sampleRate      = 44100
+bitsPerSample   = 16
+channel         = 2
+
+[icecast2-0]
+bitrateMode     = cbr
+format          = vorbis
+bitrate         = 320
+server          = localhost
+port            = 8000
+password        = &lt;your-icecast-source-password&gt;
+mountPoint      = sample.ogg
+name            = sample
 </code></pre>
-    </div>
-  </li>
-  <li>
-    <p>Open <code class="highlighter-rouge">~/darkice.cfg</code> in your favourite editor and configure like this:</p>
 
-    <div class="highlighter-rouge"><pre class="highlight"><code> [general]
- duration        = 0
- bufferSecs      = 1
- reconnect       = yes
+<p>Note: change <code>&lt;your-icecast-source-password&gt;</code> to source-password from your <code>icecast.xml</code></p>
 
- [input]
- device          = pulse
- sampleRate      = 44100
- bitsPerSample   = 16
- channel         = 2
+<p>I&rsquo;m using Ogg Vorbis stream here, but you also can use mp3 stream just change <code>format</code> from <code>vorbis</code> to <code>mp3</code> and <code>mountpoint</code> to <code>sample.mp3</code>.</p></li>
 
- [icecast2-0]
- bitrateMode     = cbr
- format          = vorbis
- bitrate         = 320
- server          = localhost
- port            = 8000
- password        = &lt;your-icecast-source-password&gt;
- mountPoint      = sample.ogg
- name            = sample
-</code></pre>
-    </div>
+<li><p>Run darkice</p>
 
-    <p>Note: change <code class="highlighter-rouge">&lt;your-icecast-source-password&gt;</code> to source-password from your <code class="highlighter-rouge">icecast.xml</code></p>
-
-    <p>I’m using Ogg Vorbis stream here, but you also can use mp3 stream just change <code class="highlighter-rouge">format</code> from <code class="highlighter-rouge">vorbis</code> to <code class="highlighter-rouge">mp3</code> and <code class="highlighter-rouge">mountpoint</code> to <code class="highlighter-rouge">sample.mp3</code>.</p>
-  </li>
-  <li>
-    <p>Run darkice</p>
-
-    <div class="highlighter-rouge"><pre class="highlight"><code> sudo /etc/init.d/icecast2 start
- sudo darkice -c ~/darkice.cfg
-</code></pre>
-    </div>
-  </li>
+<pre><code>sudo /etc/init.d/icecast2 start
+sudo darkice -c ~/darkice.cfg
+</code></pre></li>
 </ol>
 
-<p>After that you can connect your clients to url: <code class="highlighter-rouge">http://&lt;your-ip&gt;:8000/sample.ogg</code> and they will hear your pulseaudio input.</p>
+<p>After that you can connect your clients to url: <code>http://&lt;your-ip&gt;:8000/sample.ogg</code> and they will hear your pulseaudio input.</p>
 
 <h2 id="streaming-your-pulseaudio-output-instead-of-input">Streaming your pulseaudio output instead of input</h2>
 
 <p>As I said, after all steps above are completed, your clients will hear your input (microphone or line-in) instead of your output. You have several choices here:</p>
 
 <ol>
-  <li>Connect your input to your output via audio cable. Most simple, but less flexible solution. No other instruction required for that.</li>
-  <li>Configure pulseaudio to redirect all your output to darkice input.
-    <ul>
-      <li>Install pavucontrol <code class="highlighter-rouge">sudo aptitude install pavucontrol</code></li>
-      <li>Ensure you are running <code class="highlighter-rouge">icecast2</code> and <code class="highlighter-rouge">darkice</code> as described above</li>
-      <li>Launch <code class="highlighter-rouge">pavucontrol</code> GUI</li>
-      <li>Open the ‘Recording’ tab</li>
-      <li>Find <code class="highlighter-rouge">ALSA plugin [darkice]:</code> and change it’s source to <code class="highlighter-rouge">Monitor of &lt;your-sound-source&gt;</code> using button near speaker icon</li>
-      <li>That’s it, connect your clients to <code class="highlighter-rouge">http://&lt;your-ip&gt;:8000/sample.ogg</code></li>
-    </ul>
-  </li>
-  <li>Configure pulseaudio to redirect just your rhythmbox (or other player’s) output to darkice. This is what I’ve chosen because I keep all my other sounds in my laptop speakers and stream only music played by rhythmbox. But this will work only if you have several output sources like me (I have main output and HDMI output through my videocard)
-    <ul>
-      <li>Install pavucontrol <code class="highlighter-rouge">sudo aptitude install pavucontrol</code></li>
-      <li>Ensure you are running <code class="highlighter-rouge">icecast2</code> and <code class="highlighter-rouge">darkice</code> as described above</li>
-      <li>Launch <code class="highlighter-rouge">pavucontrol</code> GUI</li>
-      <li>Open the ‘Recording’ tab</li>
-      <li>Find <code class="highlighter-rouge">ALSA plugin [darkice]:</code> and change it’s source to <code class="highlighter-rouge">Monitor of &lt;your-secondary-source&gt;</code> using button near speaker icon (I’ve chose HDMI here)</li>
-      <li>Open the ‘Playback’ tab</li>
-      <li>Find <code class="highlighter-rouge">Rhythmbox section</code> (rhythmbox should be running) and change and change it’s destination to ‘<your-secondary-source>' using button near speaker icon (I've chose HDMI here)</your-secondary-source></li>
-      <li>That’s it, connect your clients to <code class="highlighter-rouge">http://&lt;your-ip&gt;:8000/sample.ogg</code></li>
-    </ul>
-  </li>
+<li>Connect your input to your output via audio cable. Most simple, but less flexible solution. No other instruction required for that.</li>
+<li>Configure pulseaudio to redirect all your output to darkice input.
+
+<ul>
+<li>Install pavucontrol <code>sudo aptitude install pavucontrol</code></li>
+<li>Ensure you are running <code>icecast2</code> and <code>darkice</code> as described above</li>
+<li>Launch <code>pavucontrol</code> GUI</li>
+<li>Open the &lsquo;Recording&rsquo; tab</li>
+<li>Find <code>ALSA plugin [darkice]:</code> and change it&rsquo;s source to <code>Monitor of &lt;your-sound-source&gt;</code> using button near speaker icon</li>
+<li>That&rsquo;s it, connect your clients to <code>http://&lt;your-ip&gt;:8000/sample.ogg</code></li>
+</ul></li>
+<li>Configure pulseaudio to redirect just your rhythmbox (or other player&rsquo;s) output to darkice. This is what I&rsquo;ve chosen because I keep all my other sounds in my laptop speakers and stream only music played by rhythmbox. But this will work only if you have several output sources like me (I have main output and HDMI output through my videocard)
+
+<ul>
+<li>Install pavucontrol <code>sudo aptitude install pavucontrol</code></li>
+<li>Ensure you are running <code>icecast2</code> and <code>darkice</code> as described above</li>
+<li>Launch <code>pavucontrol</code> GUI</li>
+<li>Open the &lsquo;Recording&rsquo; tab</li>
+<li>Find <code>ALSA plugin [darkice]:</code> and change it&rsquo;s source to <code>Monitor of &lt;your-secondary-source&gt;</code> using button near speaker icon (I&rsquo;ve chose HDMI here)</li>
+<li>Open the &lsquo;Playback&rsquo; tab</li>
+<li>Find <code>Rhythmbox section</code> (rhythmbox should be running) and change and change it&rsquo;s destination to &lsquo;<your-secondary-source>&rsquo; using button near speaker icon (I&rsquo;ve chose HDMI here)</li>
+<li>That&rsquo;s it, connect your clients to <code>http://&lt;your-ip&gt;:8000/sample.ogg</code></li>
+</ul></li>
 </ol>
 
-<p>That’s it.</p>
+<p>That&rsquo;s it.</p>
 
-  
-    <a href="/tag/ubuntu">ubuntu</a>
-  
+
 </article>
 
-<hr />
 
-<footer>
-  <div>
-    <!-- share buttons -->
-    <a href="https://twitter.com/share" class="twitter-share-button" data-via="ivalkeen">Tweet</a>
-    <div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
-  </div>
-  <hr/>
-  <div id="disqus_thread"></div>
-</footer>
+<section class="post-nav">
+    <ul>
+        
+        <li>
+            <a href="https://www.tkalin.com/blog_posts/calling-gnome-kde-default-application-from-nerdtree/"><i class="fa fa-chevron-circle-left"></i> Calling GNOME/KDE default application from NERDTree</a>
+        </li>
+        
+        
+        <li>
+            <a href="https://www.tkalin.com/blog_posts/using-console-vim-as-vim-protocol-handler-in-ubuntu/">Using console vim as vim:// protocol handler in Ubuntu <i class="fa fa-chevron-circle-right"></i> </a>
+        </li>
+        
+    </ul>
+</section>
+    
+        <section class="comments-block">
+  <br/>
+      <button id="show-comments" style="display: block;"><i class="fa fa-comments-o"></i> Add/View Comments</button>
+  <br/>
+</section>
 
-<!-- twitter init -->
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+<section id="disqus_thread"></section>
 
-
-<!-- facebook init -->
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=1645955732290194";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
-<script type="text/javascript">
-  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-  var disqus_shortname = 'tkalincom'; // required: replace example with your forum shortname
-
-  /* * * DON'T EDIT BELOW THIS LINE * * */
-  (function() {
-    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-  })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-
-      </div>
-      <div class="col-sm-3 col-sm-offset-1">
-        <div class="text-justify">
-  <img src="/assets/avatar.jpg" alt="Ivan Tkalin" class="img-circle" />
-</div>
-
-<hr />
-
-<p class="text-justify">
-  <small>
-    I'm <strong>Ivan Tkalin</strong>, a professional software developer, located in <strong>Berlin, Germany</strong>.
-  </small>
-</p>
-
-<p class="text-justify">
-  <small>
-    Currently I'm interested in everything related to <strong>Ruby</strong>, <strong>JavaScript</strong>, <strong>PostgreSQL</strong>, <strong>HTML/CSS</strong>, <strong>Linux</strong>, <strong>Git</strong> and <strong>Vim</strong>.
-  </small>
-</p>
-
-<p class="text-justify">
-  <small>
-    If you want to contact me, please <a href="mailto:itkalin@gmail.com">send me an email</a>
-  </small>
-</p>
-
-<p class="text-justify">
-  <small>
-    Feel free to follow me on <a href="http://twitter.com/ivalkeen">twitter</a> and <a href="http://github.com/ivalkeen">github</a>
-  </small>
-</p>
-
-<hr />
-
-<ul class='list-inline text-center'>
-  <li>
-    <a href="https://github.com/ivalkeen"><i class="svg-icon large github"></i></a>
-  </li>
-  <li>
-    <a href="https://stackoverflow.com/users/188975/ivalkeen"><i class="svg-icon large stackoverflow"></i></a>
-  </li>
-  <li>
-    <a href="https://twitter.com/ivalkeen"><i class="svg-icon large twitter"></i></a>
-  </li>
-  <li>
-    <a href="http://de.linkedin.com/pub/ivan-tkalin/10/381/503/"><i class="svg-icon large linkedin"></i></a>
-  </li>
-</ul>
-
-      </div>
-    </div>
-
-    <footer>
-  <hr />
-
-  <div class="container">
-    <p class="text-center text-muted"><small>(c) Ivan Tkalin</small></p>
-  </div>
-</footer>
-
-
-    <script type="text/javascript">
-  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-  var disqus_shortname = 'tkalincom'; // required: replace example with your forum shortname
-
-  /* * * DON'T EDIT BELOW THIS LINE * * */
-  (function () {
-    var s = document.createElement('script'); s.async = true;
-    s.type = 'text/javascript';
-    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
-    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-  }());
-</script>
-
-    <!-- *Google Analytics code*/ -->
 <script>
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-33991324-1']);
-  _gaq.push(['_setDomainName', 'tkalin.com']);
-  _gaq.push(['_trackPageview']);
+      (function () {
+            
+            
+            if (window.location.hostname == "localhost")
+                  return;
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+            var disqus_loaded = false;
+            var disqus_shortname = 'tkalincom';
+            var disqus_button = document.getElementById("show-comments");
+
+            disqus_button.style.display = "";
+            disqus_button.addEventListener("click", disqus, false);
+
+            function disqus() {
+
+                  if (!disqus_loaded) {
+                        disqus_loaded = true;
+
+                        var e = document.createElement("script");
+                        e.type = "text/javascript";
+                        e.async = true;
+                        e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+                        (document.getElementsByTagName("head")[0] ||
+                              document.getElementsByTagName("body")[0])
+                        .appendChild(e);
+
+                        
+                        document.getElementById("show-comments").style.display = "none";
+                  }
+            }
+
+            
+            var hash = window.location.hash.substr(1);
+            if (hash.length > 8) {
+                  if (hash.substring(0, 8) == "comment-") {
+                        disqus();
+                  }
+            }
+
+            
+            if (/bot|google|baidu|bing|msn|duckduckgo|slurp|yandex/i.test(navigator.userAgent)) {
+                  disqus();
+            }
+      })();
 </script>
 
-  </body>
+    
+
+
+
+
+
+</main>
+    <footer>
+      <p>
+        © Ivan Tkalin
+            
+            |
+            <a href="index.xml">Subscribe</a>
+      </p>
+    </footer>
+</div>
+<script src="/js/scripts.js"></script>
+</body>
+
 </html>
