@@ -6,6 +6,8 @@
     <description>Recent content in Rspec on Ivan Tkalin</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <managingEditor>itkalin@gmail.com (Ivan Tkalin)</managingEditor>
+    <webMaster>itkalin@gmail.com (Ivan Tkalin)</webMaster>
     <copyright>© Ivan Tkalin</copyright>
     <lastBuildDate>Sun, 26 Apr 2015 15:00:00 +0000</lastBuildDate>
     
@@ -16,7 +18,7 @@
       <title>Upgrading to RSpec 3.x</title>
       <link>https://www.tkalin.com/blog_posts/upgrading-to-rspec3/</link>
       <pubDate>Sun, 26 Apr 2015 15:00:00 +0000</pubDate>
-      
+      <author>itkalin@gmail.com (Ivan Tkalin)</author>
       <guid>https://www.tkalin.com/blog_posts/upgrading-to-rspec3/</guid>
       <description>This short article is TL;DR of the talk: RSpec 3 and why I expect(you).to care by Jon Rowe. I picked 3 important recommendations out of this talk which I&amp;rsquo;m going to follow.
 1. Use zero monkey patching mode This will completely disable all the monkey patching and will make RSpec less magical. Of course, it has a few consequences:
@@ -27,7 +29,7 @@
       <title>Testing authorization using RSpec parametrized shared examples </title>
       <link>https://www.tkalin.com/blog_posts/testing-authorization-using-rspec-parametrized-shared-examples/</link>
       <pubDate>Wed, 23 May 2012 15:00:00 +0000</pubDate>
-      
+      <author>itkalin@gmail.com (Ivan Tkalin)</author>
       <guid>https://www.tkalin.com/blog_posts/testing-authorization-using-rspec-parametrized-shared-examples/</guid>
       <description>I have a rails app, that uses Devise for authentication and CanCan for authorization. There is a group of controllers in my application, that should be accessible by administrators only. I was thinking about a DRY way to test these resources and their accessibility by administrators only (using request specs with RSpec and Capybara).
 The idea is to have shared examples, which try to visit resource url as unauthenicated user, authenicated non-privileged user and administrator, and check if desired resource was loaded or not.</description>

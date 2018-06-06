@@ -6,6 +6,8 @@
     <description>Recent content in Ubuntu on Ivan Tkalin</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <managingEditor>itkalin@gmail.com (Ivan Tkalin)</managingEditor>
+    <webMaster>itkalin@gmail.com (Ivan Tkalin)</webMaster>
     <copyright>© Ivan Tkalin</copyright>
     <lastBuildDate>Mon, 04 Nov 2013 09:00:00 +0000</lastBuildDate>
     
@@ -16,7 +18,7 @@
       <title>Installing Adobe Air and Elance Tracker on Ubuntu 13.10 (Saucy Salamander) 64 bit</title>
       <link>https://www.tkalin.com/blog_posts/installing-adobe-air-and-elance-tracker-on-ubuntu-13-10-saucy-salamander-64-bit/</link>
       <pubDate>Mon, 04 Nov 2013 09:00:00 +0000</pubDate>
-      
+      <author>itkalin@gmail.com (Ivan Tkalin)</author>
       <guid>https://www.tkalin.com/blog_posts/installing-adobe-air-and-elance-tracker-on-ubuntu-13-10-saucy-salamander-64-bit/</guid>
       <description>Update: Following instructions also work for Ubuntu 14.04 LTS Trusty Tahr 64 bit.
 After upgrading to Ubuntu 13.10 (Saucy) 64 bits, I had troubles installing Adobe Air and Elance Tracker air application. None of the guides available online worked for me. The guide that I used to install it on Ubuntu 13.04 didn&amp;rsquo;t work either. I would be happy not to use this piece of crap by Adobe, but, unfortunately, Elance doesn&amp;rsquo;t want to build native tracker application for Linux, and I need it for my freelance work.</description>
@@ -26,7 +28,7 @@ After upgrading to Ubuntu 13.10 (Saucy) 64 bits, I had troubles installing Adobe
       <title>Using console vim as vim:// protocol handler in Ubuntu</title>
       <link>https://www.tkalin.com/blog_posts/using-console-vim-as-vim-protocol-handler-in-ubuntu/</link>
       <pubDate>Mon, 23 Apr 2012 11:00:00 +0000</pubDate>
-      
+      <author>itkalin@gmail.com (Ivan Tkalin)</author>
       <guid>https://www.tkalin.com/blog_posts/using-console-vim-as-vim-protocol-handler-in-ubuntu/</guid>
       <description>Do you want your browser to launch console vim and open specified file on specified line when you click link like this: vim:///etc/hosts&amp;amp;line=10? This article will show how to register console vim as vim:// protocol handler in Ubuntu 11.10. Just follow these steps:
 1. Create vim launcher script We&amp;rsquo;ll need small vim launcher script, which will handle vim://... uri. As a ruby programmer I wrote this script in Ruby (so it requires Ruby to be installed), but it can be rewritten to Perl/Python or even Bash.</description>
@@ -36,7 +38,7 @@ After upgrading to Ubuntu 13.10 (Saucy) 64 bits, I had troubles installing Adobe
       <title>Broadcasting your rhythmbox in ubuntu 11.10 </title>
       <link>https://www.tkalin.com/blog_posts/broadcasting-your-rhythmbox-in-ubuntu-11-10/</link>
       <pubDate>Fri, 30 Mar 2012 11:00:00 +0000</pubDate>
-      
+      <author>itkalin@gmail.com (Ivan Tkalin)</author>
       <guid>https://www.tkalin.com/blog_posts/broadcasting-your-rhythmbox-in-ubuntu-11-10/</guid>
       <description>Once I decided to setup my rhythmbox broadcasting into local network (so my wife or home media player could connect and listen), and didn&amp;rsquo;t find any comprehensive guide, so I decided to write my own when I managed to configure it.
 I found a couple rhythmbox plugins for that, but they didn&amp;rsquo;t work for me, so I stopped on icecast plus darkice.

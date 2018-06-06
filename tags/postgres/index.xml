@@ -6,6 +6,8 @@
     <description>Recent content in Postgres on Ivan Tkalin</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <managingEditor>itkalin@gmail.com (Ivan Tkalin)</managingEditor>
+    <webMaster>itkalin@gmail.com (Ivan Tkalin)</webMaster>
     <copyright>© Ivan Tkalin</copyright>
     <lastBuildDate>Sun, 10 Nov 2013 20:00:00 +0000</lastBuildDate>
     
@@ -16,7 +18,7 @@
       <title>Quick PostgreSQL server optimization for development (or integration server)</title>
       <link>https://www.tkalin.com/blog_posts/quick-postgresql-server-optimization-for-development-or-integration-server/</link>
       <pubDate>Sun, 10 Nov 2013 20:00:00 +0000</pubDate>
-      
+      <author>itkalin@gmail.com (Ivan Tkalin)</author>
       <guid>https://www.tkalin.com/blog_posts/quick-postgresql-server-optimization-for-development-or-integration-server/</guid>
       <description>TL;DR I&amp;rsquo;ve made RSpec test suite for my Ruby on Rails application 18% faster by following a Non-durable PostgreSQL configuration guide.
 Intro When I&amp;rsquo;m developing (usually Ruby on Rails) applications using PostgreSQL database server for persistence, I don&amp;rsquo;t need high durability of my development database (or integration server). What I care the most is it&amp;rsquo;s speed. I realize, however, that database server, probably, is not the bottle neck of the typical application test suite.</description>

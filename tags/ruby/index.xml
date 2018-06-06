@@ -6,6 +6,8 @@
     <description>Recent content in Ruby on Ivan Tkalin</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <managingEditor>itkalin@gmail.com (Ivan Tkalin)</managingEditor>
+    <webMaster>itkalin@gmail.com (Ivan Tkalin)</webMaster>
     <copyright>© Ivan Tkalin</copyright>
     <lastBuildDate>Sun, 24 Apr 2016 11:00:00 +0000</lastBuildDate>
     
@@ -16,7 +18,7 @@
       <title>Rails bug with polymorphic associations</title>
       <link>https://www.tkalin.com/blog_posts/rails-bug-with-polymorphic-associations/</link>
       <pubDate>Sun, 24 Apr 2016 11:00:00 +0000</pubDate>
-      
+      <author>itkalin@gmail.com (Ivan Tkalin)</author>
       <guid>https://www.tkalin.com/blog_posts/rails-bug-with-polymorphic-associations/</guid>
       <description>In general, I don&amp;rsquo;t like using polymorphic associations, because of inability to have a database-level integrity control and trickier eager loading. However, sometimes they look like a natural choice for certain cases in Ruby on Rails applications.
 Recently, I faced a problem, which turned out to be a bug in how Rails handles negations with polymorphic associations. It took me some time to figure out what exactly was wrong, so I decided to share my experience here for future reference (mostly for myself).</description>
@@ -26,7 +28,7 @@ Recently, I faced a problem, which turned out to be a bug in how Rails handles n
       <title>Upgrading to RSpec 3.x</title>
       <link>https://www.tkalin.com/blog_posts/upgrading-to-rspec3/</link>
       <pubDate>Sun, 26 Apr 2015 15:00:00 +0000</pubDate>
-      
+      <author>itkalin@gmail.com (Ivan Tkalin)</author>
       <guid>https://www.tkalin.com/blog_posts/upgrading-to-rspec3/</guid>
       <description>This short article is TL;DR of the talk: RSpec 3 and why I expect(you).to care by Jon Rowe. I picked 3 important recommendations out of this talk which I&amp;rsquo;m going to follow.
 1. Use zero monkey patching mode This will completely disable all the monkey patching and will make RSpec less magical. Of course, it has a few consequences:
@@ -37,7 +39,7 @@ Recently, I faced a problem, which turned out to be a bug in how Rails handles n
       <title>Navigating your Rails project codebase  with vim</title>
       <link>https://www.tkalin.com/blog_posts/navigating-your-rails-project-codebase-with-vim/</link>
       <pubDate>Sat, 10 Dec 2011 11:00:00 +0000</pubDate>
-      
+      <author>itkalin@gmail.com (Ivan Tkalin)</author>
       <guid>https://www.tkalin.com/blog_posts/navigating-your-rails-project-codebase-with-vim/</guid>
       <description>When you work with source code, it is always nice to have the abilty to quickly jump to class/method definitions for either your own code or code from one of your ruby gems. This articles describes how to do this in vim with exuberant ctags, guard, and guard-ctags-bundler.
 Tags  A tag is an identifier that appears in a &amp;ldquo;tags&amp;rdquo; file. It is a sort of label that can be jumped to.</description>
