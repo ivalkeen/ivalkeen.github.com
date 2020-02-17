@@ -15,6 +15,15 @@
     
     
     <item>
+      <title>About</title>
+      <link>https://www.tkalin.com/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <author>itkalin@gmail.com (Ivan Tkalin)</author>
+      <guid>https://www.tkalin.com/about/</guid>
+      <description>My name is Ivan Tkalin and I&amp;rsquo;m a professional software developer.</description>
+    </item>
+    
+    <item>
       <title>Rails bug with polymorphic associations</title>
       <link>https://www.tkalin.com/blog_posts/rails-bug-with-polymorphic-associations/</link>
       <pubDate>Sun, 24 Apr 2016 11:00:00 +0000</pubDate>
