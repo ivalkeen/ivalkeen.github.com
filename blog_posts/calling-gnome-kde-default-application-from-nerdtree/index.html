@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="The HTML5 Herald" />
   <meta name="author" content="Ivan Tkalin" />
-  <meta name="generator" content="Hugo 0.47.1" />
+  <meta name="generator" content="Hugo 0.64.1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Roboto+Condensed|Oswald" />
@@ -96,35 +96,23 @@
 
     
 
-    
-
-<p>Sometimes it is really nice to be able to call system default application for file or directory from vim. For example open <code>Document Reader</code> for a <code>pdf</code> file or browse directory with images with <code>Nautilus</code>. I didn&rsquo;t find working solution for NERDTree, which I use for file system navigation in vim, so I wrote simple <a href="https://github.com/ivalkeen/nerdtree-execute" title="nerdtree-execute">plugin</a> for it.</p>
-
+    <p>Sometimes it is really nice to be able to call system default application for file or directory from vim. For example open <code>Document Reader</code> for a <code>pdf</code> file or browse directory with images with <code>Nautilus</code>. I didn&rsquo;t find working solution for NERDTree, which I use for file system navigation in vim, so I wrote simple <a href="https://github.com/ivalkeen/nerdtree-execute" title="nerdtree-execute">plugin</a> for it.</p>
 <p>What it does, it simply creates new menu item <code>e(x)ecute</code> in NERDTree menu, which executes system default application for selected file or directory. It works on <code>Linux</code> only and should work for <code>GNOME</code> and <code>KDE</code>.</p>
-
 <h2 id="installation">Installation</h2>
-
 <p>The installation is very simple. If you use <a href="https://github.com/tpope/vim-pathogen" title="Pathogen">pathogen</a> to manage your plugins:</p>
-
 <pre><code>$ cd ~/.vim
 $ git clone git://github.com/ivalkeen/nerdtree-execute.git bundle/nerdtree-execute
 </code></pre>
-
 <p>or if use git submodules with pathogen (like me):</p>
-
 <pre><code>$ cd ~/.vim
 $ git submodule add git://github.com/ivalkeen/nerdtree-execute.git bundle/nerdtree-execute
 </code></pre>
-
 <p>If you don&rsquo;t use <a href="https://github.com/tpope/vim-pathogen" title="Pathogen">pathogen</a>, then just start using it, or</p>
-
 <pre><code>$ cd ~/.vim
 $ git clone git://github.com/ivalkeen/nerdtree-execute.git
 </code></pre>
-
 <h2 id="usage">Usage</h2>
-
-<p>When navigating in NERDTree, select file or directory, press &rsquo;m&rsquo; key, and NERDTree menu will appear. Press &lsquo;x&rsquo; then to execute system default application for selected file/directory, using this plugin. You can open your favourite image editor for images, pdf reader for pdfs etc.</p>
+<p>When navigating in NERDTree, select file or directory, press &lsquo;m&rsquo; key, and NERDTree menu will appear. Press &lsquo;x&rsquo; then to execute system default application for selected file/directory, using this plugin. You can open your favourite image editor for images, pdf reader for pdfs etc.</p>
 
 
 </article>

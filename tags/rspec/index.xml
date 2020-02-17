@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Rspec on Ivan Tkalin</title>
+    <title>rspec on Ivan Tkalin</title>
     <link>https://www.tkalin.com/tags/rspec/</link>
-    <description>Recent content in Rspec on Ivan Tkalin</description>
+    <description>Recent content in rspec on Ivan Tkalin</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <managingEditor>itkalin@gmail.com (Ivan Tkalin)</managingEditor>

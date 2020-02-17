@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="The HTML5 Herald" />
   <meta name="author" content="Ivan Tkalin" />
-  <meta name="generator" content="Hugo 0.47.1" />
+  <meta name="generator" content="Hugo 0.64.1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Roboto+Condensed|Oswald" />
@@ -99,37 +99,25 @@
 
     
 
-    
-
-<p>This short article is TL;DR of the talk: <a href="https://www.youtube.com/watch?v=5D4UbNui3rE">RSpec 3 and why I expect(you).to care by Jon Rowe</a>.
+    <p>This short article is TL;DR of the talk: <a href="https://www.youtube.com/watch?v=5D4UbNui3rE">RSpec 3 and why I expect(you).to care by Jon Rowe</a>.
 I picked 3 important recommendations out of this talk which I&rsquo;m going to follow.</p>
-
 <h2 id="1-use-zero-monkey-patching-mode">1. Use zero monkey patching mode</h2>
-
 <p>This will completely disable all the monkey patching and will make RSpec less magical. Of course, it has a few consequences:</p>
-
 <ul>
 <li>DSL will not be exposed globally, so <code>RSpec.describe</code> must be used instead of <code>describe</code> etc.</li>
 <li><code>should</code> and <code>should_not</code> syntax will be disabled, so <code>expect()</code> syntax must be used.</li>
 </ul>
-
 <p>To enable zero monkey patching mode, just add this line to RSpec configuration:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">  config<span style="color:#f92672">.</span>disable_monkey_pathing!</code></pre></div>
-<h2 id="2-use-verified-doubles">2. Use verified doubles</h2>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">  config<span style="color:#f92672">.</span>disable_monkey_pathing!
+</code></pre></div><h2 id="2-use-verified-doubles">2. Use verified doubles</h2>
 <p>This will enable checking that the contract of the mock corresponds to the contract of the real object.
 It means that if methods being mocked/stubbed are not actually implemented by the object behind test double, the test will fail with error.</p>
-
 <p>Once it&rsquo;s enabled, <code>instance_double</code> should be used instead of <code>double</code> to create verified doubles. <code>allow()</code> and <code>expect()</code> methods for real objects just work.</p>
-
 <p>To enable verified doubles, just add this line to RSpec configuration:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">  config<span style="color:#f92672">.</span>verify_partial_doubles <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span></code></pre></div>
-<p><strong>Note:</strong> this doesn&rsquo;t play very well with <code>ActiveRecord::Base</code> models in Rails, because Rails loads columns dynamically, so don&rsquo;t try to verify columns of rails models.</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">  config<span style="color:#f92672">.</span>verify_partial_doubles <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>
+</code></pre></div><p><strong>Note:</strong> this doesn&rsquo;t play very well with <code>ActiveRecord::Base</code> models in Rails, because Rails loads columns dynamically, so don&rsquo;t try to verify columns of rails models.</p>
 <h2 id="3-upgrading-from-rspec-2-to-3">3. Upgrading from RSpec 2 to 3:</h2>
-
 <p>Upgrade from RSpec 2 to RSpec 3 should be easy if you follow this simple guide:</p>
-
 <ol>
 <li>Upgrade to latest version of RSpec 2.99 first and fix all deprecations</li>
 <li>Use <a href="https://github.com/yujinakayama/transpec">transpec</a> to convert all existing specs to 3 syntax</li>

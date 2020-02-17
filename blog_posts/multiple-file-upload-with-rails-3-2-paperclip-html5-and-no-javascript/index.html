@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="The HTML5 Herald" />
   <meta name="author" content="Ivan Tkalin" />
-  <meta name="generator" content="Hugo 0.47.1" />
+  <meta name="generator" content="Hugo 0.64.1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Roboto+Condensed|Oswald" />
@@ -100,13 +100,9 @@
     
 
     <p>Today, I was looking for a simple multiple file upload solution for <a href="https://github.com/rails/rails">Ruby on Rails 3.2</a> with <a href="https://github.com/thoughtbot/paperclip">paperclip 3.0.4</a> and found several jQuery and Flash solutions, like <a href="http://www.uploadify.com/">Uploadify</a> or <a href="https://github.com/blueimp/jQuery-File-Upload">jQuery-File-Upload</a>, buy they seemed to be too heavy and complicated for my case. I didn&rsquo;t need asynchronous upload and other features they provide, I only needed really simple (ideally pure html) solution to save several images for my <code>Item</code> model with regular form submit, but with possibility to select all images at once (in one input field).</p>
-
 <p>Luckily, there is html5 attribute <code>multiple</code> for input <code>type='file'</code>, which is already supported by  modern browsers (Opera, Firefox, Chrome, Safari), and that&rsquo;s pretty ok for me. In the following code snippet, I&rsquo;ll show, how I used this attribute and how I marked up my rails form make it work with <a href="https://github.com/thoughtbot/paperclip">paperclip</a>.</p>
-
 <p><strong>Note:</strong> As soon as IE doesn&rsquo;t support <code>multiple</code> attribute, the example below will allow to upload only one file for IE users.</p>
-
-<script src="https://gist.github.com/2790062.js"></script>
-
+<!-- raw HTML omitted -->
 <p>So basically I have <code>Item</code> model, which has many <code>AttachedAsset</code> models. <code>AttachedAsset</code> model is used to store image with paperclip. All code in models and controller is very simple and found in paperclip&rsquo;s HOWTOs. The only non-obvious part is <code>file_field_tag</code> in the <code>new.html.haml</code> template &ndash; it has tricky <code>name</code> (to be handled as array of <code>asset</code> inside <code>attached_assets_attributes</code>) and <code>multiple</code> attributes is set to <code>true</code>.</p>
 
 

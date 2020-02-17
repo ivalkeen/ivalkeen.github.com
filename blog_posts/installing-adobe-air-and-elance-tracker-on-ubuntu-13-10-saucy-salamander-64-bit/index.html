@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="The HTML5 Herald" />
   <meta name="author" content="Ivan Tkalin" />
-  <meta name="generator" content="Hugo 0.47.1" />
+  <meta name="generator" content="Hugo 0.64.1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Roboto+Condensed|Oswald" />
@@ -96,80 +96,62 @@
 
     
 
-    
-
-<p><strong>Update:</strong> Following instructions also work for Ubuntu 14.04 LTS Trusty Tahr 64 bit.</p>
-
+    <p><strong>Update:</strong> Following instructions also work for Ubuntu 14.04 LTS Trusty Tahr 64 bit.</p>
 <p>After upgrading to Ubuntu 13.10 (Saucy) 64 bits, I had troubles installing Adobe Air and Elance Tracker air application. None of the guides available online worked for me. The guide that I used to install it on Ubuntu 13.04 didn&rsquo;t work either. I would be happy not to use this piece of crap by Adobe, but, unfortunately,  Elance doesn&rsquo;t want to build native tracker application for Linux, and I need it for my freelance work.</p>
-
 <p>After spending several hours digging around, finally I managed to install both Adobe Air and Elance Tracker application on my Ubuntu 13.10 64 box. Here is small guide for future reference.</p>
-
 <h2 id="installing-adobe-air">Installing Adobe Air</h2>
-
 <ol>
-<li><p>Install i386 libraries, that are required for successful installation and running of Adobe Air and air applications:</p>
-
+<li>
+<p>Install i386 libraries, that are required for successful installation and running of Adobe Air and air applications:</p>
 <pre><code>sudo apt-get install libxt6:i386 libnspr4-0d:i386 libgtk2.0-0:i386 libstdc++6:i386 libnss3-1d:i386 lib32nss-mdns libxml2:i386 libxslt1.1:i386 libcanberra-gtk-module:i386 gtk2-engines-murrine:i386
-</code></pre></li>
-
-<li><p>Install libgnome-keyring0:i386:</p>
-
+</code></pre>
+</li>
+<li>
+<p>Install libgnome-keyring0:i386:</p>
 <pre><code>sudo apt-get install libgnome-keyring0:i386
 </code></pre>
-
 <p><strong>If installation was successful, proceed to step 3.</strong></p>
-
 <p>Sometimes, it can&rsquo;t be installed using <code>apt-get</code>, causing error with dependencies. So we&rsquo;ll need to download it and install manually. In fact, this is easy.</p>
-
 <p>download deb-package using apt-get to <code>/tmp</code>:</p>
-
 <pre><code>cd /tmp
 sudo apt-get download libgnome-keyring0:i386
 </code></pre>
-
 <p>extract deb-package into <code>gnome-keyring</code> subfolder (<strong>note version in the file name, it may be different</strong>):</p>
-
 <pre><code>sudo dpkg-deb -R libgnome-keyring0_3.8.0-2_i386.deb gnome-keyring
 </code></pre>
-
 <p>install library in the system by copying:</p>
-
 <pre><code>sudo cp gnome-keyring/usr/lib/i386-linux-gnu/libgnome-keyring.so.0.2.0 /usr/lib/i386-linux-gnu/
 
 sudo ln -s /usr/lib/i386-linux-gnu/libgnome-keyring.so.0.2.0 /usr/lib/i386-linux-gnu/libgnome-keyring.so.0
-</code></pre></li>
-
-<li><p>Create symlinks to gnome-keyring so Adobe Air could see it:</p>
-
+</code></pre>
+</li>
+<li>
+<p>Create symlinks to gnome-keyring so Adobe Air could see it:</p>
 <pre><code>sudo ln -s /usr/lib/i386-linux-gnu/libgnome-keyring.so.0 /usr/lib/libgnome-keyring.so.0
 
 sudo ln -s /usr/lib/i386-linux-gnu/libgnome-keyring.so.0.2.0 /usr/lib/libgnome-keyring.so.0.2.0
-</code></pre></li>
-
-<li><p>Download Adobe Air installer from Adobe official site: <a href="http://helpx.adobe.com/air/kb/archived-air-sdk-version.html">http://helpx.adobe.com/air/kb/archived-air-sdk-version.html</a></p></li>
-
-<li><p>Install Adobe Air using downloaded installer (don&rsquo;t forget to allow execution of the installer file):</p>
-
+</code></pre>
+</li>
+<li>
+<p>Download Adobe Air installer from Adobe official site: <a href="http://helpx.adobe.com/air/kb/archived-air-sdk-version.html">http://helpx.adobe.com/air/kb/archived-air-sdk-version.html</a></p>
+</li>
+<li>
+<p>Install Adobe Air using downloaded installer (don&rsquo;t forget to allow execution of the installer file):</p>
 <pre><code>chmod a+x AdobeAIRInstaller.bin
 
 sudo ./AdobeAIRInstaller.bin
 </code></pre>
-
 <p>Adobe Air should be installed successfully now! Now you may remove excess symlinks:</p>
-
 <pre><code>sudo rm /usr/lib/libgnome-keyring.so.0
 
 sudo rm /usr/lib/libgnome-keyring.so.0.2.0
-</code></pre></li>
+</code></pre>
+</li>
 </ol>
-
 <h2 id="installing-elance-tracker">Installing Elance Tracker</h2>
-
 <p>This is easy. Just download <code>TrackerSetup.deb</code> package from Elance official site, and install it using command:</p>
-
 <pre><code>    sudo dpkg -i TrackerSetup.deb
 </code></pre>
-
 <p>That&rsquo;s it.</p>
 
 

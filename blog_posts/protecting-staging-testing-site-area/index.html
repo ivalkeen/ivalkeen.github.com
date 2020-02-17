@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="The HTML5 Herald" />
   <meta name="author" content="Ivan Tkalin" />
-  <meta name="generator" content="Hugo 0.47.1" />
+  <meta name="generator" content="Hugo 0.64.1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Roboto+Condensed|Oswald" />
@@ -100,30 +100,21 @@
     
 
     <p>It seems, that the easiest way to protect staging/testing version of the (rails) application from search engines and undesired users is using HTTP Basic Authentication. Configuring it for nginx is very easy and well documented.</p>
-
 <p>First, enable HTTP Basic Authentication and specify passwords file location. To do this, add these lines to the site&rsquo;s server config:</p>
-
 <pre><code>auth_basic &quot;Testing Zone&quot;;
 auth_basic_user_file /var/www/my_app/current/shared/config/.htpasswd;
 </code></pre>
-
 <p>Passwords file, specified in <code>auth_basic_user_file</code> directive, should store users and <strong>encrypted</strong> passwords in the following format:</p>
-
 <pre><code>user:pass
 user2:pass2:comment
 user3:pass3
 </code></pre>
-
 <p>To encrypt passwords using MD5, <code>htpasswd</code> (goes with apache) or <code>openssl</code> tools can be used:</p>
-
 <pre><code>openssl passwd -1 user_name
 </code></pre>
-
-<p>Then create <code>/var/www/my_app/current/shared/config/.htpasswd</code> file with the user name and encrypted password:</p>
-
+<p>Then create <code> /var/www/my_app/current/shared/config/.htpasswd</code> file with the user name and encrypted password:</p>
 <pre><code>user_name:$1$YSZFGvi9$BjAEmoG/a//a0UkNyzjMC/
 </code></pre>
-
 <p>Then restart nginx, open your site and you&rsquo;ll see login/password prompt.</p>
 
 

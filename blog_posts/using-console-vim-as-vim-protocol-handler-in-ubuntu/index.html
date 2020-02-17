@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="The HTML5 Herald" />
   <meta name="author" content="Ivan Tkalin" />
-  <meta name="generator" content="Hugo 0.47.1" />
+  <meta name="generator" content="Hugo 0.64.1" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab|Roboto+Condensed|Oswald" />
@@ -99,14 +99,9 @@
 
     
 
-    
-
-<p>Do you want your browser to launch console vim and open specified file on specified line when you click link like this: <code>vim:///etc/hosts&amp;line=10</code>? This article will show how to register console vim as <code>vim://</code> protocol handler in Ubuntu 11.10. Just follow these steps:</p>
-
+    <p>Do you want your browser to launch console vim and open specified file on specified line when you click link like this: <code>vim:///etc/hosts&amp;line=10</code>? This article will show how to register console vim as <code>vim://</code> protocol handler in Ubuntu 11.10. Just follow these steps:</p>
 <h3 id="1-create-vim-launcher-script">1. Create vim launcher script</h3>
-
 <p>We&rsquo;ll need small vim launcher script, which will handle <code>vim://...</code> uri. As a ruby programmer I wrote this script in Ruby (so it requires Ruby to be installed), but it can be rewritten to Perl/Python or even Bash. What it does, it just retrieves file name and <code>line</code> parameter from URI string and launches <code>gnome-terminal</code> with <code>vim</code> inside, passing file name and line to open. Create <code>/usr/local/bin/cvim</code> file with content:</p>
-
 <pre><code>#! /usr/bin/env ruby
 
 require 'uri'
@@ -129,16 +124,11 @@ end
 
 `gnome-terminal -x vim #{vim_params}`
 </code></pre>
-
 <p>Next, give it execute permissions:</p>
-
 <pre><code>sudo chmod a+x /usr/local/bin/cvim
 </code></pre>
-
 <h3 id="2-create-desktop-file-for-our-new-launcher">2. Create .desktop file for our new launcher</h3>
-
 <p>Now we will create .desktop launcher for our vim launcher, and tell Ubuntu to use this lauchner as <code>vim://</code> protocol handler. Create &lsquo;/usr/share/applications/cvim.desktop&rsquo; file with content:</p>
-
 <pre><code>[Desktop Entry]
 Encoding=UTF-8
 Name=Vim (Console)
@@ -152,25 +142,16 @@ MimeType=text/plain;x-scheme-handler/vim;
 StartupNotify=true
 StartupWMClass=CVIM
 </code></pre>
-
 <h3 id="3-refresh-mime-types-database">3. Refresh mime types database</h3>
-
 <p>In the file above, line <code>MimeType=text/plain;x-scheme-handler/vim;</code> registers <code>vim://</code> scheme handler, but to make it work we should update mime types database cache. Execute command:</p>
-
 <pre><code>sudo update-desktop-database
 </code></pre>
-
 <h3 id="4-test-from-terminal">4. Test from terminal</h3>
-
 <p>Now everything should work. To test that it works from terminal, launch this command:</p>
-
 <pre><code>xdg-open 'vim:///etc/hosts?line=2'
 </code></pre>
-
 <p>And it should launch gnome-terminal with vim inside and open file <code>/etc/hosts</code> on line #2. If it works, your browser will do the same when you open link like this.</p>
-
 <p><strong>UPDATE:</strong> if you want files to be opened in one vim instance (in the new tab), make <code>/usr/local/bin/cvim</code> file look like this:</p>
-
 <pre><code>#! /usr/bin/env ruby
 
 require 'uri'
