@@ -9,7 +9,11 @@
   
   <url>
     <loc>https://www.tkalin.com/about/</loc>
-    <lastmod>2011-01-01T11:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.tkalin.com/</loc>
+    <lastmod>2016-04-24T11:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -135,11 +139,6 @@
   <url>
     <loc>https://www.tkalin.com/blog_posts/navigating-your-rails-project-codebase-with-vim/</loc>
     <lastmod>2011-12-10T11:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.tkalin.com/</loc>
-    <lastmod>2011-01-01T11:00:00+00:00</lastmod>
   </url>
   
 </urlset>
